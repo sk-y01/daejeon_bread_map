@@ -53,3 +53,11 @@ package.json
 README.md
 vite.config.js
 ```
+
+
+## 브랜치
+* main
+* develop (개발용)
+* jjlee
+* srpark
+* hnlee
