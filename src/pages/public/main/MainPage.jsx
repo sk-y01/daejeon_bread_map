@@ -1,7 +1,7 @@
 const MainPage = () => {
   return (
     <div>
-      메인
+      빵지도 메인
     </div>
   )
 }
