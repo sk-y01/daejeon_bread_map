@@ -61,3 +61,7 @@ vite.config.js
 * jjlee
 * srpark
 * hnlee
+
+
+## 코딩 컨벤션
+**CODING_CONVENSION.md** 파일 참조
