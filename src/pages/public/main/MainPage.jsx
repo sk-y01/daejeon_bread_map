@@ -1,3 +1,6 @@
+import { Suspense } from "react"
+import LoadingSpinner from "../../../components/loading/LoadingSpinner"
+
 const MainPage = () => {
   return (
     <div>
