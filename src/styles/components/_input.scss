@@ -1,0 +1,35 @@
+@use 'sass:map';
+@use '../color' as *;
+
+input {
+  &[type="text"],
+  &[type="password"] {
+    min-height: 3.5rem;
+    padding: 0 1rem;
+    border: 0 none;
+    border-radius: 0;
+    border-bottom: 1px solid map.get($colors, "main");
+    
+    &::placeholder {
+      color: rgba(map.get($colors, "placeholder"), .52);
+    }
+  }
+}
+
+.icon__input {
+  display: inline-flex;
+  align-items: center;
+  padding-left: .5rem;
+  border: 2px solid map.get($colors, "main");
+  border-radius: 6px;
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  input {
+    border-bottom: 0;
+    border-radius: 0 6px 6px 0;
+  }
+}

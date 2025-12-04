@@ -32,3 +32,33 @@ select {
   font-size: 1.5rem;
   font-weight: 400;
 }
+
+h1 { font-size: 30px; }
+h2 { font-size: 28px; }
+h3 { font-size: 26px; }
+h4 { font-size: 24px; }
+h5 { font-size: 22px; }
+h6 { font-size: 20px; }
+
+.inner { padding: 0 2rem; }
+
+/*
+* Responsive
+*/
+@media all and (min-width: 1024px) {
+  .inner { max-width: 1440px; }
+}
+
+@media all and (min-width: 1441px) {
+  .inner { padding: 0; }
+}
+
+@media all and (min-width: 1921px) {
+  .inner { max-width: 1920px; }
+}
+
+@media all and (max-width: 500px) {
+  body {
+    font-size: 1.4rem;
+  }
+}
