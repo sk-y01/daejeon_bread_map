@@ -1,0 +1,48 @@
+@use "sass:map";
+@use "../color" as *;
+@use "../common/mixins" as *;
+
+.AdminDashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__item {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+
+    strong {
+      font-weight: 700;
+      color: map.get($colors, "sub");
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+
+    button {
+      @include button-variant(
+        map.get($colors, "sub"),
+        map.get($colors, "sub"),
+        6,
+        map.get($colors, "white"),
+        map.get($colors, "white"),
+        map.get($colors, "sub")
+      );
+    }
+  }
+}

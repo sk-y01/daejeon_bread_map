@@ -8,6 +8,14 @@ import DesignPage from './pages/public/design/DesignPage'
 import './App.css'
 import './styles/components/_input.scss'
 import './styles/components/_buttons.scss'
+import BakeryListPage from './pages/admin/bakery/BakeryListPage'
+import BakeryFormPage from './pages/admin/bakery/BakeryFormPage'
+
+import "./styles/admin/_layout.scss";
+import "./styles/admin/_sidebar.scss";
+import "./styles/admin/_bakery-list.scss";
+import "./styles/admin/_bakery-form.scss";
+import "./styles/admin/_dashboard.scss";
 
 function App() {
   return (
@@ -17,9 +25,15 @@ function App() {
           <Route index element={ <MainPage /> } />
           <Route path='design' element={ <DesignPage /> } />
         </Route>
+
         <Route path='/admin' element={ <AdminLayout /> }>
           <Route index element={ <AdminMainPage /> } />
+
+          <Route path='bakery' element={<BakeryListPage />} />
+          <Route path='bakery/form' element={<BakeryFormPage />} />
+          <Route path='bakery/form/:id' element={<BakeryFormPage />} />
         </Route>
+
         <Route path='/login' element={ <LoginPage /> } />
       </Routes>
     </>
