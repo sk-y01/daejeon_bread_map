@@ -16,13 +16,11 @@
 import { api } from "./axiosInstance";
 
 /**
- * 빵집 등록 요청
- * 
- * WHY?
- * - POST는 리소스를 생성하는 표준 방식.
+ * 빵집 등록 (POST)
+ * FIXME: URL/필드명 백엔드 확인 필요
  */
 export const createBakery = (data) => {
-  return api.post("/admin/bakeries", data); // FIXME: URL은 백엔드에게 반드시 확인
+  return api.post("/admin/bakeries", data); 
 };
 
 /**
@@ -39,10 +37,14 @@ export const updateBakery = (id, data) => {
   return api.put(`/admin/bakeries/${id}`, data); // FIXME: URL 및 메소드 확인
 };
 
-// 빵집 목록 조회
-
+/**
+ * ✔ 빵집 목록 조회 (GET)
+ * 백엔드가 알려준 실제 URL에 맞게 수정해야 하는 부분
+ *
+ * 백엔드: GET http://jarryjeong.pe.kr/api/bakery
+ */
 export const fetchBakeries = () => {
-  return api.get("/admin/bakeries"); // FIXME: URL 확인
+  return api.get("/bakery");   // 여기 수정됨!
 };
 
 // 빵집 상세 조회

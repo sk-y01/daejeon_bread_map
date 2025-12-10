@@ -25,7 +25,7 @@ function BakeryListPage() {
    * - 페이지가 열리면 항상 최신 데이터를 보게 하기 위해.
    */
   useEffect(() => {
-    loadList();
+    // loadList();
   }, []);
 
   /**
@@ -38,7 +38,7 @@ function BakeryListPage() {
     try {
       setLoading(true);
       const res = await fetchBakeries();
-      setBakeries(res.data);
+      setBakeries(res.data.list || []);
 
     } catch (err) {
       console.error(err);

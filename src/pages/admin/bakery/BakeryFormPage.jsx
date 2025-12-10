@@ -29,7 +29,7 @@ function BakeryFormPage() {
     menu: "",
     category: "",
     address: "",
-    phone: "",
+    tel: "",
     lat: "",
     lng: "",
     image: null,
@@ -42,7 +42,7 @@ function BakeryFormPage() {
    * - 기존 데이터가 있어야 수정이 가능함.
    */
   useEffect(() => {
-    if (isEdit) loadDetail();
+    // if (isEdit) loadDetail();
   }, [id]); // FIXME: ESLint 경고 시 useCallback 고려
 
   /**
@@ -117,29 +117,29 @@ function BakeryFormPage() {
       <div className="BakeryForm__card">
         {/* 인풋들 */}
         <label>가게 이름</label>
-        <input name="name" value={form.name} onChange={handleChange} />
+        <input name="name" value={form.name} onChange={handleChange} placeholder="성심당 본점" />
 
         <label>대표 메뉴</label>
-        <input name="menu" value={form.menu} onChange={handleChange} />
+        <input name="menu" value={form.menu} onChange={handleChange} placeholder="튀김소보로" />
 
         <label>카테고리</label>
-        <input name="category" value={form.category} onChange={handleChange} />
+        <input name="category" value={form.category} onChange={handleChange} placeholder="빵" />
 
         <label>주소</label>
-        <input name="address" value={form.address} onChange={handleChange} />
+        <input name="address" value={form.address} onChange={handleChange} placeholder="대전 중구 중앙로 75" />
 
         <label>전화번호</label>
-        <input name="phone" value={form.phone} onChange={handleChange} />
+        <input name="tel" value={form.tel} onChange={handleChange} placeholder="042-123-4567" />
 
         {/* 위도/경도 */}
         <div className="BakeryForm__half">
           <div>
             <label>위도</label>
-            <input name="lat" value={form.lat} onChange={handleChange} />
+            <input name="lat" value={form.lat} onChange={handleChange} placeholder="36.32739" />
           </div>
           <div>
             <label>경도</label>
-            <input name="lng" value={form.lng} onChange={handleChange} />
+            <input name="lng" value={form.lng} onChange={handleChange} placeholder="127.42391" />
           </div>
         </div>
 
