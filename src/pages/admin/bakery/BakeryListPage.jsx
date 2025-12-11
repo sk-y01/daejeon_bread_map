@@ -48,7 +48,9 @@ function BakeryListPage() {
     try {
       setLoading(true);
       const res = await fetchBakeries();
-      setBakeries(res.data.list || []);
+      // setBakeries(res.data.list || []);
+      setBakeries(res.data?.data?.bakeries || []);
+
     } catch (err) {
       console.error(err);
       alert("목록을 불러오지 못했습니다.");
@@ -117,11 +119,11 @@ function BakeryListPage() {
               <div className="BakeryCard__content">
                 <h3>{item.name}</h3>
                 <p className="info"><strong>카테고리:</strong> {item.category}</p>
-                <p className="info"><strong>대표 메뉴:</strong> {item.menu}</p>
+                <p className="info"><strong>대표 메뉴:</strong> {item.signature_menu}</p>
                 <p className="info"><strong>주소:</strong> {item.address}</p>
-                <p className="info"><strong>전화번호:</strong> {item.tel}</p>
+                <p className="info"><strong>전화번호:</strong> {item.phone}</p>
                 <p className="coords">
-                  <strong>위도/경도:</strong> {item.lat}, {item.lng}
+                  <strong>위도/경도:</strong>{item.latitude}, {item.longitude}
                 </p>
               </div>
 

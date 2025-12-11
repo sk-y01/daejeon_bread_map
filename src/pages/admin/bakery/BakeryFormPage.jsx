@@ -31,12 +31,12 @@ function BakeryFormPage() {
    */
   const [form, setForm] = useState({
     name: "",
-    menu: "",
+    signature_menu: "",
     category: "",
     address: "",
-    tel: "",
-    lat: "",
-    lng: "",
+    phone: "",
+    latitude: "",
+    longitude: "",
     image: null,
   });
 
@@ -136,8 +136,8 @@ function BakeryFormPage() {
 
         <label>대표 메뉴</label>
         <input
-          name="menu"
-          value={form.menu}
+          name="signature_menu"
+          value={form.signature_menu}
           onChange={handleChange}
           placeholder="튀김소보로"
         />
@@ -160,8 +160,8 @@ function BakeryFormPage() {
 
         <label>전화번호</label>
         <input
-          name="tel"
-          value={form.tel}
+          name="phone"
+          value={form.phone}
           onChange={handleChange}
           placeholder="042-123-4567"
         />
@@ -171,8 +171,8 @@ function BakeryFormPage() {
           <div>
             <label>위도</label>
             <input
-              name="lat"
-              value={form.lat}
+              name="latitude"
+              value={form.latitude}
               onChange={handleChange}
               placeholder="36.32739"
             />
@@ -181,10 +181,10 @@ function BakeryFormPage() {
           <div>
             <label>경도</label>
             <input
-              name="lng"
-              value={form.lng}
+              name="latitude"
+              value={form.latitude}
               onChange={handleChange}
-              placeholder="127.42391"
+              placeholder="36.32739"
             />
           </div>
         </div>
