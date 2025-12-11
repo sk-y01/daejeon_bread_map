@@ -1,11 +1,14 @@
+@use "sass:map";
+@use "../color" as *;
+
+/* 관리자 레이아웃 전체 */
 .AdminLayout {
   display: flex;
   min-height: 100vh;
-  background-color: #fafafa;
+  background-color: map.get($colors, "cream"); 
 
   &__content {
     flex: 1;
-    padding: 2rem;
+    padding: 3rem;
   }
 }
-

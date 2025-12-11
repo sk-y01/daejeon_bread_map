@@ -2,59 +2,85 @@
 @use "../color" as *;
 @use "../common/mixins" as *;
 
+// Bakery 등록/수정 페이지 컨테이너
 .BakeryForm {
   h1 {
     margin-bottom: 2rem;
     font-size: 2rem;
     font-weight: 700;
+    color: map.get($colors, "main");
   }
 
+  // 폼 카드 영역
   &__card {
     background: map.get($colors, "white");
-    padding: 4rem;
+    padding: 3rem;
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0,0,0,.08);
 
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: .5rem;
 
     label {
       font-size: 1.6rem;
       font-weight: 600;
+      color: map.get($colors, "main");
     }
-    
-    /* 여기서는 input 기본 스타일을 건드리지 않음! */
+
+    // 기본 input 스타일
     input:not([type="file"]) {
       width: 100%;
-      padding: .5rem .2rem;
-      margin-top: 0.3rem;
+      padding: 0.8rem 1rem;
+      border: 1px solid map.get($border-colors, "default");
+      border-radius: 6px;
+      background: map.get($colors, "white");
+      font-size: 1.4rem;
+
+      &::placeholder {
+        color: map.get($colors, "placeholder");
+      }
+
+      &:focus {
+        outline: none;
+        border-color: map.get($colors, "sub");
+      }
+      margin-bottom: 1.2rem; 
     }
   }
 
-  /* 위도/경도 병렬 */
+  // 위도/경도 영역
   &__half {
     display: flex;
-    gap: 2.4rem; 
+    gap: 2rem;
 
     > div {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      margin-bottom: 0.5rem;
     }
   }
 
+  // 이미지 미리보기
   &__preview {
     width: 180px;
     height: 180px;
     object-fit: cover;
     border-radius: 8px;
+    border: 1px solid map.get($border-colors, "default");
   }
 
+  // 저장, 취소 버튼
   &__actions {
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
     margin-top: 2rem;
 
+    // 취소 버튼
     button {
       @include button-variant(
         map.get($colors, "white"),
@@ -66,6 +92,7 @@
       );
     }
 
+    // 저장 버튼
     .submit {
       @include button-variant(
         map.get($colors, "sub"),

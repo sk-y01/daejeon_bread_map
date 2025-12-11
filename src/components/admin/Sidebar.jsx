@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-// import "./Sidebar.scss"; // 스타일은 나중에 만들 수 있음
 
 const Sidebar = () => {
   return (
@@ -12,10 +11,10 @@ const Sidebar = () => {
             <Link to="/admin">대시보드</Link>
           </li>
           <li>
-            <Link to="/admin/bakery">빵집 관리</Link>
+            <Link to="/admin/bakery">빵집 리스트 보기</Link>
           </li>
           <li>
-            {/* <Link to="/login">로그아웃</Link> */}
+            <Link to="/admin/bakery/form">새 빵집 등록</Link>
           </li>
         </ul>
       </nav>
@@ -24,3 +23,5 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+

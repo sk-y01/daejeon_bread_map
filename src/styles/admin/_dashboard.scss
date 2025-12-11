@@ -6,42 +6,47 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  padding: 2rem;
 
-  &__card {
-    background: #fff;
+  /* 제목 */
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: map.get($colors, "main");
+  }
+
+  /* 통계 박스 */
+  &__box {
+    background: map.get($colors, "white");
     padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-radius: 10px;
+    border: 1px solid map.get($border-colors, "default");
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 
-    h2 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
+    p {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+
+      strong {
+        font-weight: 700;
+        color: map.get($colors, "sub");
+      }
     }
   }
 
-  &__item {
-    font-size: 1.4rem;
-    margin-bottom: 0.8rem;
-
-    strong {
-      font-weight: 700;
-      color: map.get($colors, "sub");
-    }
-  }
-
+  /* 버튼 그룹 */
   &__actions {
     display: flex;
     gap: 1rem;
 
     button {
       @include button-variant(
-        map.get($colors, "sub"),
-        map.get($colors, "sub"),
-        6,
-        map.get($colors, "white"),
-        map.get($colors, "white"),
-        map.get($colors, "sub")
+        map.get($colors, "sub"),     // 배경색
+        map.get($colors, "sub"),     // border
+        6,                           // radius
+        map.get($colors, "white"),   // text color
+        map.get($colors, "white"),   // hover text color
+        map.get($colors, "sub")      // hover border
       );
     }
   }

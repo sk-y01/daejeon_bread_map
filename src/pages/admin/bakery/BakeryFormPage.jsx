@@ -2,16 +2,21 @@
  * BakeryFormPage.jsx
  *
  * @description
- * 빵집 등록 + 수정 공용 폼 페이지.
- * id가 있을 경우 수정 모드이며, 상세 조회 후 폼에 데이터를 채움.
+ * 관리자용 빵집 등록/수정 폼 페이지.
+ * id 존재 여부에 따라 등록/수정 모드가 결정된다.
  *
- * WHY?
- * - 등록과 수정의 UI가 거의 동일하므로 파일을 분리할 필요가 없다고 생각함.
+ * NOTE:
+ * - 상세조회(loadDetail)는 API 완성 전까지 비활성화.
+ * - 등록/수정 UI가 동일하여 공용 폼으로 구성.
  */
 
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { createBakery, updateBakery, fetchBakeryDetail } from "../../../apis/bakeryApi";
+import {
+  createBakery,
+  updateBakery,
+  fetchBakeryDetail,
+} from "../../../apis/bakeryApi";
 
 function BakeryFormPage() {
   const { id } = useParams();
@@ -22,7 +27,7 @@ function BakeryFormPage() {
    * 기본 폼 데이터
    *
    * WHY?
-   * - React controlled input 방식 사용을 위해 state로 관리.
+   * - controlled input 구조를 유지하기 위해 모든 입력값을 상태로 관리.
    */
   const [form, setForm] = useState({
     name: "",
@@ -43,10 +48,13 @@ function BakeryFormPage() {
    */
   useEffect(() => {
     // if (isEdit) loadDetail();
-  }, [id]); // FIXME: ESLint 경고 시 useCallback 고려
+  }, [id]); // FIXME: ESLint 경고 발생 시 useCallback 고려
 
   /**
    * 상세 조회 API 호출
+   *
+   * WHY?
+   * - 수정 시 기존 데이터를 불러와야 하므로 별도 함수로 분리.
    */
   const loadDetail = async () => {
     try {
@@ -59,7 +67,7 @@ function BakeryFormPage() {
   };
 
   /**
-   * input 변경 핸들러
+   * input 값 변경 핸들러
    *
    * WHY?
    * - 모든 입력 값을 하나의 state에서 관리하기 위해 공용 핸들러 사용.
@@ -70,13 +78,13 @@ function BakeryFormPage() {
   };
 
   /**
-   * 이미지 업로드(base64 변환)
+   * 이미지 업로드 & base64 변환
    *
-   * * WHY?
-   * - 백엔드에서 최종 이미지 업로드 방식이 정해지지 않아 base64 방식으로 임시 구현.
-   * 
+   * WHY?
+   * - 백엔드 이미지 업로드 스펙이 확정되기 전까지 임시로 base64 처리.
+   *
    * TODO:
-   * - 추후 이미지 전달 방식 수정. 현재 업로드까지 구현힘.
+   * - 실제 이미지 업로드 방식 결정 후 변경 예정.
    */
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -90,7 +98,10 @@ function BakeryFormPage() {
   };
 
   /**
-   * 저장(등록/수정) 요청
+   * 등록/수정 요청
+   *
+   * WHY?
+   * - 등록(create)과 수정(update)을 동일한 버튼에서 처리하여 UX 통합.
    */
   const handleSubmit = async () => {
     try {
@@ -103,7 +114,6 @@ function BakeryFormPage() {
       }
 
       navigate("/admin/bakery");
-
     } catch (err) {
       console.error(err);
       alert("저장 실패");
@@ -115,39 +125,83 @@ function BakeryFormPage() {
       <h1>{isEdit ? "빵집 수정" : "빵집 등록"}</h1>
 
       <div className="BakeryForm__card">
-        {/* 인풋들 */}
+        {/* 기본 정보 입력 */}
         <label>가게 이름</label>
-        <input name="name" value={form.name} onChange={handleChange} placeholder="성심당 본점" />
+        <input
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+          placeholder="성심당 본점"
+        />
 
         <label>대표 메뉴</label>
-        <input name="menu" value={form.menu} onChange={handleChange} placeholder="튀김소보로" />
+        <input
+          name="menu"
+          value={form.menu}
+          onChange={handleChange}
+          placeholder="튀김소보로"
+        />
 
         <label>카테고리</label>
-        <input name="category" value={form.category} onChange={handleChange} placeholder="빵" />
+        <input
+          name="category"
+          value={form.category}
+          onChange={handleChange}
+          placeholder="빵"
+        />
 
         <label>주소</label>
-        <input name="address" value={form.address} onChange={handleChange} placeholder="대전 중구 중앙로 75" />
+        <input
+          name="address"
+          value={form.address}
+          onChange={handleChange}
+          placeholder="대전 중구 중앙로 75"
+        />
 
         <label>전화번호</label>
-        <input name="tel" value={form.tel} onChange={handleChange} placeholder="042-123-4567" />
+        <input
+          name="tel"
+          value={form.tel}
+          onChange={handleChange}
+          placeholder="042-123-4567"
+        />
 
         {/* 위도/경도 */}
         <div className="BakeryForm__half">
           <div>
             <label>위도</label>
-            <input name="lat" value={form.lat} onChange={handleChange} placeholder="36.32739" />
+            <input
+              name="lat"
+              value={form.lat}
+              onChange={handleChange}
+              placeholder="36.32739"
+            />
           </div>
+
           <div>
             <label>경도</label>
-            <input name="lng" value={form.lng} onChange={handleChange} placeholder="127.42391" />
+            <input
+              name="lng"
+              value={form.lng}
+              onChange={handleChange}
+              placeholder="127.42391"
+            />
           </div>
         </div>
 
-        {/* 이미지 */}
+        {/* 이미지 업로드 */}
         <label>대표 이미지</label>
         <input type="file" onChange={handleImageChange} />
-        {form.image && <img className="BakeryForm__preview" src={form.image} alt="preview" />}
 
+        {form.image && (
+          <img
+            src={form.image}
+            className="BakeryForm__preview"
+            alt="preview"
+          />
+        )}
+
+        {/* 액션 버튼 */}
         <div className="BakeryForm__actions">
           <button onClick={() => navigate("/admin/bakery")}>취소</button>
           <button className="submit" onClick={handleSubmit}>
