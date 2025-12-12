@@ -16,6 +16,7 @@ import "./styles/admin/_sidebar.scss";
 import "./styles/admin/_bakery-list.scss";
 import "./styles/admin/_bakery-form.scss";
 import "./styles/admin/_dashboard.scss";
+import TestApi from './pages/test/TestApi'
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         </Route>
 
         <Route path='/login' element={ <LoginPage /> } />
+        <Route path='/test' element={ <TestApi /> } />
       </Routes>
     </>
   )
