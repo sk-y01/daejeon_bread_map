@@ -87,5 +87,5 @@ export const fetchBakeryDetail = (id) => {
  * @returns
  */
 export const deleteBakery = (id) => {
-  return api.delete(`/bakeries/delet/${id}`);
+  return api.delete(`/bakeries/delete/${id}`);
 };

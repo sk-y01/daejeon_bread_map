@@ -50,7 +50,6 @@ const TestApi = () => {
               <button
                 type="button" 
                 className="btn btn__sub"
-                onClick={ clickSelectListHandler }
               >
                 API 호출
               </button>
