@@ -1,0 +1,46 @@
+/**
+* button-variant
+*
+* @description              버튼 정의
+* @param $background-color  배경색
+* @param $border-color      선 색 (default : transparent)
+* @param $border-radius     선 round (default : 0)
+* @param $color             글꼴 색
+* @param $hover-background  hover 시 배경색
+* @param $hover-color       hover 시 글꼴 색
+*/
+@mixin button-variant (
+  $background-color,
+  $border-color: transparent,
+  $border-radius: 0,
+  $color,
+  $hover-background,
+  $hover-color
+) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-width: 8rem;
+  min-height: 3.6rem;
+  background-color: $background-color;
+  border: 1px solid $border-color;
+  border-radius: #{$border-radius}px;
+  font: {
+    size: 1.4rem;
+    weight: 400;
+  }
+  color: $color;
+  cursor: pointer;
+  transition: .35s;
+
+  &:hover,
+  &:focus {
+    background-color: $hover-background;
+    border-color: $border-color;
+    color: $hover-color;
+  }
+
+  @content;
+}

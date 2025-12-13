@@ -1,0 +1,47 @@
+@use 'sass:map';
+@use '../color' as *;
+@use '../common/mixins' as *;
+
+.btn__sub {
+  @include button-variant(
+    map.get($colors, "sub"),
+    map.get($colors, "sub"),
+    6,
+    map.get($colors, "white"),
+    map.get($colors, "white"),
+    map.get($colors, "sub")
+  );
+}
+
+.btn__sub--rounded {
+  @include button-variant(
+    map.get($colors, "sub"),
+    map.get($colors, "sub"),
+    20,
+    map.get($colors, "white"),
+    map.get($colors, "white"),
+    map.get($colors, "sub")
+  );
+}
+
+.btn__light {
+  @include button-variant(
+    map.get($colors, "white"),
+    map.get($colors, "light-gray"),
+    6,
+    #252525,
+    map.get($colors, "light-gray"),
+    #252525
+  );
+}
+
+.btn__light--rounded {
+  @include button-variant(
+    map.get($colors, "white"),
+    map.get($colors, "light-gray"),
+    20,
+    #252525,
+    map.get($colors, "light-gray"),
+    #252525
+  );
+}
