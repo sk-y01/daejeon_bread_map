@@ -1,0 +1,89 @@
+@use "sass:map";
+@use "../color" as *;
+
+.main-page {
+
+  &__section {
+    position: relative;
+    text-align: center;
+  }
+
+  &__search {
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    width: 100%;
+    margin: 0 auto;
+    z-index: 2;
+  
+    .search__input {
+      display: inline-flex;
+      align-items: center;
+      width: 90%;
+      min-height: 5.4rem;
+      padding: 0 1rem;
+      border: 2px solid map.get($colors, "sub");
+      border-radius: 6px;
+      background-color: #fff;
+
+      svg {
+        width:3rem;
+        height: 3rem;
+      }
+    
+      input {
+        background-color: #fff;
+        border-bottom: 0;
+        border-radius: 6px;
+      }
+    }
+
+    .main-page__cate {
+      width: 90%;
+      margin: 0 auto;
+      padding: 1rem 0;
+      overflow-x: auto;
+      white-space: nowrap;
+      
+      
+    }
+
+    .Design__button {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1rem 0;
+
+      .btn {
+        margin:0 0 0.5rem 0.5rem;
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  &__map {
+    width: 100%;
+    height: calc(100vh - 80px);
+    background-color: #f0f0f0;
+  }
+
+  &__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    z-index: 1;
+
+    &__inner {
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 -6px 10px rgba(0, 0, 0, 0.05);
+    }
+  }
+}

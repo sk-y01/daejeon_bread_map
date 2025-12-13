@@ -11,6 +11,9 @@ import './styles/components/_buttons.scss'
 import BakeryListPage from './pages/admin/bakery/BakeryListPage'
 import BakeryFormPage from './pages/admin/bakery/BakeryFormPage'
 
+import "./styles/components/_header.scss";
+import "./styles/pages/_main.scss";
+
 import "./styles/admin/_layout.scss";
 import "./styles/admin/_sidebar.scss";
 import "./styles/admin/_bakery-list.scss";
