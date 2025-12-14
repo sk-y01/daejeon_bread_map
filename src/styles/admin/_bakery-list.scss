@@ -1,6 +1,6 @@
-@use "sass:map";
-@use "../color" as *;
-@use "../common/mixins" as *;
+@use 'sass:map';
+@use '../color' as *;
+@use '../common/mixins' as *;
 
 .BakeryList {
   display: flex;
@@ -10,50 +10,43 @@
   h1 {
     font-size: 2.2rem;
     font-weight: 700;
-    color: map.get($colors, "main");
+    color: map.get($colors, 'main');
   }
 
-  // 상단 빵집등록 버튼
-
-  &__actions {
+  /* 상단 헤더 */
+  &__header {
     display: flex;
-    justify-content: flex-end;
-
-    .btn {
-      @include button-variant(
-        map.get($colors, "sub"),
-        map.get($colors, "sub"),
-        6,
-        map.get($colors, "white"),
-        map.get($colors, "white"),
-        map.get($colors, "sub")
-      );
-    }
+    justify-content: space-between;
+    align-items: center;
   }
 
-  // 빵집 카드 리스트
+  /* 검색 영역 */
+  &__search {
+    margin-bottom: 1.5rem;
+  }
+
+  /* 카드 리스트 */
   &__cards {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.6rem;
   }
 
   .BakeryCard {
     display: flex;
-    gap: 2rem;
-    align-items: flex-start;
-    background: map.get($colors, "white");
-    padding: 1.8rem;
-    border-radius: 10px;
-    border: 1px solid map.get($border-colors, "default");
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    gap: 2.4rem;
+    padding: 2.4rem;
+    background: map.get($colors, 'white');
+    border-radius: 12px;
+    border: 1px solid map.get($border-colors, 'default');
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 
     &__thumbnail {
-      width: 140px;
-      height: 140px;
-      border-radius: 6px;
+      width: 160px;
+      height: 160px;
+      border-radius: 8px;
       overflow: hidden;
-      background: map.get($colors, "light-gray");
+      background: map.get($colors, 'light-gray');
 
       img {
         width: 100%;
@@ -64,44 +57,39 @@
       .thumbnail__placeholder {
         width: 100%;
         height: 100%;
-        font-size: 1.4rem;
-        color: map.get($colors, "gray");
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
+        color: map.get($colors, 'gray');
+        font-size: 1.4rem;
       }
     }
 
-    // 텍스트 정보 영역
     &__content {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
       h3 {
         font-size: 1.8rem;
         font-weight: 700;
-        margin-bottom: 0.5rem;
-        color: map.get($colors, "main");
+        margin-bottom: 0.6rem;
+        color: map.get($colors, 'main');
       }
 
-      p {
-        margin: 0.2rem 0;
+      .info {
         font-size: 1.4rem;
-        color: map.get($colors, "point");
-
-        strong {
-          font-weight: 700;
-          margin-right: 0.3rem;
-        }
+        margin: 0.2rem 0;
       }
 
       .coords {
         margin-top: 0.6rem;
         font-size: 1.3rem;
-        color: map.get($colors, "gray");
+        color: map.get($colors, 'gray');
       }
     }
 
-    // 수정, 삭제 버튼
     &__buttons {
       display: flex;
       flex-direction: column;
@@ -109,25 +97,57 @@
 
       .btn__light {
         @include button-variant(
-          map.get($colors, "white"),
-          map.get($border-colors, "default"),
+          map.get($colors, 'white'),
+          map.get($border-colors, 'default'),
           6,
-          map.get($colors, "point"),
-          map.get($colors, "white"),
-          map.get($colors, "sub")
+          map.get($colors, 'point'),
+          map.get($colors, 'white'),
+          map.get($colors, 'sub')
         );
       }
 
       .btn__sub {
         @include button-variant(
-          map.get($colors, "sub"),
-          map.get($colors, "sub"),
+          map.get($colors, 'sub'),
+          map.get($colors, 'sub'),
           6,
-          map.get($colors, "white"),
-          map.get($colors, "white"),
-          map.get($colors, "sub")
+          map.get($colors, 'white'),
+          map.get($colors, 'white'),
+          map.get($colors, 'sub')
         );
       }
     }
+  }
+}
+
+/* Top 버튼 */
+.TopButton {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 100;
+
+  padding: 1.7rem;
+  border-radius: 50%;
+  border: none;
+
+  background-color: map.get($colors, 'sub');
+  color: map.get($colors, 'white');
+
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  &:hover {
+    background-color: map.get($colors, 'main');
   }
 }
