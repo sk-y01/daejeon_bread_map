@@ -1,7 +1,8 @@
 import { Suspense } from "react"
 import LoadingSpinner from "../../../components/loading/LoadingSpinner"
-import Map from "../../../components/map/Map"
+import BakeryMap from "../../../components/bakery/BakeryMap"
 import { MdOutlineSearch } from "react-icons/md"
+import BakeryList from "../../../components/bakery/BakeryList"
 
 const MainPage = () => {
   return (
@@ -23,11 +24,11 @@ const MainPage = () => {
           </div>
         </div>
         <div className="main-page__map">
-          <Map />
+          <BakeryMap />
         </div>
         <div className="main-page__content">
           <div className="main-page__content__inner">
-            list
+            <BakeryList />
           </div>
         </div>
       </section>

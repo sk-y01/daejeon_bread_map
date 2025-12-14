@@ -1,5 +1,5 @@
 @use "sass:map";
-@use "../color" as *;
+@use "../styles/color" as *;
 
 .main-page {
 
@@ -25,6 +25,7 @@
       border: 2px solid map.get($colors, "sub");
       border-radius: 6px;
       background-color: #fff;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
 
       svg {
         width:3rem;
@@ -44,8 +45,6 @@
       padding: 1rem 0;
       overflow-x: auto;
       white-space: nowrap;
-      
-      
     }
 
     .Design__button {
@@ -57,6 +56,7 @@
 
       .btn {
         margin:0 0 0.5rem 0.5rem;
+        box-shadow: 0 2px 3px rgba(0, 0, 0  , 0.1);
         &:first-child {
           margin-left: 0;
         }
@@ -68,6 +68,14 @@
     width: 100%;
     height: calc(100vh - 80px);
     background-color: #f0f0f0;
+
+    .bakeryMap {
+      &__inner {
+        #map {
+          height: calc(100vh - 80px);
+        }
+      }
+    }
   }
 
   &__content {
@@ -83,7 +91,42 @@
       height: 100%;
       background-color: #fff;
       border-radius: 20px 20px 0 0;
-      box-shadow: 0 -6px 10px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+.bakeryList {
+  padding: 2rem;
+
+  .bakeryItem {
+    text-align-last: left;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid map.get($colors, "light-gray");
+  
+    &__content {
+      position: relative;
+      h3 {
+        font-size: 1.8rem;
+        font-weight: 500;
+      }
+    }
+
+    &__info {
+      margin-top: 1rem;
+    }
+
+    &__thumbnail {
+      margin-top: 1.2rem;
+      ul {
+        display: flex;
+        gap: 1rem;
+        li > img {
+          width: 106px;
+          height: 106px;
+          border-radius: 0.8rem;
+        }
+      }
     }
   }
 }

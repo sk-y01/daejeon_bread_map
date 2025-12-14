@@ -9,12 +9,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 0;
+    padding: 1rem 0;
   }
 
   &__logo {
     margin: 0;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 600;
     color: map.get($colors, "main");
 
@@ -25,6 +25,7 @@
     span {
       vertical-align: top;
       margin-left: 0.8rem;
+      line-height: 4rem;
     }
   }
 
@@ -41,7 +42,7 @@
     span {
       display: block;
       width: 25px;
-      height: 3px;
+      height: 2px;
       background-color:map.get($colors, "main");
       margin-bottom: .5rem;
       transition: .5s;
