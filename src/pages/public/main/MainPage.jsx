@@ -23,15 +23,15 @@ const MainPage = () => {
             </div>
           </div>
         </div>
-        <div className="main-page__map">
-          <BakeryMap />
-        </div>
         <div className="main-page__content">
           <div className="main-page__content__inner">
             <BakeryList />
           </div>
         </div>
       </section>
+      <div className="main-page__map">
+        <BakeryMap />
+      </div>
     </div>
   )
 }
