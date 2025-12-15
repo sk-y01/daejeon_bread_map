@@ -12,14 +12,17 @@ import { api } from "./axiosInstance";
  * ✔ createBakery
  * 
  * @author        hnlee
- * @modifier      jjlee
  * @method        POST
- * @description   빵집 등록
- * @param {*}     data 
+ * @description   빵집 등록 (multipart/form-data)
+ * @param {*}     data  FormData
  * @returns 
  */
 export const createBakery = (data) => {
-  return api.post("/bakeries/add", data); 
+  return api.post("/bakeries/add", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 /**
@@ -32,19 +35,23 @@ export const createBakery = (data) => {
  * FIXME:
  * - 실제 수정 방식 확인 후 put → patch 변경 가능.
  */
+
 /**
  * ✔ updateBakery
  * 
  * @author        hnlee
- * @modifier      jjlee
  * @method        PUT
- * @description   빵집 수정 요청
+ * @description   빵집 수정 요청 (multipart/form-data)
  * @param {*}     id 
- * @param {*}     data 
+ * @param {*}     data  FormData
  * @returns 
  */
 export const updateBakery = (id, data) => {
-  return api.put(`/bakeries/update/${id}`, data); // FIXME: URL 및 메소드 확인
+  return api.put(`/bakeries/update/${id}`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 /**

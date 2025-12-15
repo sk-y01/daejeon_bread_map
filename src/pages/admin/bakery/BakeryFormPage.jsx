@@ -135,35 +135,57 @@ function BakeryFormPage() {
   };
 
   /**
-   * 이미지 업로드 & base64 변환
+   * 이미지 업로드 처리
    *
-   * NOTE:
-   * - 이미지 업로드 스펙 확정 전 임시 처리.
+   * WHY?
+   * - base64 변환을 제거하고
+   * - multipart/form-data 전송을 위해 File 객체 그대로 관리
    */
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      setForm({ ...form, image: reader.result });
-    };
-    reader.readAsDataURL(file);
+    setForm({
+      ...form,
+      image: file, // File 객체 그대로 저장
+    });
   };
+
 
   /**
    * 등록 / 수정 요청
    *
    * WHY?
-   * - 동일한 폼 UI에서 create / update 처리.
+   * - 이미지 파일 포함 전송을 위해 FormData 사용
+   * - 서버에서 multipart/form-data로 처리 가능하도록 구성
    */
   const handleSubmit = async () => {
     try {
+      const formData = new FormData();
+
+      // 기본 필드
+      formData.append('name', form.name);
+      formData.append('menu', form.menu);
+      formData.append('address', form.address);
+      formData.append('phone', form.phone);
+      formData.append('latitude', form.latitude);
+      formData.append('longitude', form.longitude);
+
+      // 카테고리 (배열)
+      form.category.forEach((item) => {
+        formData.append('category', item);
+      });
+
+      // 이미지 파일
+      if (form.image) {
+        formData.append('image', form.image);
+      }
+
       if (isEdit) {
-        await updateBakery(id, form);
+        await updateBakery(id, formData);
         alert('수정 완료!');
       } else {
-        await createBakery(form);
+        await createBakery(formData);
         alert('등록 완료!');
       }
 
@@ -260,17 +282,19 @@ function BakeryFormPage() {
           </div>
         </div>
 
-        {/* 이미지 업로드 */}
+        {/* 이미지 */}
         <label>대표 이미지</label>
         <input type="file" onChange={handleImageChange} />
 
+        {/* 이미지 미리보기 : URL.createObjectURL을 통해 임시 URL 생성 */}
         {form.image && (
           <img
-            src={form.image}
+            src={URL.createObjectURL(form.image)}
             className="BakeryForm__preview"
             alt="preview"
           />
         )}
+
 
         {/* 액션 버튼 */}
         <div className="BakeryForm__actions">
