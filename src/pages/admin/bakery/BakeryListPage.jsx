@@ -4,11 +4,6 @@
  * @description
  * 관리자용 빵집 목록 페이지.
  * 조회 / 검색 / 수정 / 삭제
- *
- * NOTE:
- * - 검색은 서버 기준으로 처리
- * - 페이지네이션은 UI만 선구현 상태
- * - 서버 페이지네이션 적용 시 page / limit 연동 예정
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -17,34 +12,52 @@ import { fetchBakeries, deleteBakery } from '../../../apis/bakeryApi';
 import { FaArrowUp } from 'react-icons/fa';
 import { MdOutlineSearch } from 'react-icons/md';
 
+const LIMIT = 10;
+
 function BakeryListPage() {
   const navigate = useNavigate();
   const debounceRef = useRef(null);
 
-  /** 조회된 빵집 목록 */
+  /**
+   * @state bakeries
+   * @description 조회된 빵집 목록 데이터 (전체)
+   */
   const [bakeries, setBakeries] = useState([]);
 
-  /** 로딩 여부 */
+  /**
+   * @state loading
+   * @description 목록 로딩 여부
+   */
   const [loading, setLoading] = useState(true);
 
-  /** 검색 키워드 */
+  /**
+   * @state keyword
+   * @description 검색 키워드
+   */
   const [keyword, setKeyword] = useState('');
 
-  /** Top 버튼 */
+  /**
+   * @state page
+   * @description 현재 페이지
+   */
+  const [page, setPage] = useState(1);
+
+  /**
+   * @state showTopButton
+   * @description Top 버튼 노출 여부
+   */
   const [showTopButton, setShowTopButton] = useState(false);
 
   /**
-   * 빵집 목록 조회
+   * loadList
    *
-   * WHY?
-   * - 검색은 서버에서 처리
-   * - 현재는 전체 배열 반환
+   * @description 빵집 목록 조회 (검색은 서버, 페이지 분리는 프론트 임시)
    */
-  const loadList = async (params = {}) => {
+  const loadList = async () => {
     try {
       setLoading(true);
-      const res = await fetchBakeries(params);
-      setBakeries(res.data || []);
+      const res = await fetchBakeries({ keyword });
+      setBakeries(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error(err);
       alert('목록을 불러오지 못했습니다.');
@@ -61,10 +74,11 @@ function BakeryListPage() {
   }, []);
 
   /**
-   * 검색 debounce 처리
+   * 검색 debounce
    *
    * WHY?
-   * - 타이핑 중 과도한 API 호출 방지
+   * - 입력 중 과도한 API 호출 방지
+   * - 검색 시 page = 1 초기화
    */
   useEffect(() => {
     if (debounceRef.current) {
@@ -72,7 +86,8 @@ function BakeryListPage() {
     }
 
     debounceRef.current = setTimeout(() => {
-      loadList({ keyword });
+      setPage(1);
+      loadList();
     }, 300);
 
     return () => clearTimeout(debounceRef.current);
@@ -80,6 +95,9 @@ function BakeryListPage() {
 
   /**
    * 스크롤 이벤트
+   *
+   * WHY?
+   * - 일정 스크롤 이후 Top 버튼 노출
    */
   useEffect(() => {
     const handleScroll = () => {
@@ -91,7 +109,9 @@ function BakeryListPage() {
   }, []);
 
   /**
-   * 빵집 삭제
+   * handleDelete
+   *
+   * @description 빵집 삭제 처리
    */
   const handleDelete = async (id) => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
@@ -102,7 +122,7 @@ function BakeryListPage() {
     try {
       await deleteBakery(id, reason);
       alert('삭제 완료!');
-      loadList({ keyword });
+      loadList();
     } catch (err) {
       console.error(err);
       alert('삭제 실패');
@@ -110,17 +130,33 @@ function BakeryListPage() {
   };
 
   /**
-   * 최상단 이동
+   * handleScrollTop
+   *
+   * @description 화면 최상단 이동
    */
   const handleScrollTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
+
+  /* ===============================
+     임시 페이지네이션 (프론트 처리)
+     =============================== */
+  const totalPages = Math.ceil(bakeries.length / LIMIT);
+
+  const pagedBakeries = bakeries.slice(
+    (page - 1) * LIMIT,
+    page * LIMIT,
+  );
 
   return (
     <div className="BakeryList">
       {/* 상단 헤더 */}
       <div className="BakeryList__header">
         <h1>빵집 리스트</h1>
+
         <button
           type="button"
           className="btn btn__sub"
@@ -143,15 +179,16 @@ function BakeryListPage() {
         </div>
       </div>
 
-      {/* 리스트 */}
+      {/* 로딩 & 리스트 */}
       {loading ? (
         <p>로딩 중...</p>
-      ) : bakeries.length === 0 ? (
+      ) : pagedBakeries.length === 0 ? (
         <p>검색 결과가 없습니다.</p>
       ) : (
         <div className="BakeryList__cards">
-          {bakeries.map((item) => (
+          {pagedBakeries.map((item) => (
             <div className="BakeryCard" key={item._id}>
+              {/* 이미지 */}
               <div className="BakeryCard__thumbnail">
                 {item.image ? (
                   <img src={item.image} alt={item.name} />
@@ -160,6 +197,7 @@ function BakeryListPage() {
                 )}
               </div>
 
+              {/* 정보 (기존 텍스트 전부 유지) */}
               <div className="BakeryCard__content">
                 <h3>{item.name}</h3>
                 <p className="info">
@@ -174,11 +212,15 @@ function BakeryListPage() {
                 <p className="info">
                   <strong>주소:</strong> {item.address}
                 </p>
+                <p className="info">
+                  <strong>전화번호:</strong> {item.phone}
+                </p>
                 <p className="coords">
-                  {item.latitude}, {item.longitude}
+                  <strong>위도/경도:</strong> {item.latitude}, {item.longitude}
                 </p>
               </div>
 
+              {/* 버튼 */}
               <div className="BakeryCard__buttons">
                 <button
                   type="button"
@@ -202,16 +244,28 @@ function BakeryListPage() {
         </div>
       )}
 
-      {/* 페이지네이션 UI (선구현) */}
-      <div className="BakeryList__pagination">
-        <button type="button" disabled>
-          이전
-        </button>
-        <span>1</span>
-        <button type="button" disabled>
-          다음
-        </button>
-      </div>
+      {/* 페이지네이션 */}
+      {totalPages > 1 && (
+        <div className="BakeryList__pagination">
+          <button
+            type="button"
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+          >
+            이전
+          </button>
+          <span>
+            {page} / {totalPages}
+          </span>
+          <button
+            type="button"
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+          >
+            다음
+          </button>
+        </div>
+      )}
 
       {/* Top 버튼 */}
       {showTopButton && (

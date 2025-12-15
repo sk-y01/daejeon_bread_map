@@ -1,59 +1,62 @@
-import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaStore, FaPlusSquare } from 'react-icons/fa';
+import { NavLink, useLocation } from 'react-router-dom';
+import { FaHome, FaUser, FaStore } from 'react-icons/fa';
 
-const Sidebar = () => {
-  const location = useLocation();
+function AdminSidebar() {
+  const { pathname } = useLocation();
+
+  const isUser = pathname.startsWith('/admin/users');
+  const isBakery = pathname.startsWith('/admin/bakery');
 
   return (
     <aside className="AdminSidebar">
       <h2 className="AdminSidebar__title">관리자 메뉴</h2>
 
-      <nav>
-        <ul>
-          <li>
-            <Link
-              to="/admin"
-              className={`AdminSidebar__item ${
-                location.pathname === '/admin' ? 'is-active' : ''
-              }`}
-            >
-              <FaHome />
-              <span>대시보드</span>
-            </Link>
-          </li>
+      <nav className="AdminSidebar__nav">
+        {/* 대시보드 (exact) */}
+        <NavLink
+          to="/admin"
+          end
+          className={({ isActive }) =>
+            `AdminSidebar__single ${isActive ? 'active' : ''}`
+          }
+        >
+          <FaHome />
+          <span>대시보드</span>
+        </NavLink>
 
-          <li>
-            <Link
-              to="/admin/bakery"
-              className={`AdminSidebar__item ${
-                location.pathname.startsWith('/admin/bakery') &&
-                !location.pathname.includes('form')
-                  ? 'is-active'
-                  : ''
-              }`}
-            >
-              <FaStore />
-              <span>빵집 리스트</span>
-            </Link>
-          </li>
+        {/* 회원 관리 */}
+        <div className={`AdminSidebar__group ${isUser ? 'active' : ''}`}>
+          <div className="AdminSidebar__group-title">
+            <FaUser />
+            <span>회원 관리</span>
+          </div>
+          <ul className="AdminSidebar__submenu">
+            <li>
+              <NavLink to="/admin/users">회원 목록</NavLink>
+            </li>
+          </ul>
+        </div>
 
-          <li>
-            <Link
-              to="/admin/bakery/form"
-              className={`AdminSidebar__item ${
-                location.pathname.includes('/admin/bakery/form')
-                  ? 'is-active'
-                  : ''
-              }`}
-            >
-              <FaPlusSquare />
-              <span>새 빵집 등록</span>
-            </Link>
-          </li>
-        </ul>
+        {/* 빵집 관리 */}
+        <div className={`AdminSidebar__group ${isBakery ? 'active' : ''}`}>
+          <div className="AdminSidebar__group-title">
+            <FaStore />
+            <span>빵집 관리</span>
+          </div>
+          <ul className="AdminSidebar__submenu">
+            <li>
+              <NavLink to="/admin/bakery" end>
+                빵집 목록 조회
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/bakery/form">빵집 등록</NavLink>
+            </li>
+          </ul>
+        </div>
       </nav>
     </aside>
   );
-};
+}
 
-export default Sidebar;
+export default AdminSidebar;

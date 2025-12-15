@@ -1,16 +1,11 @@
 @use 'sass:map';
 @use '../color' as *;
-@use '../common/mixins' as *;
 
 .AdminSidebar {
   width: 240px;
-  height: 100vh;
-
-  position: sticky;
-  top: 0;
-
-  background-color: map.get($colors, 'main');
+  min-height: 100vh;
   padding: 2rem;
+  background-color: map.get($colors, 'main');
   color: map.get($colors, 'white');
 
   &__title {
@@ -19,43 +14,81 @@
     margin-bottom: 2.4rem;
   }
 
-  nav ul {
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  /* 단일 메뉴 */
+  &__single {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    color: map.get($colors, 'white');
+    text-decoration: none;
+
+    &.active {
+      background-color: map.get($colors, 'sub');
+    }
+  }
+
+  /* 그룹 */
+  &__group {
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
-  }
 
-  nav li {
-    list-style: none;
-  }
-
-  /* 🔹 사이드바 버튼 (button-variant 톤) */
-  &__item {
-    @include button-variant(
-      transparent,                 // background
-      transparent,                 // border
-      6,                           // radius
-      map.get($colors, 'white'),   // text color
-      map.get($colors, 'sub'),     // hover background
-      map.get($colors, 'white')    // hover text
-    );
-
-    justify-content: flex-start;
-    gap: 1rem;
-    width: 100%;
-    padding: 1rem 1.2rem;
-
-    font-size: 1.4rem;
-    font-weight: 500;
-
-    svg {
-      width: 1.6rem;
-      height: 1.6rem;
-    }
-
-    &.is-active {
+    &.active > .AdminSidebar__group-title {
       background-color: map.get($colors, 'sub');
-      font-weight: 600;
+    }
+
+    &:hover .AdminSidebar__submenu {
+      max-height: 200px;
+      opacity: 1;
     }
   }
+
+  &__group-title {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+
+  /* 서브메뉴 */
+  &__submenu {
+  margin-left: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.2s ease;
+
+  a {
+    display: block;
+    width: 100%;                /* ⭐ 핵심 */
+    padding: 0.8rem 1rem;       /* 버튼 느낌 */
+    border-radius: 8px;
+    font-size: 1.3rem;
+    color: map.get($colors, 'white');
+    text-decoration: none;
+    background-color: transparent;
+
+    &.active {
+      background-color: map.get($colors, 'sub'); /* 풀 배경 */
+    }
+
+    &:hover {
+      background-color: map.get($colors, 'sub');
+    }
+  }
+}
+
 }
