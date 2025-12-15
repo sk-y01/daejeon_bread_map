@@ -1,9 +1,11 @@
 /**
  * BakeryListPage.jsx
  *
- * @description
- * 관리자용 빵집 목록 페이지.
- * 조회 / 검색 / 수정 / 삭제
+ * 관리자용 빵집 목록 페이지
+ * - 목록 조회
+ * - 검색 (서버 연동, debounce)
+ * - 페이지네이션 (page / limit 전달)
+ * - 수정 / 삭제
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -18,48 +20,29 @@ function BakeryListPage() {
   const navigate = useNavigate();
   const debounceRef = useRef(null);
 
-  /**
-   * @state bakeries
-   * @description 조회된 빵집 목록 데이터 (전체)
-   */
   const [bakeries, setBakeries] = useState([]);
-
-  /**
-   * @state loading
-   * @description 목록 로딩 여부
-   */
   const [loading, setLoading] = useState(true);
-
-  /**
-   * @state keyword
-   * @description 검색 키워드
-   */
   const [keyword, setKeyword] = useState('');
-
-  /**
-   * @state page
-   * @description 현재 페이지
-   */
   const [page, setPage] = useState(1);
-
-  /**
-   * @state showTopButton
-   * @description Top 버튼 노출 여부
-   */
   const [showTopButton, setShowTopButton] = useState(false);
 
   /**
-   * loadList
-   *
-   * @description 빵집 목록 조회 (검색은 서버, 페이지 분리는 프론트 임시)
+   * 빵집 목록 조회
+   * - 검색, 페이지 정보는 서버로 전달
    */
   const loadList = async () => {
     try {
       setLoading(true);
-      const res = await fetchBakeries({ keyword });
+
+      const res = await fetchBakeries({
+        keyword,
+        page,
+        limit: LIMIT,
+      });
+
       setBakeries(Array.isArray(res.data) ? res.data : []);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
       alert('목록을 불러오지 못했습니다.');
     } finally {
       setLoading(false);
@@ -67,18 +50,15 @@ function BakeryListPage() {
   };
 
   /**
-   * 초기 목록 로드
+   * 페이지 변경 시 목록 재조회
    */
   useEffect(() => {
     loadList();
-  }, []);
+  }, [page]);
 
   /**
-   * 검색 debounce
-   *
-   * WHY?
-   * - 입력 중 과도한 API 호출 방지
-   * - 검색 시 page = 1 초기화
+   * 검색 debounce 처리
+   * - 검색어 변경 시 page를 1로 초기화
    */
   useEffect(() => {
     if (debounceRef.current) {
@@ -94,10 +74,7 @@ function BakeryListPage() {
   }, [keyword]);
 
   /**
-   * 스크롤 이벤트
-   *
-   * WHY?
-   * - 일정 스크롤 이후 Top 버튼 노출
+   * 스크롤 위치에 따라 Top 버튼 노출
    */
   useEffect(() => {
     const handleScroll = () => {
@@ -109,9 +86,7 @@ function BakeryListPage() {
   }, []);
 
   /**
-   * handleDelete
-   *
-   * @description 빵집 삭제 처리
+   * 빵집 삭제 처리
    */
   const handleDelete = async (id) => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
@@ -123,29 +98,21 @@ function BakeryListPage() {
       await deleteBakery(id, reason);
       alert('삭제 완료!');
       loadList();
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
       alert('삭제 실패');
     }
   };
 
   /**
-   * handleScrollTop
-   *
-   * @description 화면 최상단 이동
+   * 화면 최상단으로 스크롤
    */
   const handleScrollTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  /* ===============================
-     임시 페이지네이션 (프론트 처리)
-     =============================== */
+  /* 프론트 임시 페이지네이션 */
   const totalPages = Math.ceil(bakeries.length / LIMIT);
-
   const pagedBakeries = bakeries.slice(
     (page - 1) * LIMIT,
     page * LIMIT,
@@ -153,10 +120,8 @@ function BakeryListPage() {
 
   return (
     <div className="BakeryList">
-      {/* 상단 헤더 */}
       <div className="BakeryList__header">
         <h1>빵집 리스트</h1>
-
         <button
           type="button"
           className="btn btn__sub"
@@ -166,7 +131,6 @@ function BakeryListPage() {
         </button>
       </div>
 
-      {/* 검색 영역 */}
       <div className="BakeryList__search">
         <div className="icon__input">
           <MdOutlineSearch />
@@ -179,7 +143,6 @@ function BakeryListPage() {
         </div>
       </div>
 
-      {/* 로딩 & 리스트 */}
       {loading ? (
         <p>로딩 중...</p>
       ) : pagedBakeries.length === 0 ? (
@@ -188,7 +151,6 @@ function BakeryListPage() {
         <div className="BakeryList__cards">
           {pagedBakeries.map((item) => (
             <div className="BakeryCard" key={item._id}>
-              {/* 이미지 */}
               <div className="BakeryCard__thumbnail">
                 {item.image ? (
                   <img src={item.image} alt={item.name} />
@@ -197,37 +159,20 @@ function BakeryListPage() {
                 )}
               </div>
 
-              {/* 정보 (기존 텍스트 전부 유지) */}
               <div className="BakeryCard__content">
                 <h3>{item.name}</h3>
-                <p className="info">
-                  <strong>카테고리:</strong>{' '}
-                  {Array.isArray(item.category)
-                    ? item.category.join(' / ')
-                    : item.category}
-                </p>
-                <p className="info">
-                  <strong>대표 메뉴:</strong> {item.menu}
-                </p>
-                <p className="info">
-                  <strong>주소:</strong> {item.address}
-                </p>
-                <p className="info">
-                  <strong>전화번호:</strong> {item.phone}
-                </p>
-                <p className="coords">
-                  <strong>위도/경도:</strong> {item.latitude}, {item.longitude}
-                </p>
+                <p><strong>카테고리:</strong> {Array.isArray(item.category) ? item.category.join(' / ') : item.category}</p>
+                <p><strong>대표 메뉴:</strong> {item.menu}</p>
+                <p><strong>주소:</strong> {item.address}</p>
+                <p><strong>전화번호:</strong> {item.phone}</p>
+                <p><strong>위도/경도:</strong> {item.latitude}, {item.longitude}</p>
               </div>
 
-              {/* 버튼 */}
               <div className="BakeryCard__buttons">
                 <button
                   type="button"
                   className="btn btn__light"
-                  onClick={() =>
-                    navigate(`/admin/bakery/form/${item._id}`)
-                  }
+                  onClick={() => navigate(`/admin/bakery/form/${item._id}`)}
                 >
                   수정
                 </button>
@@ -244,7 +189,6 @@ function BakeryListPage() {
         </div>
       )}
 
-      {/* 페이지네이션 */}
       {totalPages > 1 && (
         <div className="BakeryList__pagination">
           <button
@@ -254,9 +198,7 @@ function BakeryListPage() {
           >
             이전
           </button>
-          <span>
-            {page} / {totalPages}
-          </span>
+          <span>{page} / {totalPages}</span>
           <button
             type="button"
             disabled={page === totalPages}
@@ -267,7 +209,6 @@ function BakeryListPage() {
         </div>
       )}
 
-      {/* Top 버튼 */}
       {showTopButton && (
         <button
           type="button"

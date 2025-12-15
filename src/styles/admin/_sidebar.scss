@@ -2,11 +2,19 @@
 @use '../color' as *;
 
 .AdminSidebar {
+  position: fixed;              /* 사이드바 고정 */
+  top: 0;
+  left: 0;
+
   width: 240px;
-  min-height: 100vh;
+  height: 100vh;                /* 화면 높이 기준 */
   padding: 2rem;
+
   background-color: map.get($colors, 'main');
   color: map.get($colors, 'white');
+
+  overflow-y: auto;             /* 메뉴 많아질 때 내부 스크롤 */
+  box-sizing: border-box;
 
   &__title {
     font-size: 1.8rem;
@@ -31,6 +39,10 @@
     text-decoration: none;
 
     &.active {
+      background-color: map.get($colors, 'sub');
+    }
+
+    &:hover {
       background-color: map.get($colors, 'sub');
     }
   }
@@ -58,37 +70,38 @@
     padding: 0.8rem 1rem;
     border-radius: 8px;
     font-weight: 600;
+    cursor: pointer;
   }
 
   /* 서브메뉴 */
   &__submenu {
-  margin-left: 1.6rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: all 0.2s ease;
+    margin-left: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
 
-  a {
-    display: block;
-    width: 100%;                /* ⭐ 핵심 */
-    padding: 0.8rem 1rem;       /* 버튼 느낌 */
-    border-radius: 8px;
-    font-size: 1.3rem;
-    color: map.get($colors, 'white');
-    text-decoration: none;
-    background-color: transparent;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.2s ease;
 
-    &.active {
-      background-color: map.get($colors, 'sub'); /* 풀 배경 */
-    }
+    a {
+      display: block;
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      font-size: 1.3rem;
+      color: map.get($colors, 'white');
+      text-decoration: none;
+      background-color: transparent;
 
-    &:hover {
-      background-color: map.get($colors, 'sub');
+      &.active {
+        background-color: map.get($colors, 'sub');
+      }
+
+      &:hover {
+        background-color: map.get($colors, 'sub');
+      }
     }
   }
-}
-
 }

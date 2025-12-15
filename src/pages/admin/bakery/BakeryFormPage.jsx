@@ -17,6 +17,7 @@ import {
   updateBakery,
   fetchBakeryDetail,
 } from '../../../apis/bakeryApi';
+import { FiX } from 'react-icons/fi';
 
 function BakeryFormPage() {
   const { id } = useParams();
@@ -48,6 +49,7 @@ function BakeryFormPage() {
    *   실제 category 배열과 분리하여 관리.
    */
   const [categoryInput, setCategoryInput] = useState('');
+  const [categoryError, setCategoryError] = useState('');
 
   /**
    * 수정 모드일 경우 상세 조회
@@ -87,18 +89,11 @@ function BakeryFormPage() {
   };
 
   /**
-   * 카테고리 입력 값 변경
-   */
-  const handleCategoryChange = (e) => {
-    setCategoryInput(e.target.value);
-  };
-
-  /**
    * 카테고리 키 입력 처리
    *
    * WHY?
    * - Enter 또는 ',' 입력 시 category 배열에 추가.
-   * - 중복 입력 방지.
+   * - 중복 입력 방지 및 에러 메시지 노출.
    */
   const handleCategoryKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ',') {
@@ -108,6 +103,7 @@ function BakeryFormPage() {
       if (!value) return;
 
       if (form.category.includes(value)) {
+        setCategoryError('이미 추가된 카테고리입니다.');
         setCategoryInput('');
         return;
       }
@@ -118,6 +114,7 @@ function BakeryFormPage() {
       });
 
       setCategoryInput('');
+      setCategoryError('');
     }
   };
 
@@ -138,7 +135,7 @@ function BakeryFormPage() {
    * 이미지 업로드 처리
    *
    * WHY?
-   * - base64 변환을 제거하고
+   * - base64 변환 제거
    * - multipart/form-data 전송을 위해 File 객체 그대로 관리
    */
   const handleImageChange = (e) => {
@@ -147,23 +144,20 @@ function BakeryFormPage() {
 
     setForm({
       ...form,
-      image: file, // File 객체 그대로 저장
+      image: file,
     });
   };
-
 
   /**
    * 등록 / 수정 요청
    *
    * WHY?
    * - 이미지 파일 포함 전송을 위해 FormData 사용
-   * - 서버에서 multipart/form-data로 처리 가능하도록 구성
    */
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
 
-      // 기본 필드
       formData.append('name', form.name);
       formData.append('menu', form.menu);
       formData.append('address', form.address);
@@ -171,12 +165,10 @@ function BakeryFormPage() {
       formData.append('latitude', form.latitude);
       formData.append('longitude', form.longitude);
 
-      // 카테고리 (배열)
       form.category.forEach((item) => {
         formData.append('category', item);
       });
 
-      // 이미지 파일
       if (form.image) {
         formData.append('image', form.image);
       }
@@ -201,7 +193,6 @@ function BakeryFormPage() {
       <h1>{isEdit ? '빵집 수정' : '빵집 등록'}</h1>
 
       <div className="BakeryForm__card">
-        {/* 기본 정보 입력 */}
         <label>가게 이름</label>
         <input
           name="name"
@@ -218,30 +209,36 @@ function BakeryFormPage() {
           placeholder="튀김소보로"
         />
 
-        {/* 카테고리 입력 영역 (Enter / 콤마 기반 다중 입력) */}
         <label>카테고리</label>
-        <div className="BakeryForm__category">
-          <ul className="BakeryForm__category-list">
-            {form.category.map((item) => (
-              <li key={item} className="BakeryForm__category-item">
-                {item}
-                <button
-                  type="button"
-                  onClick={() => handleRemoveCategory(item)}
-                >
-                  ×
-                </button>
-              </li>
-            ))}
-          </ul>
+        <div className="BakeryForm__category-input">
+          {form.category.map((item) => (
+            <span key={item} className="BakeryForm__category-tag">
+              {item}
+              <button
+                type="button"
+                className="tag-remove"
+                onClick={() => handleRemoveCategory(item)}
+                aria-label="remove category"
+              >
+                <FiX />
+              </button>
+            </span>
+          ))}
 
           <input
             value={categoryInput}
-            onChange={handleCategoryChange}
+            onChange={(e) => {
+              setCategoryInput(e.target.value);
+              setCategoryError('');
+            }}
             onKeyDown={handleCategoryKeyDown}
             placeholder="카테고리 입력 후 Enter"
           />
         </div>
+
+        {categoryError && (
+          <p className="BakeryForm__category-error">{categoryError}</p>
+        )}
 
         <label>주소</label>
         <input
@@ -259,7 +256,6 @@ function BakeryFormPage() {
           placeholder="042-123-4567"
         />
 
-        {/* 위도 / 경도 */}
         <div className="BakeryForm__half">
           <div>
             <label>위도</label>
@@ -282,11 +278,9 @@ function BakeryFormPage() {
           </div>
         </div>
 
-        {/* 이미지 */}
         <label>대표 이미지</label>
         <input type="file" onChange={handleImageChange} />
 
-        {/* 이미지 미리보기 : URL.createObjectURL을 통해 임시 URL 생성 */}
         {form.image && (
           <img
             src={URL.createObjectURL(form.image)}
@@ -295,8 +289,6 @@ function BakeryFormPage() {
           />
         )}
 
-
-        {/* 액션 버튼 */}
         <div className="BakeryForm__actions">
           <button onClick={() => navigate('/admin/bakery')}>취소</button>
           <button className="submit" onClick={handleSubmit}>

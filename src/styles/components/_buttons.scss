@@ -45,3 +45,35 @@
     #252525
   );
 }
+
+.btn__heart {
+  @include button-variant(
+    transparent,
+    transparent,
+    0,
+    #DB3B29,
+    transparent,
+    #DB3B29
+  );
+  border: none;
+  min-width: 2rem;
+  min-height: 2rem;
+  font-size: 1.6rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.btn__close {
+  width: 2rem;
+  height: 2rem;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #222;
+  cursor: pointer;
+}

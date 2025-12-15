@@ -3,12 +3,13 @@
 
 /* 관리자 레이아웃 전체 */
 .AdminLayout {
-  display: flex;
   min-height: 100vh;
-  background-color: map.get($colors, "cream"); 
+  background-color: map.get($colors, "cream");
+}
 
-  &__content {
-    flex: 1;
-    padding: 3rem;
-  }
+/* 사이드바 고정폭만큼 콘텐츠 밀기 */
+.AdminLayout__content {
+  margin-left: 240px;   /* 사이드바 width랑 동일 */
+  padding: 3rem;
+  min-height: 100vh;
 }
