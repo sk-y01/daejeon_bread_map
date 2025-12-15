@@ -82,10 +82,13 @@ export const fetchBakeryDetail = (id) => {
  * @author        hnlee
  * @modifier      jjlee
  * @method        DELETE
- * @description   빵집 삭제 요청 (기존 데이터는 삭제되고, 삭제 테이블에 백업 저장)
+ * @description   빵집 삭제 요청 (reason 필수)
  * @param         id
+ * @param         reason
  * @returns
  */
-export const deleteBakery = (id) => {
-  return api.delete(`/bakeries/delete/${id}`);
+export const deleteBakery = (id, reason) => {
+  return api.delete(`/bakeries/delete/${id}`, {
+    data: { reason },
+  });
 };
