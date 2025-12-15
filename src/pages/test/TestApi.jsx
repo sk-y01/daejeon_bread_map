@@ -1,6 +1,9 @@
 import React, { useRef } from 'react'
-import { fetchBakeries } from '../../apis/bakeryApi'
-import axios from 'axios';
+import { 
+  testFetchBakeries, 
+  testFetchDetailBakery,
+  testFetchUserList
+} from '../../utils/test/testApiList'
 import './TestApi.style.scss'
 
 /**
@@ -11,45 +14,37 @@ import './TestApi.style.scss'
 const TestApi = () => {
   const wrapRef = useRef()
       , detailRef = useRef()
-  // const LOCAL_URL = import.meta.env.VITE_LOCAL_URL + '/api';
-  const LOCAL_URL = import.meta.env.VITE_API_URL + '/api';
+      , userListRef = useRef()
 
   /**
-   * 빵집 목록 조회
+   * 빵집 전체 목록 조회 이벤트 핸들러
    */
-  const testFetchBakeries = async () => {
-    const response = await fetchBakeries()
-        , data = await response?.data;
-
-    wrapRef.current.textContent = JSON.stringify(data);
+  const clickSelectListHandler = async () => {
+    const result = await testFetchBakeries();
+    wrapRef.current.textContent = JSON.stringify(result);
   }
-  
-  const clickSelectListHandler = () => {
-    testFetchBakeries();
-  }
-
   /**
-   * 빵집 상세 조회
+   * 빵집 상세 조회 이벤트 핸들러
    */
-  const testFetchDetailBakery = async () => {
-    const frm = document.forms[0]
-        , search = frm[0].value
-    const response = await axios.get(LOCAL_URL + `/bakeries/${search}`)
-        , data = await response?.data || {}
-
-    detailRef.current.textContent = JSON.stringify(data)
-  }
-
-  const clickDetailHandler = (e) => {
+  const clickDetailHandler = async (e) => {
     e.preventDefault();
 
-    testFetchDetailBakery();
+    const result = await testFetchDetailBakery()
+    detailRef.current.textContent = JSON.stringify(result);
+  }
+  /**
+   * 사용자 목록 조회 이벤트 핸들러
+   */
+  const clickFetchUserListHandler = async () => {
+    const result = await testFetchUserList();
+    userListRef.current.textContent = JSON.stringify(result);
   }
 
   return (
     <>
       <div className="TestApi">
         <h1>API 테스트 영역</h1>
+        {/* 빵집 전체 목록 조회 */}
         <div className="TestApi__item">
           <h2>빵집 전체 목록 조회</h2>
           <div className="TestApi__item-result">
@@ -65,6 +60,7 @@ const TestApi = () => {
             </div>
           </div>
         </div>
+        {/* 빵집 상세 조회 */}
         <div className="TestApi__item">
           <h2>빵집 상세 조회</h2>
           <div className="TestApi__frm">
@@ -75,6 +71,7 @@ const TestApi = () => {
                   name="testId" 
                   id="testId"
                   placeholder="_id를 입력하세요"
+                  autoComplete='none'
                 />
                 <button
                   type="submit" 
@@ -92,17 +89,19 @@ const TestApi = () => {
             </div>
           </div>
         </div>
+        {/* 유저 목록 조회 */}
         <div className="TestApi__item">
-          <h2>빵집 추가</h2>
+          <h2>사용자 전체 목록 조회</h2>
           <div className="TestApi__item-result">
             <div className="btn__box">
               <button
                 type="button" 
                 className="btn btn__sub"
+                onClick={ clickFetchUserListHandler }
               >
                 API 호출
               </button>
-              <p className="result__api"></p>
+              <p className="result__api" ref={ userListRef }></p>
             </div>
           </div>
         </div>
