@@ -11,7 +11,8 @@ import './TestApi.style.scss'
 const TestApi = () => {
   const wrapRef = useRef()
       , detailRef = useRef()
-  const LOCAL_URL = import.meta.env.VITE_LOCAL_URL + '/api';
+  // const LOCAL_URL = import.meta.env.VITE_LOCAL_URL + '/api';
+  const LOCAL_URL = import.meta.env.VITE_API_URL + '/api';
 
   /**
    * 빵집 목록 조회
