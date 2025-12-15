@@ -63,3 +63,17 @@
   top: 0;
   right: 0;
 }
+
+.btn__close {
+  width: 2rem;
+  height: 2rem;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #222;
+  cursor: pointer;
+}

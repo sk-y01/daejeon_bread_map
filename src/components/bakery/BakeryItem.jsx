@@ -22,6 +22,9 @@ function BakeryItem() {
             <li>
               <img src="/src/assets/images/main/bakery_img03.png" alt="성심당 본점" />
             </li>
+            <li>
+              <img src="/src/assets/images/main/bakery_img03.png" alt="성심당 본점" />
+            </li>
           </ul>
         </div>
       </div>

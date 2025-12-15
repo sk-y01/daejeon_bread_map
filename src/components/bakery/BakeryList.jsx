@@ -6,6 +6,7 @@ function BakeryList() {
     <div className="bakeryList">
       <BakeryItem />
       <BakeryItem />
+      <BakeryItem />
     </div>
   )
 }
