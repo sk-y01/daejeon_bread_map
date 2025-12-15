@@ -4,7 +4,6 @@ import axios from "axios";
 
 // API URL은 반드시 .env 파일로 관리할 것
 const BAKERIES_API_URL = import.meta.env.VITE_API_URL + '/api';
-const KAKAO_API_URL = import.meta.env.VITE_KAKAO_KEY + '/api';
 
 /**
  * api 정의
@@ -13,8 +12,7 @@ const KAKAO_API_URL = import.meta.env.VITE_KAKAO_KEY + '/api';
  * - 모든 API 요청의 기본 URL을 한 곳에서 관리하기 위해 사용
  */
 export const api = axios.create({
-  // baseURL: BAKERIES_API_URL,   // 여기 변경함!!
-  baseURL: KAKAO_API_URL,   // 여기 변경함!!
+  baseURL: BAKERIES_API_URL,   // 여기 변경함!!
 });
 
 api.interceptors.request.use((config) => {
