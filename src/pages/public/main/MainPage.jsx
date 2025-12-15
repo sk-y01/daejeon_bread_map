@@ -1,7 +1,9 @@
 import { Suspense } from "react"
 import LoadingSpinner from "../../../components/loading/LoadingSpinner"
-import Map from "../../../components/map/Map"
+import BakeryMap from "../../../components/bakery/BakeryMap"
 import { MdOutlineSearch } from "react-icons/md"
+import BakeryList from "../../../components/bakery/BakeryList"        
+import { MdArrowBackIosNew } from "react-icons/md"      
 
 const MainPage = () => {
   return (
@@ -22,15 +24,18 @@ const MainPage = () => {
             </div>
           </div>
         </div>
-        <div className="main-page__map">
-          <Map />
-        </div>
         <div className="main-page__content">
           <div className="main-page__content__inner">
-            list
+            <BakeryList />
           </div>
         </div>
+        <div className="main-page__more">
+          <button type="button" className="btn btn__close"><MdArrowBackIosNew /></button>
+        </div>
       </section>
+      <div className="main-page__map">
+        <BakeryMap />
+      </div>
     </div>
   )
 }

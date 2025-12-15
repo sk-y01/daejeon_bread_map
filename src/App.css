@@ -52,7 +52,7 @@ a {text-decoration: none; color: inherit;}
 }
 
 @media all and (min-width: 1441px) {
-  .inner { padding: 0; }
+  .inner { padding: 0 2rem; }
 }
 
 @media all and (min-width: 1921px) {
