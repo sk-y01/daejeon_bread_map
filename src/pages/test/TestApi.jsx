@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import { fetchBakeries } from '../../apis/bakeryApi'
+import axios from 'axios';
 import './TestApi.style.scss'
 
 /**
@@ -8,7 +9,9 @@ import './TestApi.style.scss'
  * @returns 
  */
 const TestApi = () => {
-  const wrapRef = useRef();
+  const wrapRef = useRef()
+      , detailRef = useRef()
+  const LOCAL_URL = import.meta.env.VITE_LOCAL_URL + '/api';
 
   /**
    * 빵집 목록 조회
@@ -22,6 +25,24 @@ const TestApi = () => {
   
   const clickSelectListHandler = () => {
     testFetchBakeries();
+  }
+
+  /**
+   * 빵집 상세 조회
+   */
+  const testFetchDetailBakery = async () => {
+    const frm = document.forms[0]
+        , search = frm[0].value
+    const response = await axios.get(LOCAL_URL + `/bakeries/${search}`)
+        , data = await response?.data || {}
+
+    detailRef.current.textContent = JSON.stringify(data)
+  }
+
+  const clickDetailHandler = (e) => {
+    e.preventDefault();
+
+    testFetchDetailBakery();
   }
 
   return (
@@ -44,6 +65,33 @@ const TestApi = () => {
           </div>
         </div>
         <div className="TestApi__item">
+          <h2>빵집 상세 조회</h2>
+          <div className="TestApi__frm">
+            <form action="">
+              <div className="">
+                <input 
+                  type="text" 
+                  name="testId" 
+                  id="testId"
+                  placeholder="_id를 입력하세요"
+                />
+                <button
+                  type="submit" 
+                  className="btn btn__sub"
+                  onClick={ clickDetailHandler }
+                >
+                  API 호출
+                </button>
+              </div>
+            </form>
+          </div>
+          <div className="TestApi__item-result">
+            <div className="btn__box">
+              <p className="result__api" ref={ detailRef }></p>
+            </div>
+          </div>
+        </div>
+        <div className="TestApi__item">
           <h2>빵집 추가</h2>
           <div className="TestApi__item-result">
             <div className="btn__box">
@@ -53,7 +101,7 @@ const TestApi = () => {
               >
                 API 호출
               </button>
-              <p className="result__api" ref={ wrapRef }></p>
+              <p className="result__api"></p>
             </div>
           </div>
         </div>
