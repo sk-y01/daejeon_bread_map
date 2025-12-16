@@ -2,7 +2,7 @@ import React from 'react'
 import { FaHeart } from "react-icons/fa";
 
 const BakeryItem = ({ bakery }) => {
-  const { name, address, phone, latitude, longitude, category } = bakery;
+  const { name, address, phone, category } = bakery;
 
   return (
     <div className="bakeryItem">
@@ -13,8 +13,6 @@ const BakeryItem = ({ bakery }) => {
           <p>{ address }</p>
           <p>{ phone }</p>
           <p>{ category }</p>
-          <p>{ latitude }</p>
-          <p>{ longitude }</p>
         </div>
         <div className="bakeryItem__thumbnail">
           <ul>

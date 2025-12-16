@@ -61,7 +61,7 @@ const BakeryMap = () => {
 
       const options = {
         center: mapPosition,
-        level: 2
+        level: 5
       };
 
       const mapInstance = new window.kakao.maps.Map(mapContainer, options);
