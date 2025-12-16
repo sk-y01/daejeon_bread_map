@@ -47,3 +47,15 @@ export const testFetchUserList = async () => {
 
   return data;
 }
+
+/**
+ * 빵집 삭제 이력 조회
+ * 
+ * @returns data
+ */
+export const testFetchDeleteBakeryList = async () => {
+  const response = await axios.get(LOCAL_URL + `/bakeries/remove/history`)
+      , data = await response?.data || {}
+
+  return data;
+}
