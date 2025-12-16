@@ -4,6 +4,7 @@ import { fetchBakeries } from '../../apis/bakeryApi'
 const BakeryMap = () => {
   const [map, setMap] = useState(null);
   const [bakeries, setBakeries] = useState([]);
+  
   // 환경변수 파일 가져오기
   const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
 

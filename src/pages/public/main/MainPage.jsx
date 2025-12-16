@@ -2,11 +2,9 @@ import { Suspense } from "react"
 import LoadingSpinner from "../../../components/loading/LoadingSpinner"
 import BakeryMap from "../../../components/bakery/BakeryMap"
 import BakeryList from "../../../components/bakery/BakeryList"        
-import { MdOutlineSearch } from "react-icons/md"
-import { MdArrowBackIosNew } from "react-icons/md"      
+import { MdOutlineSearch, MdPersonOutline, MdArrowBackIosNew } from "react-icons/md"    
 
 const MainPage = () => {
-
 
   return (
     <div className="main-page">
@@ -33,6 +31,9 @@ const MainPage = () => {
         </div>
         <div className="main-page__more">
           <button type="button" className="btn btn__close"><MdArrowBackIosNew /></button>
+        </div>
+        <div className="main-page__loginBtn">
+          <button type="button" className="btn btn__loginBtn"><MdPersonOutline /></button>
         </div>
       </section>
       <div className="main-page__map">

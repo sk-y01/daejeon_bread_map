@@ -64,6 +64,27 @@
   right: 0;
 }
 
+.btn__loginBtn {
+  width: 6rem;
+  height: 6rem;
+  background-color: map.get($colors, "sub");
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  font-size: 2rem;
+  color: map.get($colors, "white");
+  cursor: pointer;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3);
+
+  svg {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+
 .btn__close {
   width: 2rem;
   height: 2rem;

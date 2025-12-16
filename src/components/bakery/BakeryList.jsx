@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import BakeryItem from './BakeryItem'
 import { fetchBakeries } from '../../apis/bakeryApi'
 import LoadingSpinner from '../loading/LoadingSpinner'
+import Pagination from '../common/Pagination/Pagination'
 
 function BakeryList() {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,11 +26,9 @@ function BakeryList() {
         setIsLoading(false);
       }
     }
-
     getBakeries();
   }, []);
 
-  
   return (
     <div className="bakeryList">
       {

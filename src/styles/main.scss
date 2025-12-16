@@ -8,6 +8,8 @@
     position: relative;
     text-align: center;
     height: 100vh;
+
+    
   }
 
   &__search {
@@ -104,6 +106,13 @@
       }
     }
   }
+
+  &__loginBtn {
+    position: fixed;
+    bottom: 3rem;
+    right: 2rem;
+    z-index: 10;
+  }
 }
 
 .bakeryList {
@@ -174,6 +183,11 @@
         background: none;
         border-radius: 0;
       }
+    }
+
+    &__loginBtn {
+      max-width: 40rem;
+      margin: 0 auto;
     }
 
     &__more {
