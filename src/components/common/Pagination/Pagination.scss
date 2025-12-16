@@ -1,0 +1,33 @@
+@use 'sass:map';
+@use '../../../styles/color' as *;
+@use '../../../styles/common/mixins' as *;
+
+.Pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 2rem;
+
+  span {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: map.get($colors, 'point');
+  }
+
+  button {
+    @include button-variant(
+      map.get($colors, 'white'),
+      map.get($border-colors, 'default'),
+      6,
+      map.get($colors, 'point'),
+      map.get($colors, 'light-gray'),
+      map.get($colors, 'point')
+    );
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+}
