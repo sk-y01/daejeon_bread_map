@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from 'react'
+import { fetchBakeries } from '../../apis/bakeryApi'
 
 // 현재 위치 가져오기 
 const BakeryMap = () => {
   const [map, setMap] = useState(null);
+  const [bakeries, setBakeries] = useState([]);
+
+  useEffect(() => {
+    const getBakeries = async() => {
+      const response = await fetchBakeries({ limit: 10 });
+      setBakeries(response.data);
+    }
+    getBakeries();
+  }, []);
 
   // 환경변수 파일 가져오기
   const kakaoKey = import.meta.env.VITE_KAKAO_KEY;
@@ -12,9 +22,6 @@ const BakeryMap = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
-      
-      // console.log('lat :', lat);
-      // console.log('lon :', lon);
 
       const mapContainer = document.getElementById('map');
 
@@ -22,18 +29,29 @@ const BakeryMap = () => {
 
       const options = {
         center: mapPosition,
-        level :2
+        level: 2
       };
 
       const mapInstance = new window.kakao.maps.Map(mapContainer, options);
       setMap(mapInstance);
 
-      const marker = new window.kakao.maps.Marker({
-        position : mapPosition // 마커의 위치를 설정
-      });
+      // const marker = new window.kakao.maps.Marker({
+      //   position : mapPosition 
+      // });
 
       // 지도에 마커를 표시
-      marker.setMap(mapInstance);
+      // marker.setMap(mapInstance);
+
+      // 빵집 목록 마커 표시
+      
+      bakeries.forEach( bakery => {  
+        const bakeryMarker =new window.kakao.maps.Marker({
+          position : new window.kakao.maps.LatLng(bakery.latitude, bakery.longitude),
+          map : mapInstance 
+        });
+        bakeryMarker.setMap(mapInstance); 
+      });
+      
     }, (error) => {
       console.error('Error Code : ', error.code);
     });

@@ -1,15 +1,20 @@
 import React from 'react'
 import { FaHeart } from "react-icons/fa";
 
-function BakeryItem() {
+const BakeryItem = ({ bakery }) => {
+  const { name, address, phone, latitude, longitude, category } = bakery;
+
   return (
     <div className="bakeryItem">
       <div className="bakeryItem__content">
-        <h3>성심당 본점</h3>
+        <h3>{name}</h3>
         <button className="btn btn__heart"><FaHeart /></button>
         <div className="bakeryItem__info">
-          <p>대전 중구 대종로 480번길 15</p>
-          <p>영업 중 22:00에 영업종료</p>
+          <p>{ address }</p>
+          <p>{ phone }</p>
+          <p>{ category }</p>
+          <p>{ latitude }</p>
+          <p>{ longitude }</p>
         </div>
         <div className="bakeryItem__thumbnail">
           <ul>

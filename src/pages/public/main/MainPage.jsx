@@ -1,11 +1,13 @@
 import { Suspense } from "react"
 import LoadingSpinner from "../../../components/loading/LoadingSpinner"
 import BakeryMap from "../../../components/bakery/BakeryMap"
-import { MdOutlineSearch } from "react-icons/md"
 import BakeryList from "../../../components/bakery/BakeryList"        
+import { MdOutlineSearch } from "react-icons/md"
 import { MdArrowBackIosNew } from "react-icons/md"      
 
 const MainPage = () => {
+
+
   return (
     <div className="main-page">
       <section className="main-page__section">
