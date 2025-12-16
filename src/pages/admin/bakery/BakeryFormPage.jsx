@@ -6,7 +6,6 @@
  * id 존재 여부에 따라 등록/수정 모드 결정.
  *
  * NOTE:
- * - 상세조회(loadDetail)는 API 완성 전까지 비활성화.
  * - 등록/수정 UI가 동일하여 공용 폼으로 구성.
  */
 
@@ -54,23 +53,36 @@ function BakeryFormPage() {
   /**
    * 수정 모드일 경우 상세 조회
    *
-   * NOTE:
-   * - 백엔드 API 완성 전까지 비활성화.
+   * WHY?
+   * - 수정 시 기존 데이터를 불러오기 위함.
    */
   useEffect(() => {
-    // if (isEdit) loadDetail();
+    if (isEdit) {
+      loadDetail();
+    }
   }, [id]);
 
   /**
    * 상세 조회 API 호출
    *
    * WHY?
-   * - 수정 시 기존 데이터를 불러오기 위함.
+   * - 서버 응답을 폼 구조에 맞게 매핑
    */
   const loadDetail = async () => {
     try {
       const res = await fetchBakeryDetail(id);
-      setForm(res.data);
+      const data = res.data;
+
+      setForm({
+        name: data.name ?? '',
+        menu: data.menu ?? '',
+        category: Array.isArray(data.category) ? data.category : [],
+        address: data.address ?? '',
+        phone: data.phone ?? '',
+        latitude: data.latitude ?? '',
+        longitude: data.longitude ?? '',
+        image: null, // 기존 이미지는 파일로 다시 받지 않음
+      });
     } catch (err) {
       console.error(err);
       alert('상세 정보를 불러오지 못했습니다.');
@@ -135,7 +147,6 @@ function BakeryFormPage() {
    * 이미지 업로드 처리
    *
    * WHY?
-   * - base64 변환 제거
    * - multipart/form-data 전송을 위해 File 객체 그대로 관리
    */
   const handleImageChange = (e) => {

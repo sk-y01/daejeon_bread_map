@@ -7,6 +7,7 @@
   flex-direction: column;
   gap: 2rem;
   padding: 2rem;
+  color: map.get($colors, "main");
 
   /* 제목 */
   h1 {
@@ -15,7 +16,7 @@
     color: map.get($colors, "main");
   }
 
-  /* 통계 박스 */
+  /* 통계 / 공용 박스 (기존 유지) */
   &__box {
     background: map.get($colors, "white");
     padding: 2rem;
@@ -34,20 +35,50 @@
     }
   }
 
-  /* 버튼 그룹 */
+  /* 버튼 그룹 (기존 유지) */
   &__actions {
     display: flex;
     gap: 1rem;
 
     button {
       @include button-variant(
-        map.get($colors, "sub"),     // 배경색
-        map.get($colors, "sub"),     // border
-        6,                           // radius
-        map.get($colors, "white"),   // text color
-        map.get($colors, "white"),   // hover text color
-        map.get($colors, "sub")      // hover border
+        map.get($colors, "sub"),
+        map.get($colors, "sub"),
+        6,
+        map.get($colors, "white"),
+        map.get($colors, "white"),
+        map.get($colors, "sub")
       );
+    }
+  }
+
+  // 하단 2등분 레이아웃
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  /* 최근 등록된 빵집 리스트 */
+  &__recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 1.6rem 0;
+
+    li {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 1rem;
+      align-items: center;
+
+      .name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: map.get($colors, "point");
+        font-weight: 600;
+      }
     }
   }
 }
