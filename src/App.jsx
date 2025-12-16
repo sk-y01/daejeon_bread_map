@@ -20,6 +20,7 @@ import "./styles/admin/_sidebar.scss";
 import "./styles/admin/_bakery-list.scss";
 import "./styles/admin/_bakery-form.scss";
 import "./styles/admin/_dashboard.scss";
+import "./styles/admin/_bakery-delete-history.scss";
 import TestApi from './pages/test/TestApi'
 
 function App() {
