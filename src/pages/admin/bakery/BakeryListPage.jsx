@@ -5,7 +5,7 @@
  * 관리자용 빵집 목록 페이지
  * - 목록 조회
  * - 검색 (서버 연동, debounce)
- * - 페이지네이션 (page / limit 전달)
+ * - 페이지네이션 (프론트 slice 기반)
  * - 수정 / 삭제
  */
 
@@ -24,7 +24,7 @@ function BakeryListPage() {
 
   /**
    * @state bakeries
-   * @description 서버에서 조회된 빵집 목록
+   * @description 서버에서 조회된 빵집 전체 목록
    */
   const [bakeries, setBakeries] = useState([]);
 
@@ -57,7 +57,7 @@ function BakeryListPage() {
    *
    * @description
    * 빵집 목록 조회
-   * - 검색어(keyword), 페이지(page), 개수(limit)를 서버로 전달
+   * - 현재는 서버에서 전체 리스트를 내려받음
    */
   const loadList = async () => {
     try {
@@ -65,8 +65,6 @@ function BakeryListPage() {
 
       const res = await fetchBakeries({
         keyword,
-        page,
-        limit: LIMIT,
       });
 
       setBakeries(Array.isArray(res.data) ? res.data : []);
@@ -89,8 +87,8 @@ function BakeryListPage() {
    * 검색 debounce 처리
    *
    * @description
-   * - 검색어 입력 후 300ms 뒤 서버 재요청
-   * - 검색 시 페이지를 1로 초기화
+   * - 검색어 입력 후 300ms 뒤 목록 재조회
+   * - 검색 시 페이지 1로 초기화
    */
   useEffect(() => {
     if (debounceRef.current) {
@@ -150,12 +148,23 @@ function BakeryListPage() {
   };
 
   /**
-   * 임시 totalPages 계산
+   * totalPages
    *
-   * TODO:
-   * - 서버에서 totalPages 내려주면 해당 값으로 교체
+   * @description
+   * 프론트 기준 전체 페이지 수 계산
    */
   const totalPages = Math.ceil(bakeries.length / LIMIT);
+
+  /**
+   * pagedBakeries
+   *
+   * @description
+   * 현재 페이지에 해당하는 목록만 slice
+   */
+  const pagedBakeries = bakeries.slice(
+    (page - 1) * LIMIT,
+    page * LIMIT
+  );
 
   return (
     <div className="BakeryList">
@@ -171,7 +180,7 @@ function BakeryListPage() {
         </button>
       </div>
 
-      {/* 검색 영역 */}
+      {/* 검색 */}
       <div className="BakeryList__search">
         <div className="icon__input">
           <MdOutlineSearch />
@@ -184,14 +193,14 @@ function BakeryListPage() {
         </div>
       </div>
 
-      {/* 목록 영역 */}
+      {/* 목록 */}
       {loading ? (
         <p>로딩 중...</p>
-      ) : bakeries.length === 0 ? (
+      ) : pagedBakeries.length === 0 ? (
         <p>검색 결과가 없습니다.</p>
       ) : (
         <div className="BakeryList__cards">
-          {bakeries.map((item) => (
+          {pagedBakeries.map((item) => (
             <div className="BakeryCard" key={item._id}>
               <div className="BakeryCard__thumbnail">
                 {item.image ? (
