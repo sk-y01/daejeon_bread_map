@@ -7,12 +7,6 @@
   flex-direction: column;
   gap: 2rem;
 
-  h1 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: map.get($colors, 'main');
-  }
-
   /* 상단 헤더 */
   &__header {
     display: flex;
@@ -20,9 +14,29 @@
     align-items: center;
   }
 
-  /* 검색 영역 */
-  &__search {
-    margin-bottom: 1.5rem;
+  /* 검색 + 페이지당 개수 */
+  &__search-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  &__select {
+    min-width: 120px;
+    height: 3.6rem;
+    padding: 0 1rem;
+
+    border-radius: 6px;
+    border: 1px solid map.get($colors, 'sub');
+    background-color: map.get($colors, 'white');
+
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: map.get($colors, 'main');
+    }
   }
 
   /* 카드 리스트 */
@@ -32,41 +46,11 @@
     gap: 1.6rem;
   }
 
-  /* 페이지네이션 (UI 선구현) */
-  &__pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.2rem;
-    margin-top: 2rem;
-
-    span {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: map.get($colors, 'point');
-    }
-
-    button {
-      @include button-variant(
-        map.get($colors, 'white'),
-        map.get($border-colors, 'default'),
-        6,
-        map.get($colors, 'point'),
-        map.get($colors, 'light-gray'),
-        map.get($colors, 'point')
-      );
-
-      &:disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-      }
-    }
-  }
-
   .BakeryCard {
     display: flex;
     gap: 2.4rem;
     padding: 2.4rem;
+
     background: map.get($colors, 'white');
     border-radius: 12px;
     border: 1px solid map.get($border-colors, 'default');
@@ -92,7 +76,6 @@
         align-items: center;
         justify-content: center;
         color: map.get($colors, 'gray');
-        font-size: 1.4rem;
       }
     }
 
@@ -101,24 +84,6 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-
-      h3 {
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin-bottom: 0.6rem;
-        color: map.get($colors, 'main');
-      }
-
-      .info {
-        font-size: 1.4rem;
-        margin: 0.2rem 0;
-      }
-
-      .coords {
-        margin-top: 0.6rem;
-        font-size: 1.3rem;
-        color: map.get($colors, 'gray');
-      }
     }
 
     &__buttons {

@@ -1,0 +1,50 @@
+@use 'sass:map';
+@use '../color' as *;
+
+.BakeryDeleteHistory {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: map.get($colors, 'main');
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+}
+
+.BakeryDeleteHistoryCard {
+  display: flex;
+  padding: 2.4rem;
+  background: map.get($colors, 'white');
+  border-radius: 12px;
+  border: 1px solid map.get($border-colors, 'default');
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: map.get($colors, 'main');
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0.6rem;
+    }
+
+    p {
+      font-size: 1.4rem;
+      color: map.get($colors, 'point');
+    }
+  }
+}

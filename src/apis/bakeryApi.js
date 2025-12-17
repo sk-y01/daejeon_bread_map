@@ -27,18 +27,11 @@ export const createBakery = (data) => {
 /**
  * ✔ updateBakery
  *
- * @author        hnlee
- * @method        PUT
- * @description   빵집 수정 요청 (multipart/form-data)
- * @param {*}     id
- * @param {*}     data  FormData
+ * @method PUT
+ * @description 빵집 수정 요청 (multipart/form-data)
  */
 export const updateBakery = (id, data) => {
-  return api.put(`/bakeries/update/${id}`, data, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  return api.put(`/bakeries/update/${id}`, data);
 };
 
 /**

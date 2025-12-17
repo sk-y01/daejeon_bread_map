@@ -16,8 +16,6 @@ import { FaArrowUp } from 'react-icons/fa';
 import { MdOutlineSearch } from 'react-icons/md';
 import Pagination from '../../../components/common/Pagination/Pagination';
 
-const LIMIT = 10;
-
 function BakeryListPage() {
   const navigate = useNavigate();
   const debounceRef = useRef(null);
@@ -47,6 +45,12 @@ function BakeryListPage() {
   const [page, setPage] = useState(1);
 
   /**
+   * @state limit
+   * @description 페이지당 목록 개수
+   */
+  const [limit, setLimit] = useState(10);
+
+  /**
    * @state showTopButton
    * @description Top 버튼 노출 여부
    */
@@ -65,6 +69,7 @@ function BakeryListPage() {
 
       const res = await fetchBakeries({
         keyword,
+        limit,
       });
 
       setBakeries(Array.isArray(res.data) ? res.data : []);
@@ -81,7 +86,7 @@ function BakeryListPage() {
    */
   useEffect(() => {
     loadList();
-  }, [page]);
+  }, [page, limit]);
 
   /**
    * 검색 debounce 처리
@@ -153,7 +158,7 @@ function BakeryListPage() {
    * @description
    * 프론트 기준 전체 페이지 수 계산
    */
-  const totalPages = Math.ceil(bakeries.length / LIMIT);
+  const totalPages = Math.ceil(bakeries.length / limit);
 
   /**
    * pagedBakeries
@@ -162,8 +167,8 @@ function BakeryListPage() {
    * 현재 페이지에 해당하는 목록만 slice
    */
   const pagedBakeries = bakeries.slice(
-    (page - 1) * LIMIT,
-    page * LIMIT
+    (page - 1) * limit,
+    page * limit,
   );
 
   return (
@@ -180,8 +185,8 @@ function BakeryListPage() {
         </button>
       </div>
 
-      {/* 검색 */}
-      <div className="BakeryList__search">
+      {/* 검색 + 페이지당 개수 */}
+      <div className="BakeryList__search-row">
         <div className="icon__input">
           <MdOutlineSearch />
           <input
@@ -191,6 +196,19 @@ function BakeryListPage() {
             onChange={(e) => setKeyword(e.target.value)}
           />
         </div>
+
+        <select
+          className="BakeryList__select"
+          value={limit}
+          onChange={(e) => {
+            setLimit(Number(e.target.value));
+            setPage(1);
+          }}
+        >
+          <option value={10}>10개씩</option>
+          <option value={20}>20개씩</option>
+          <option value={50}>50개씩</option>
+        </select>
       </div>
 
       {/* 목록 */}
@@ -211,7 +229,7 @@ function BakeryListPage() {
               </div>
 
               <div className="BakeryCard__content">
-                <h3>{item.name}</h3>
+                <h3 title={item.name}>{item.name}</h3>
                 <p>
                   <strong>카테고리:</strong>{' '}
                   {Array.isArray(item.category)
@@ -221,9 +239,6 @@ function BakeryListPage() {
                 <p><strong>대표 메뉴:</strong> {item.menu}</p>
                 <p><strong>주소:</strong> {item.address}</p>
                 <p><strong>전화번호:</strong> {item.phone}</p>
-                <p>
-                  <strong>위도/경도:</strong> {item.latitude}, {item.longitude}
-                </p>
               </div>
 
               <div className="BakeryCard__buttons">
