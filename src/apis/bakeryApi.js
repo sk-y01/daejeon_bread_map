@@ -88,5 +88,5 @@ export const deleteBakery = (id, reason) => {
  * @returns 
  */
 export const fetchDeleteHistoryList = (params = {}) => {
-  return api.get('/remove/history', { params })
+  return api.get('/bakeries/remove/history', { params })
 }

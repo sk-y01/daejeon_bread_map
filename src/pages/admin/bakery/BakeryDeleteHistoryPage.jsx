@@ -10,26 +10,24 @@
  */
 
 import { useEffect, useState } from 'react';
+import { fetchDeleteHistoryList } from '../../../apis/bakeryApi';
+import { convertDateFormat } from '../../../utils/date';
 
 function BakeryDeleteHistoryPage() {
   const [deleteHistories, setDeleteHistories] = useState([]);
-
+  
   useEffect(() => {
-    // TODO: 삭제 이력 API 연동
-    setDeleteHistories([
-      {
-        id: 1,
-        name: '성심당 본점',
-        reason: '폐업',
-        deletedAt: '2025-12-14',
-      },
-      {
-        id: 2,
-        name: '빵집 테스트',
-        reason: '중복 등록',
-        deletedAt: '2025-12-13',
-      },
-    ]);
+    /**
+     * 삭제 이력 조회
+     */
+    async function historyData() {
+      const response = await fetchDeleteHistoryList()
+          , data = await response?.data || []
+  
+      setDeleteHistories(data)
+    }
+
+    historyData()
   }, []);
 
   return (
@@ -41,15 +39,15 @@ function BakeryDeleteHistoryPage() {
       ) : (
         <div className="BakeryDeleteHistory__cards">
           {deleteHistories.map((item) => (
-            <div className="BakeryDeleteHistoryCard" key={item.id}>
+            <div className="BakeryDeleteHistoryCard" key={ item._id }>
               <div className="BakeryDeleteHistoryCard__content">
-                <h3 className="name">{item.name}</h3>
+                <h3 className="name">{ item.name }</h3>
 
                 <p>
-                  <strong>삭제 사유:</strong> {item.reason}
+                  <strong>삭제 사유:</strong> { item.deletedReason }
                 </p>
                 <p>
-                  <strong>삭제일:</strong> {item.deletedAt}
+                  <strong>삭제일:</strong> { convertDateFormat(item.deletedAt) }
                 </p>
               </div>
             </div>

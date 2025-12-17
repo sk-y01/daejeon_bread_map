@@ -2,7 +2,7 @@ import React from 'react'
 import { FaHeart } from "react-icons/fa";
 
 const BakeryItem = ({ bakery }) => {
-  const { name, address, phone, category } = bakery;
+  const { name, address, phone, category, imageUrl } = bakery;
 
   return (
     <div className="bakeryItem">
@@ -16,18 +16,18 @@ const BakeryItem = ({ bakery }) => {
         </div>
         <div className="bakeryItem__thumbnail">
           <ul>
-            <li>
-              <img src="/src/assets/images/main/bakery_img01.png" alt="성심당 본점" />
-            </li>
-            <li>
-              <img src="/src/assets/images/main/bakery_img02.png" alt="성심당 본점" />
-            </li>
-            <li>
-              <img src="/src/assets/images/main/bakery_img03.png" alt="성심당 본점" />
-            </li>
-            <li>
-              <img src="/src/assets/images/main/bakery_img03.png" alt="성심당 본점" />
-            </li>
+            {
+              !imageUrl
+              ? (
+                <li>
+                  <img src="/src/assets/images/main/bakery_img01.png" alt="성심당 본점" />
+                </li>
+              ) : (
+                <li>
+                  <img src={ imageUrl } alt={ name } />
+                </li>
+              )
+            }
           </ul>
         </div>
       </div>
