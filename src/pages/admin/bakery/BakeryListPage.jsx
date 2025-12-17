@@ -15,6 +15,7 @@ import { fetchBakeries, deleteBakery } from '../../../apis/bakeryApi';
 import { FaArrowUp } from 'react-icons/fa';
 import { MdOutlineSearch } from 'react-icons/md';
 import Pagination from '../../../components/common/Pagination/Pagination';
+import { toImageUrl } from '../../../utils/imageUrl'
 
 function BakeryListPage() {
   const navigate = useNavigate();
@@ -222,7 +223,7 @@ function BakeryListPage() {
             <div className="BakeryCard" key={item._id}>
               <div className="BakeryCard__thumbnail">
                 {item.image ? (
-                  <img src={item.image} alt={item.name} />
+                  <img src={toImageUrl(item.image)} alt={item.name} />
                 ) : (
                   <div className="thumbnail__placeholder">이미지 없음</div>
                 )}

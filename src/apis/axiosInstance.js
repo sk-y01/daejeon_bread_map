@@ -4,6 +4,7 @@ import axios from "axios";
 
 // API URL은 반드시 .env 파일로 관리할 것
 const BAKERIES_API_URL = import.meta.env.VITE_API_URL + '/api';
+// const BAKERIES_API_URL = import.meta.env.VITE_LOCAL_URL + '/api';
 
 /**
  * api 정의

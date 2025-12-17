@@ -17,11 +17,8 @@ import { api } from './axiosInstance';
  * @param {*}     data  FormData
  */
 export const createBakery = (data) => {
-  return api.post('/bakeries/add', data, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  console.log('data : ', data)
+  return api.post('/bakeries/add', data);
 };
 
 /**
@@ -80,3 +77,16 @@ export const deleteBakery = (id, reason) => {
     data: { reason },
   });
 };
+
+/**
+ * ✔ fetchDeleteHistoryList
+ * 
+ * @author        jjlee
+ * @method        GET
+ * @description   빵집 삭제 이력
+ * @param {*}     params 
+ * @returns 
+ */
+export const fetchDeleteHistoryList = (params = {}) => {
+  return api.get('/remove/history', { params })
+}

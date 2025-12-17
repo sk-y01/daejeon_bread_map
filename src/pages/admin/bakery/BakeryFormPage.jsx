@@ -38,6 +38,7 @@ function BakeryFormPage() {
     latitude: '',
     longitude: '',
     image: null,
+    imageUrl: ''
   });
 
   /**
@@ -49,6 +50,9 @@ function BakeryFormPage() {
    */
   const [categoryInput, setCategoryInput] = useState('');
   const [categoryError, setCategoryError] = useState('');
+  
+  // preview 상태 검증
+  const [previewUrl, setPreviewUrl] = useState('')
 
   /**
    * 수정 모드일 경우 상세 조회
@@ -61,6 +65,15 @@ function BakeryFormPage() {
       loadDetail();
     }
   }, [id]);
+
+  // cleanUp
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl)
+      }
+    }
+  }, [previewUrl])
 
   /**
    * 상세 조회 API 호출
@@ -82,6 +95,7 @@ function BakeryFormPage() {
         latitude: data.latitude ?? '',
         longitude: data.longitude ?? '',
         image: null, // 기존 이미지는 파일로 다시 받지 않음
+        imageUrl: data.image ?? '',
       });
     } catch (err) {
       console.error(err);
@@ -150,13 +164,36 @@ function BakeryFormPage() {
    * - multipart/form-data 전송을 위해 File 객체 그대로 관리
    */
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (!file) return;
 
-    setForm({
-      ...form,
+    if (!file.type.startsWith('image/')) {
+      alert('이미지 파일 업로드만 가능합니다.')
+      e.target.value = ''
+
+      return;
+    }
+
+    // 용량 제한 (3MB)
+    const maxSize = 3 * 1024 * 1024;
+    if (file.size > maxSize) {
+      alert('이미지 용량은 최대 3MB 이하만 가능합니다.')
+      e.target.value = ''
+
+      return;
+    }
+
+    // 이전 Preview URL revoke (메모리 누수 방지)
+    setPreviewUrl((prev) => {
+      if (prev) URL.revokeObjectURL(prev)
+      
+      return URL.createObjectURL(file)
+    })
+
+    setForm((prev) => ({
+      ...prev,
       image: file,
-    });
+    }));
   };
 
   /**
@@ -290,11 +327,17 @@ function BakeryFormPage() {
         </div>
 
         <label>대표 이미지</label>
-        <input type="file" onChange={handleImageChange} />
+        <input type="file" accept='image/*' onChange={handleImageChange} />
 
-        {form.image && (
+        {(previewUrl || form.image) && (
           <img
-            src={URL.createObjectURL(form.image)}
+            src={
+              previewUrl
+              ? previewUrl
+              : (form.imageUrl.startsWith('http'))
+                ? form.imageUrl
+                : `${import.meta.env.VITE_LOCAL_URL}/${form.imageUrl}`
+            }
             className="BakeryForm__preview"
             alt="preview"
           />
