@@ -38,13 +38,35 @@ const BakeryMap = () => {
         })
 
         // 마커 클릭 시 정보창 표시
-        const infowindow = new window.kakao.maps.InfoWindow({
-          content: `<div style="padding:5px;font-size:12px;">${bakery.name || '빵집'}</div>`
+        const customOverlay = new kakao.maps.CustomOverlay({
+          position : bakeryMarker.getPosition(),
+          map: mapInstance,
+          content: `<div class="wrap">
+          <div class="info">
+            <div class="title">${bakery.name || '빵집'}</div>
+            <div class="close">X</div>
+            <div class="body">
+              <div class="img">
+                <img src="${bakery.thumbnail || 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/place.png'}" alt="${bakery.name || '빵집'}">
+              </div>
+              <div class="desc">
+                <div class="ellipsis">${bakery.address || '주소'}</div>
+              </div>
+            </div>
+          </div>
+          </div>`
+        });
+        
+        kakao.maps.event.addListener(bakeryMarker, 'click', () => {
+          customOverlay.setMap(mapInstance);
         });
 
-        kakao.maps.event.addListener(bakeryMarker, 'click', () => {
-          infowindow.open(mapInstance, bakeryMarker)
-        })
+        const closeOverlay = () => {
+          customOverlay.setMap(null);
+        }
+
+        kakao.maps.event.addListener(customOverlay, 'click', closeOverlay);
+        kakao.maps.event.addListener(bakeryMarker, 'click', closeOverlay);
       }
     })
   }
