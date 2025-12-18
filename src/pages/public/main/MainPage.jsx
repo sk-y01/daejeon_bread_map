@@ -1,7 +1,7 @@
 import { useState } from "react"
 import BakeryMap from "../../../components/bakery/BakeryMap"
 import BakeryList from "../../../components/bakery/BakeryList"        
-import { MdOutlineSearch, MdPersonOutline } from "react-icons/md"
+import { MdOutlineSearch, MdPersonOutline, MdArrowBackIosNew } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
 
 const MainPage = () => {
@@ -44,9 +44,9 @@ const MainPage = () => {
             <BakeryList keyword={keyword} />
           </div>
         </div>
-        {/* <div className="main-page__more">
+        <div className="main-page__more">
           <button type="button" className="btn btn__close"><MdArrowBackIosNew /></button>
-        </div> */}
+        </div>
         <div className="main-page__loginBtn">
           <button 
             type="button" 
