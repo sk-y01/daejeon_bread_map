@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react"
-import BakeryMap from "../../../components/bakery/BakeryMap"
-import BakeryList from "../../../components/bakery/BakeryList"        
 import { MdOutlineSearch, MdPersonOutline, MdArrowBackIosNew } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
 import { fetchBakeries } from "../../../apis/bakeryApi"
+import BakeryMap from "../../../components/bakery/BakeryMap"
+import BakeryList from "../../../components/bakery/BakeryList"        
 
 
 const MainPage = () => {
   const [keyword, setKeyword] = useState('');
   const [bakeries, setBakeries] = useState([]);
   const [filterBakeries, setFilterBakeries] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('')
   
   const navigate = useNavigate();
 
@@ -19,19 +20,36 @@ const MainPage = () => {
 
   const searchEnterHandler = (e) => {
     if(e.key === "Enter") {
-      const filterBakeries = bakeries.filter(bakery => bakery.name.includes(keyword)); 
-      setFilterBakeries(filterBakeries);
+      e.preventDefault()
+      setSearchKeyword(keyword)
     }
   };
 
+  // 1. 최초 list 호출
   useEffect(() => {
     const getBakeries = async() => {
       const response = await fetchBakeries();
       const data = await response?.data || [];
       setBakeries(data);
     }
+    
     getBakeries();
   }, []);
+  // 2. 키워드가 입력 후, 엔터 키 누를 시 filter 적용
+  useEffect(() => {
+    // 데이터가 로드되지 않을 시
+    if (bakeries.length === 0) return;
+
+    if (searchKeyword.trim() === '') {
+      // 검색 키워드가 없을 시 전체 목록 표시
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setFilterBakeries(bakeries)
+    } else {
+      // 키워드 있으면 필터 적용
+      const filtered = bakeries.filter(bakery => bakery.name.includes(searchKeyword))
+      setFilterBakeries(filtered)
+    }
+  }, [bakeries, searchKeyword]);
 
 
   return (
