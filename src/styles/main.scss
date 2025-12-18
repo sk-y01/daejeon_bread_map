@@ -152,6 +152,15 @@
         line-height: 1.2;
         color: map.get($colors, "point");
       }
+      .category {
+        display: inline-block;
+        margin: 0.5rem 0.5rem 0 0;
+        padding: 0.2rem 0.8rem;
+        border-radius: 0.4rem;
+        font-size: 1.2rem;
+        background-color: #f0e6d9;
+        color: map.get($colors, "main");
+      }
     }
 
     &__thumbnail {

@@ -12,7 +12,7 @@ const BakeryItem = ({ bakery }) => {
         <div className="bakeryItem__info">
           <p className="address">{ address }</p>
           <p>{ phone }</p>
-          <p>{ category }</p>
+          <p className="category">{ category }</p>
         </div>
         <div className="bakeryItem__thumbnail">
           <ul>
