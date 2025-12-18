@@ -10,7 +10,7 @@ const BakeryItem = ({ bakery }) => {
         <h3>{name}</h3>
         <button className="btn btn__heart"><FaRegHeart /></button>
         <div className="bakeryItem__info">
-          <p>{ address }</p>
+          <p className="address">{ address }</p>
           <p>{ phone }</p>
           <p>{ category }</p>
         </div>
