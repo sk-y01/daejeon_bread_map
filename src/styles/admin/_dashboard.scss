@@ -9,14 +9,12 @@
   padding: 2rem;
   color: map.get($colors, "main");
 
-  /* 제목 */
   h1 {
     font-size: 2.4rem;
     font-weight: 700;
     color: map.get($colors, "main");
   }
 
-  /* 통계 / 공용 박스 (기존 유지) */
   &__box {
     background: map.get($colors, "white");
     padding: 2rem;
@@ -35,31 +33,14 @@
     }
   }
 
-  /* 버튼 그룹 (기존 유지) */
-  &__actions {
-    display: flex;
-    gap: 1rem;
-
-    button {
-      @include button-variant(
-        map.get($colors, "sub"),
-        map.get($colors, "sub"),
-        6,
-        map.get($colors, "white"),
-        map.get($colors, "white"),
-        map.get($colors, "sub")
-      );
-    }
-  }
-
-  // 하단 2등분 레이아웃
+  /* 하단 그리드 (PC 기본) */
   &__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
   }
 
-  /* 최근 등록된 빵집 리스트 */
+  /* 최근 등록된 빵집 */
   &__recent-list {
     display: flex;
     flex-direction: column;
@@ -68,16 +49,52 @@
 
     li {
       display: grid;
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: minmax(14rem, 1fr) auto auto;
       gap: 1rem;
       align-items: center;
+    }
 
-      .name {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        color: map.get($colors, "point");
-        font-weight: 600;
+    .name {
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: map.get($colors, "point");
+      font-weight: 600;
+    }
+
+    .categories {
+      display: flex;
+      gap: 0.4rem;
+      white-space: nowrap;
+
+      .tag {
+        flex-shrink: 0;
+      }
+    }
+
+    .date {
+      font-size: 1.3rem;
+      color: map.get($colors, "gray");
+      white-space: nowrap;
+    }
+  }
+}
+
+// Tablet 이하
+@media (max-width: 1024px) {
+  .AdminDashboard {
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__recent-list {
+      li {
+        grid-template-columns: 1fr auto;
+      }
+
+      .categories {
+        display: none;
       }
     }
   }
