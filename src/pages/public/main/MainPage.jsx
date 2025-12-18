@@ -1,18 +1,39 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import BakeryMap from "../../../components/bakery/BakeryMap"
 import BakeryList from "../../../components/bakery/BakeryList"        
 import { MdOutlineSearch, MdPersonOutline, MdArrowBackIosNew } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
+import { fetchBakeries } from "../../../apis/bakeryApi"
+
 
 const MainPage = () => {
   const [keyword, setKeyword] = useState('');
+  const [bakeries, setBakeries] = useState([]);
+  const [filterBakeries, setFilterBakeries] = useState([]);
   
   const navigate = useNavigate();
 
   const onChangeSearch = (e) => {
     setKeyword(e.target.value);
+  }
+
+  const searchEnterHandler = (e) => {
+    if(e.key === "Enter") {
+      const filterBakeries = bakeries.filter(bakery => bakery.name.includes(keyword)); 
+      setFilterBakeries(filterBakeries);
+    }
   };
-  
+
+  useEffect(() => {
+    const getBakeries = async() => {
+      const response = await fetchBakeries();
+      const data = await response?.data || [];
+      setBakeries(data);
+    }
+    getBakeries();
+  }, []);
+
+
   return (
     <div className="main-page">
       <section className="main-page__section">
@@ -24,7 +45,8 @@ const MainPage = () => {
               name="searchInput" 
               id="searchInput" 
               value={keyword}
-              onChange={onChangeSearch} 
+              onChange={onChangeSearch}
+              onKeyDown={searchEnterHandler} 
               autoComplete="off" 
               placeholder="대전 빵집 찾기" 
             />
@@ -41,7 +63,7 @@ const MainPage = () => {
         </div>
         <div className="main-page__content">
           <div className="main-page__content__inner">
-            <BakeryList keyword={keyword} />
+            <BakeryList filterBakeries={filterBakeries} />
           </div>
         </div>
         <div className="main-page__more">

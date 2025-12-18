@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const BakeryItem = ({ bakery }) => {
   const { name, address, phone, category, imageUrl } = bakery;
@@ -8,7 +8,7 @@ const BakeryItem = ({ bakery }) => {
     <div className="bakeryItem">
       <div className="bakeryItem__content">
         <h3>{name}</h3>
-        <button className="btn btn__heart"><FaHeart /></button>
+        <button className="btn btn__heart"><FaRegHeart /></button>
         <div className="bakeryItem__info">
           <p>{ address }</p>
           <p>{ phone }</p>

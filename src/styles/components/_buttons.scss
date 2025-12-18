@@ -51,11 +51,10 @@
     transparent,
     transparent,
     0,
-    #DB3B29,
+    map.get($colors, "main"),   
     transparent,
     #DB3B29
   );
-  border: none;
   min-width: 2rem;
   min-height: 2rem;
   font-size: 1.6rem;

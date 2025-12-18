@@ -4,21 +4,23 @@ import { fetchBakeries } from '../../apis/bakeryApi'
 import LoadingSpinner from '../loading/LoadingSpinner'
 import Pagination from '../common/Pagination/Pagination'
 
-function BakeryList({keyword = ''}) {  
+function BakeryList({ filterBakeries }) {  
 
   const [loading, setLoading] = useState(true);
   const [bakeries, setBakeries] = useState([]);
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
 
-  const loadList = async({keyword = ''}) => {
+  const loadList = async() => {
     try {
       setLoading(true);
 
       const res = await fetchBakeries({
-        keyword,
+        keyword: filterBakeries.name,
       });
-
+      console.log("res.data", res.data);
+      console.log("filterBakeries", filterBakeries);
+      
       setBakeries(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error(error);
@@ -29,8 +31,8 @@ function BakeryList({keyword = ''}) {
   };
 
   useEffect(() => {
-    loadList({keyword});
-  }, [keyword, page]);
+    loadList();
+  }, [filterBakeries, page]);
 
   useEffect(() => {
     // data 불러오기
