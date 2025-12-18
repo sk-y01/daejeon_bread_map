@@ -11,6 +11,8 @@ import './styles/components/_buttons.scss'
 import BakeryListPage from './pages/admin/bakery/BakeryListPage'
 import BakeryFormPage from './pages/admin/bakery/BakeryFormPage'
 import BakeryDeleteHistoryPage from './pages/admin/bakery/BakeryDeleteHistoryPage'
+import TestApi from './pages/test/TestApi'
+import JoinPage from './pages/login/JoinPage'
 
 import "./styles/components/_header.scss";
 import "./styles/main.scss";
@@ -21,7 +23,6 @@ import "./styles/admin/_bakery-list.scss";
 import "./styles/admin/_bakery-form.scss";
 import "./styles/admin/_dashboard.scss";
 import "./styles/admin/_bakery-delete-history.scss";
-import TestApi from './pages/test/TestApi'
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
         </Route>
 
         <Route path='/login' element={ <LoginPage /> } />
+        <Route path='/join' element={ <JoinPage /> } />
         <Route path='/test' element={ <TestApi /> } />
       </Routes>
     </>

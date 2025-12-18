@@ -37,5 +37,87 @@
         color: map.get($colors, 'main');
       }
     }
+
+    form {
+      display: block;
+      max-width: 37rem;
+      margin: 3rem auto 0;
+
+      input {
+        width: 100%;
+        height: 4rem;
+        border-color: map.get($colors, 'placeholder');
+
+        &:focus {
+          background-color: #F8F5E6;
+        }
+      }
+    }
+
+    &-item {
+      &:first-child {
+        input {
+          border-width: 0 0 2px;
+        }
+      }
+
+      & + & {
+        margin-top: 1.5rem;
+      }
+    }
+
+    &-btn-wrap {
+      margin-top: 5rem;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 4.6rem;
+        background-color: transparent;
+        border: 0 none;
+        border-radius: 6px;
+        font: {
+          size: 1.5rem;
+          weight: 400;
+        }
+        color: #fffffd;
+        cursor: pointer;
+
+        + button {
+          margin-top: 1rem;
+        }
+
+        &.btn__login {
+          background-color: map.get($colors, 'sub');
+        }
+
+        &.btn__join {
+          background-color: #F8F5E6;
+          border: 1px solid map.get($colors, 'placeholder');
+          color: #4A3728;
+        }
+      }
+    }
+  }
+}
+
+@media all and (min-width: 1024px) {
+  .Login {
+    &__form {
+      max-width: 50rem;
+      padding: 6rem 3rem;
+
+      &-img {
+        strong {
+          font-size: 2.4rem;
+        }
+
+        span {
+          font-size: 1.8rem;
+        }
+      }
+    }
   }
 }
