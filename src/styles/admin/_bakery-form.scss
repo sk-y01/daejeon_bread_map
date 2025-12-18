@@ -1,15 +1,17 @@
+// 반응형 완료
 @use "sass:map";
 @use "../color" as *;
 @use "../common/mixins" as *;
 
 .BakeryForm {
+  // 페이지 제목
   h1 {
     margin-bottom: 2rem;
-    font-size: 2rem;
     font-weight: 700;
     color: map.get($colors, "main");
   }
 
+  // 폼 카드 영역
   &__card {
     background: map.get($colors, "white");
     padding: 3rem;
@@ -26,6 +28,7 @@
       color: map.get($colors, "main");
     }
 
+    // 기본 input 스타일
     input:not([type="file"]):not(.BakeryForm__category-input input) {
       width: 100%;
       height: 3.6rem;
@@ -33,6 +36,7 @@
       border: 1px solid map.get($border-colors, "default");
       border-radius: 6px;
       font-size: 1.4rem;
+      margin-bottom: 1.2rem;
 
       &::placeholder {
         color: map.get($colors, "placeholder");
@@ -42,11 +46,10 @@
         outline: none;
         border-color: map.get($colors, "sub");
       }
-
-      margin-bottom: 1.2rem;
     }
   }
 
+  // 위도 / 경도 영역
   &__half {
     display: flex;
     gap: 2rem;
@@ -58,6 +61,7 @@
     }
   }
 
+  // 이미지 미리보기 영역
   &__preview {
     width: 180px;
     height: 180px;
@@ -66,6 +70,7 @@
     border: 1px solid map.get($border-colors, "default");
   }
 
+  // 하단 버튼 영역
   &__actions {
     display: flex;
     justify-content: flex-end;
@@ -96,7 +101,7 @@
   }
 }
 
-/* 카테고리 입력 */
+// 카테고리 입력 영역
 .BakeryForm__category-input {
   display: flex;
   align-items: center;
@@ -129,11 +134,11 @@
   }
 }
 
+// 카테고리 태그 영역
 .BakeryForm__category-tag {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-
   padding: 0.2rem 0.6rem;
   border-radius: 14px;
   background-color: map.get($colors, "light-gray");
@@ -142,22 +147,18 @@
 
   .tag-remove {
     display: inline-flex;
-    align-items: center;        
+    align-items: center;
     justify-content: center;
-    width: 16px;            
+    width: 16px;
     height: 16px;
     border: none;
     background: transparent;
-    padding: 0;
     cursor: pointer;
 
-
     svg {
-      display: block;
       width: 14px;
       height: 14px;
       color: map.get($colors, "gray");
-
     }
 
     &:hover svg {
@@ -166,8 +167,36 @@
   }
 }
 
+// 카테고리 에러 메시지
 .BakeryForm__category-error {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: map.get($colors, "sub");
   margin-bottom: 1.2rem;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .BakeryForm__card {
+    padding: 2.4rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .BakeryForm__card {
+    padding: 1.6rem;
+  }
+
+  .BakeryForm__half {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .BakeryForm__actions {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
 }

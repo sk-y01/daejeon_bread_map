@@ -1,3 +1,4 @@
+// 반응형 완료
 @use "sass:map";
 @use "../color" as *;
 @use "../common/mixins" as *;
@@ -10,7 +11,7 @@
   color: map.get($colors, "main");
 
   h1 {
-    font-size: 2.4rem;
+    // font-size: 2.4rem;
     font-weight: 700;
     color: map.get($colors, "main");
   }
@@ -81,7 +82,7 @@
   }
 }
 
-// Tablet 이하
+// Tablet
 @media (max-width: 1024px) {
   .AdminDashboard {
     &__grid {
