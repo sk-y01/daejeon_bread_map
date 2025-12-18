@@ -1,0 +1,68 @@
+.test-info {
+  padding: 10px;
+  strong {
+    font-size: 13px;
+    font-weight: 700;
+  }
+}
+
+.overlay {
+  width: 300px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  padding: 12px;
+  border: 1px solid rgba(0,0,0,0.08);
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__close {
+    border: 0;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  &__img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  &__addr {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 10px;
+    line-height: 1.35;
+    max-height: 34px;
+    overflow: hidden;
+    word-wrap: break-word;
+  }
+
+  &__btn {
+    width: 100%;
+    height: 34px;
+    border-radius: 10px;
+    border: 0;
+    cursor: pointer;
+    font-weight: 700;
+  }
+}
