@@ -1,9 +1,10 @@
 import React, {Suspense, useState } from 'react'
-import BakeryItem from './BakeryItem'
 import LoadingSpinner from '../loading/LoadingSpinner'
 import Pagination from '../common/Pagination/Pagination'
 
-function BakeryList({ filterBakeries }) {  
+const BakeryItem = React.lazy(() => import('./BakeryItem'))
+
+function BakeryList({ filterBakeries, searchKeyword }) {  
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
 
@@ -20,7 +21,8 @@ function BakeryList({ filterBakeries }) {
     <div className="bakeryList">
       <Suspense fallback={ <LoadingSpinner /> }>
         {
-          filterBakeries.length === 0
+          // 검색 실행 및 결과가 없을 때만 "검색 결과가 없습니다" 표시
+          searchKeyword && filterBakeries.length === 0
           ? (
             <div className="bakeryList__empty">
               <p>검색 결과가 없습니다</p>

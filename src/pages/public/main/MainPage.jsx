@@ -25,6 +25,7 @@ const MainPage = () => {
     }
   };
 
+  // 로직 구성
   // 1. 최초 list 호출
   useEffect(() => {
     const getBakeries = async() => {
@@ -81,7 +82,10 @@ const MainPage = () => {
         </div>
         <div className="main-page__content">
           <div className="main-page__content__inner">
-            <BakeryList filterBakeries={filterBakeries} />
+            <BakeryList 
+              filterBakeries={ filterBakeries } 
+              searchKeyword={ searchKeyword }
+            />
           </div>
         </div>
         <div className="main-page__more">
