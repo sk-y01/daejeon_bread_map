@@ -1,6 +1,7 @@
 # 대전 빵 지도
 ## 기간
 * **설계 :** 2025.11.27 ~ 
+* **개발 :** 2025.12.08 ~
 
 
 ## 참여 인원
@@ -16,10 +17,14 @@
   - Axios
 
 * **Back-End**
-  - Java (Spring Boot) or Node.js (Express.js)
+  - Node.js (Express.js)
 
 * **Database**
   - MongoDB
+
+* **Library**
+  - Map
+    - kakao Map API
 
 
 ## 폴더 구조
