@@ -121,6 +121,7 @@
 }
 
 .bakeryList {
+  width: 100%;
   padding: 2rem;
 
   .bakeryItem {
@@ -179,6 +180,17 @@
           border-radius: 0.8rem;
         }
       }
+    }
+  }
+
+  &__empty {
+    width: 100%;
+    padding: 2rem 0;
+    border-bottom: 1px solid map.get($colors, "light-gray");
+    svg {
+      width: 3.5rem;
+      height: 3.5rem;
+      color: map.get($colors, "light-gray");
     }
   }
 }
@@ -249,7 +261,7 @@
     left: 0;
     padding-top: 0;
     background-color: #fff;
-
+    
     .bakeryItem {
       &__content {
         width: calc(40rem - 4rem);

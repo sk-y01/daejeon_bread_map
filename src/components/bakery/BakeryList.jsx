@@ -1,6 +1,7 @@
 import React, {Suspense, useState } from 'react'
 import LoadingSpinner from '../loading/LoadingSpinner'
 import Pagination from '../common/Pagination/Pagination'
+import { SlExclamation } from "react-icons/sl";
 
 const BakeryItem = React.lazy(() => import('./BakeryItem'))
 
@@ -25,6 +26,7 @@ function BakeryList({ filterBakeries, searchKeyword }) {
           searchKeyword && filterBakeries.length === 0
           ? (
             <div className="bakeryList__empty">
+              <SlExclamation />
               <p>검색 결과가 없습니다</p>
             </div>
           ) : (
