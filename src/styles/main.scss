@@ -8,8 +8,6 @@
     position: relative;
     text-align: center;
     height: 100vh;
-
-    
   }
 
   &__search {
@@ -193,6 +191,13 @@
       position: relative;
       background: #fff;
       max-width: 40rem;
+      height: 100vh;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
       box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1);
       z-index: 10;
     }
@@ -217,10 +222,10 @@
     }
 
     &__more {
-      position: absolute;
+      position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      right: -2.5rem;
+      left: 40rem;
       z-index: 10;
 
       .btn__close {
