@@ -84,6 +84,7 @@
         }
         color: #fffffd;
         cursor: pointer;
+        transition: .35s;
 
         + button {
           margin-top: 1rem;
@@ -91,6 +92,12 @@
 
         &.btn__login {
           background-color: map.get($colors, 'sub');
+          border: 1px solid map.get($colors, 'sub');
+
+          &:hover {
+            background-color: map.get($colors, 'cream');
+            color: map.get($colors, 'sub');
+          }
         }
 
         &.btn__join {
@@ -101,6 +108,13 @@
       }
     }
   }
+}
+
+// 에러 메시지
+.is-error {
+  padding: 0 1rem;
+  font-size: 1.3rem;
+  color: map.get($colors, 'heart');
 }
 
 @media all and (min-width: 1024px) {

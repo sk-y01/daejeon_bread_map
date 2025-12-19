@@ -12,7 +12,12 @@ const BakeryItem = ({ bakery }) => {
         <div className="bakeryItem__info">
           <p className="address">{ address }</p>
           <p>{ phone }</p>
-          <p className="category">{ category }</p>
+          {
+            // category는 배열 형태이기 때문에
+            category.map(cate => (
+              <p className="category">{ cate }</p>
+            ))
+          }
         </div>
         <div className="bakeryItem__thumbnail">
           <ul>
