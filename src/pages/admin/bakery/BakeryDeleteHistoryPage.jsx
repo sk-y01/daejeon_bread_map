@@ -2,11 +2,9 @@
  * BakeryDeleteHistoryPage.jsx
  *
  * @description
- * 관리자용 빵집 삭제 이력 페이지 (UI 선작업)
- *
- * NOTE:
- * - 빵집 리스트와 동일한 카드형 레이아웃 사용
- * - API 연동 전 더미 데이터 사용
+ * 관리자용 빵집 삭제 이력 페이지
+ * - 삭제 이력 조회
+ * - 삭제일 기준 최신순 정렬
  */
 
 import { useEffect, useState } from 'react';
@@ -15,19 +13,31 @@ import { convertDateFormat } from '../../../utils/date';
 
 function BakeryDeleteHistoryPage() {
   const [deleteHistories, setDeleteHistories] = useState([]);
-  
+
   useEffect(() => {
     /**
      * 삭제 이력 조회
+     *
+     * WHY?
+     * - 삭제일(deletedAt) 기준 최신순으로 정렬
      */
     async function historyData() {
-      const response = await fetchDeleteHistoryList()
-          , data = await response?.data || []
-  
-      setDeleteHistories(data)
+      try {
+        const response = await fetchDeleteHistoryList();
+        const data = response?.data || [];
+
+        const sortedData = [...data].sort(
+          (a, b) => new Date(b.deletedAt) - new Date(a.deletedAt),
+        );
+
+        setDeleteHistories(sortedData);
+      } catch (error) {
+        console.error(error);
+        setDeleteHistories([]);
+      }
     }
 
-    historyData()
+    historyData();
   }, []);
 
   return (
@@ -39,15 +49,16 @@ function BakeryDeleteHistoryPage() {
       ) : (
         <div className="BakeryDeleteHistory__cards">
           {deleteHistories.map((item) => (
-            <div className="BakeryDeleteHistoryCard" key={ item._id }>
+            <div className="BakeryDeleteHistoryCard" key={item._id}>
               <div className="BakeryDeleteHistoryCard__content">
-                <h3 className="name">{ item.name }</h3>
+                <h3 className="name">{item.name}</h3>
 
                 <p>
-                  <strong>삭제 사유:</strong> { item.deletedReason }
+                  <strong>삭제 사유:</strong> {item.deletedReason}
                 </p>
                 <p>
-                  <strong>삭제일:</strong> { convertDateFormat(item.deletedAt) }
+                  <strong>삭제일:</strong>{' '}
+                  {convertDateFormat(item.deletedAt)}
                 </p>
               </div>
             </div>

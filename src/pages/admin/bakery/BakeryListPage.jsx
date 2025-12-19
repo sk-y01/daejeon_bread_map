@@ -3,33 +3,32 @@
  *
  * @description
  * 관리자용 빵집 목록 페이지
- * - 목록 조회
- * - 검색 (서버 연동, debounce)
- * - 페이지네이션 (프론트 slice 기반)
- * - 수정 / 삭제
+ * - 빵집 목록 조회
+ * - 엔터 / 돋보기 클릭 기반 검색
+ * - 프론트 기준 페이지네이션
+ * - 수정 / 삭제 기능 제공
  */
 
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchBakeries, deleteBakery } from '../../../apis/bakeryApi';
 import { FaArrowUp } from 'react-icons/fa';
 import { MdOutlineSearch } from 'react-icons/md';
 import Pagination from '../../../components/common/Pagination/Pagination';
-import { toImageUrl } from '../../../utils/imageUrl'
+import { toImageUrl } from '../../../utils/imageUrl';
 
 function BakeryListPage() {
   const navigate = useNavigate();
-  const debounceRef = useRef(null);
 
   /**
    * @state bakeries
-   * @description 서버에서 조회된 빵집 전체 목록
+   * @description 서버에서 조회한 전체 빵집 목록
    */
   const [bakeries, setBakeries] = useState([]);
 
   /**
    * @state loading
-   * @description 목록 로딩 상태
+   * @description 목록 로딩 상태 제어
    */
   const [loading, setLoading] = useState(true);
 
@@ -53,16 +52,15 @@ function BakeryListPage() {
 
   /**
    * @state showTopButton
-   * @description Top 버튼 노출 여부
+   * @description 스크롤 위치에 따른 Top 버튼 노출 여부
    */
   const [showTopButton, setShowTopButton] = useState(false);
 
   /**
    * loadList
-   *
-   * @description
    * 빵집 목록 조회
-   * - 현재는 서버에서 전체 리스트를 내려받음
+   * 
+   * - 검색/페이지/limit 변경 시 동일한 조회 로직 재사용
    */
   const loadList = async () => {
     try {
@@ -83,35 +81,17 @@ function BakeryListPage() {
   };
 
   /**
-   * 페이지 변경 시 목록 재조회
+   * 페이지 또는 limit 변경 시 목록 재조회
+   *
+   * WHY?
+   * - 페이지 이동은 즉각적인 목록 갱신이 필요
    */
   useEffect(() => {
     loadList();
   }, [page, limit]);
 
-  /**
-   * 검색 debounce 처리
-   *
-   * @description
-   * - 검색어 입력 후 300ms 뒤 목록 재조회
-   * - 검색 시 페이지 1로 초기화
-   */
-  useEffect(() => {
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current);
-    }
+  // 스크롤 이벤트 처리(Top 버튼)
 
-    debounceRef.current = setTimeout(() => {
-      setPage(1);
-      loadList();
-    }, 300);
-
-    return () => clearTimeout(debounceRef.current);
-  }, [keyword]);
-
-  /**
-   * 스크롤 위치에 따라 Top 버튼 노출
-   */
   useEffect(() => {
     const handleScroll = () => {
       setShowTopButton(window.scrollY > 200);
@@ -122,10 +102,25 @@ function BakeryListPage() {
   }, []);
 
   /**
+   * handleSearch
+   *
+   * 검색 실행
+   * WHY?
+   * - 자동 검색으로 인한 서버 부하 방지
+   * - 엔터 / 검색 버튼 클릭 시에만 호출
+   */
+  const handleSearch = () => {
+    setPage(1);
+    loadList();
+  };
+
+  /**
    * handleDelete
    *
    * @description
-   * 빵집 삭제 처리 (삭제 사유 필수)
+   * 빵집 삭제 처리
+   * 
+   * - 삭제 사유를 함께 전달
    */
   const handleDelete = async (id) => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
@@ -143,30 +138,15 @@ function BakeryListPage() {
     }
   };
 
-  /**
-   * handleScrollTop
-   *
-   * @description
-   * 화면 최상단으로 스크롤 이동
-   */
+  // 화면 최상단으로 스크롤 이동
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  /**
-   * totalPages
-   *
-   * @description
-   * 프론트 기준 전체 페이지 수 계산
-   */
+  // 전체 페이지 수 (프론트 기준 계산)
   const totalPages = Math.ceil(bakeries.length / limit);
 
-  /**
-   * pagedBakeries
-   *
-   * @description
-   * 현재 페이지에 해당하는 목록만 slice
-   */
+  // 현재 페이지에 해당하는 빵집 목록
   const pagedBakeries = bakeries.slice(
     (page - 1) * limit,
     page * limit,
@@ -174,7 +154,6 @@ function BakeryListPage() {
 
   return (
     <div className="BakeryList">
-      {/* 헤더 */}
       <div className="BakeryList__header">
         <h1>빵집 리스트</h1>
         <button
@@ -186,15 +165,24 @@ function BakeryListPage() {
         </button>
       </div>
 
-      {/* 검색 + 페이지당 개수 */}
       <div className="BakeryList__search-row">
-        <div className="icon__input">
+        <div
+          className="icon__input"
+          onClick={handleSearch}
+          role="button"
+          tabIndex={0}
+        >
           <MdOutlineSearch />
           <input
             type="text"
             placeholder="빵집 이름 검색"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearch();
+              }
+            }}
           />
         </div>
 
@@ -212,7 +200,6 @@ function BakeryListPage() {
         </select>
       </div>
 
-      {/* 목록 */}
       {loading ? (
         <p>로딩 중...</p>
       ) : pagedBakeries.length === 0 ? (
@@ -265,14 +252,12 @@ function BakeryListPage() {
         </div>
       )}
 
-      {/* 페이지네이션 */}
       <Pagination
         page={page}
         totalPages={totalPages}
         onChange={setPage}
       />
 
-      {/* Top 버튼 */}
       {showTopButton && (
         <button
           type="button"
