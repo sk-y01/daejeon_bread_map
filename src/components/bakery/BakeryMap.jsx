@@ -74,6 +74,9 @@ const BakeryMap = () => {
   const openOverlay = (mapInstance, bakery, position) => {
     const overlay = ensureOverlay(mapInstance)
 
+    // 기존 오버레이가 열려있으면 먼저 닫기 (선택사항)
+    // overlay.setMap(null)
+
     overlay.setContent(createOverlayContent(bakery))
     overlay.setPosition(position)
     overlay.setMap(mapInstance)

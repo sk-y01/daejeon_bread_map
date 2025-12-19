@@ -55,5 +55,10 @@
 @media (min-width:768px) {
   .header {
     max-width: 40rem;
+    transform: translateX(0);
+    transition: .3s;
+  }
+  .header.active {
+    transform: translateX(-100%);
   }
 }
