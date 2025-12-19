@@ -12,7 +12,7 @@ const Header = () => {
               <span>대전빵지도</span>
             </Link>
           </h1>
-          <nav className="haeder_nav">
+          {/* <nav className="haeder_nav">
             <ul className="header__menu">
               <li>
                 <Link to="/">
@@ -21,9 +21,8 @@ const Header = () => {
                   <span></span>
                 </Link>
               </li>
-              {/* <li><Link to="/design">디자인</Link></li> */}
             </ul>
-          </nav>
+          </nav> */}
         </div>
       </div>
     </header>

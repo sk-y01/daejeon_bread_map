@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { MdOutlineSearch, MdPersonOutline, MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md"
+import { MdOutlineSearch, MdPersonOutline, MdArrowBackIosNew, MdArrowForwardIos, MdOutlineList } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
 import { fetchBakeries } from "../../../apis/bakeryApi"
 import BakeryMap from "../../../components/bakery/BakeryMap"
@@ -25,26 +25,6 @@ const MainPage = () => {
       setSearchKeyword(keyword)
     }
   };
-
-  // 1. 더보기 닫기
-  // 2. 닫기 버튼 클릭 시 section 영역 display:none 
-  const toggleVisible = () => {
-    setIsSectionVisible(!isSectionVisible); 
-  }
-
-  // Header active 클래스 추가/제거
-  // isSetionVisivle 상태를 의존성 배열에 추가
-  useEffect(() => {
-    const header = document.querySelector('.header');
-    if(!header) return;
-
-    if(!isSectionVisible) {
-      header.classList.add('active');
-    } else {
-      header.classList.remove('active');
-    }
-  }, [isSectionVisible]);
-
 
   // 로직 구성
   // 1. 최초 list 호출
@@ -72,7 +52,26 @@ const MainPage = () => {
       setFilterBakeries(filtered)
     }
   }, [bakeries, searchKeyword]);
+  
+  
+  // 1. 더보기 닫기
+  // 2. 닫기 버튼 클릭 시 section 영역 display:none 
+  const toggleVisible = () => {
+    setIsSectionVisible(!isSectionVisible); 
+  }
 
+  // Header active 클래스 추가/제거
+  // isSetionVisivle 상태를 의존성 배열에 추가
+  useEffect(() => {
+    const header = document.querySelector('.header');
+    if(!header) return;
+
+    if(!isSectionVisible) {
+      header.classList.add('active');
+    } else {
+      header.classList.remove('active');
+    }
+  }, [isSectionVisible]);
 
   return (
     <div className="main-page">
@@ -110,20 +109,28 @@ const MainPage = () => {
           </div>
         </div>
       </section>
-      <div className="main-page__loginBtn">
+      <div className="main-page__button">
         <button 
           type="button" 
-          className="btn btn__loginBtn"
+          className="floatingBtn btn__loginBtn"
           onClick={() => navigate('/login')}
         >
           <MdPersonOutline />
           <span>로그인</span>
         </button>
+        <button 
+          type="button" 
+          className="floatingBtn btn__mypageBtn"
+          onClick={() => navigate('/')}
+        >
+          <MdOutlineList />
+          <span>마이페이지</span>
+        </button>
       </div>
       <div className={isSectionVisible ? 'main-page__more' : 'main-page__more active'}>
           <button 
             type="button" 
-            className="btn btn__close"
+            className="btn btn__toggle"
             onClick={ toggleVisible }
           >
             {isSectionVisible ? <MdArrowBackIosNew />: <MdArrowForwardIos />}
