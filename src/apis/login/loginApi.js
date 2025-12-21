@@ -13,7 +13,7 @@ import { api } from "../axiosInstance";
  * @returns 
  */
 export const login = (data) => {
-  return api.post('/login', data)
+  return api.post('/auth/login', data)
 }
 
 /**
@@ -24,5 +24,5 @@ export const login = (data) => {
  * @returns 
  */
 export const join = (data) => {
-  return api.post('/join', data)
+  return api.post('/auth/join', data)
 }

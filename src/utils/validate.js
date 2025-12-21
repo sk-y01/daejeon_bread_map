@@ -61,3 +61,31 @@ export const validationPassword = (password) => {
     errorMessage: ''
   }
 }
+
+/**
+ * 비밀번호 확인 검증
+ * 
+ * @param { string } password          패스워드
+ * @param { string } passwordConfirm   패스워드 확인
+ * @returns { object } { isValid: boolean, errorMessage: string } 
+ */
+export const validationPasswordConfirm = (password, passwordConfirm) => {
+  if (!passwordConfirm || passwordConfirm.trim() === '') {
+    return {
+      isValid: false,
+      errorMessage: '비밀번호 확인을 입력해주세요.'
+    }
+  }
+
+  if (password !== passwordConfirm) {
+    return {
+      isValid: false,
+      errorMessage: '비밀번호가 일치하지 않습니다.'
+    }
+  }
+
+  return {
+    isValid: true,
+    errorMessage: ''
+  }
+}

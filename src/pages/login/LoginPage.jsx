@@ -1,6 +1,7 @@
 import { Suspense, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { validationEmail, validationPassword } from '../../utils/validate';
+import { login } from '../../apis/login/loginApi';
 import LoadingSpinner from '../../components/loading/LoadingSpinner'
 import logoImg from '../../assets/images/login/login_logo.svg'
 import './Login.style.scss'
@@ -52,13 +53,27 @@ const LoginPage = () => {
    * 
    * @param {*} e   이벤트 객체
    */
-  const loginSubmitHandler = (e) => {
+  // TODO : 로그인하는 것까진 완료 .. 로그인 후 세션 처리 추가할 것
+  const loginSubmitHandler = async (e) => {
     e.preventDefault();
+    
+    try {
+      const email = emailValue
+          , password = passwordValue
+  
+      const response = await login({ email, password })
 
-    const email = emailValue
-        , password = passwordValue
+      if (response.status === 200) {
+        navigate('/')
+      }
+    } catch (error) {
+      console.error('로그인인 실패 : ', error)
 
-    console.log('email, password : ', email, password)
+      if (error.response) {
+        console.error('에러 상태 코드 : ', error.response.status)
+        console.error('에러 메시지 : ', error.response.data)
+      }
+    }
   }
 
   return (
