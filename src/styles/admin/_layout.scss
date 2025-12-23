@@ -1,15 +1,63 @@
-@use "sass:map";
-@use "../color" as *;
+// 반응형 완료
+/* z-index 레이어 구조
+--------------------------------
+X 버튼        : 210
+사이드바      : 200
+dim           : 150
+햄버거 버튼   : 100
+-------------------------------- */
 
-/* 관리자 레이아웃 전체 */
+@use 'sass:map';
+@use '../color' as *;
+
+// 관리자 레이아웃
 .AdminLayout {
   min-height: 100vh;
-  background-color: map.get($colors, "cream");
+  background-color: map.get($colors, 'cream');
 }
 
-/* 사이드바 고정폭만큼 콘텐츠 밀기 */
+// 콘텐츠 영역
 .AdminLayout__content {
-  margin-left: 240px;   /* 사이드바 width랑 동일 */
+  margin-left: 240px; /* PC 사이드바 고정폭 */
   padding: 3rem;
   min-height: 100vh;
+}
+
+// 햄버거 버튼 (모바일)
+.AdminLayout__menu-btn {
+  display: none; /* PC 숨김 */
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: map.get($colors, 'main');
+
+  svg {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+}
+
+// dim (모바일)
+.AdminLayout__dim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 150;
+}
+
+// 모바일 전용
+@media (max-width: 768px) {
+  .AdminLayout__content {
+    margin-left: 0;
+    padding-top: 6rem; /* 햄버거 버튼 영역 확보 */
+  }
+
+  .AdminLayout__menu-btn {
+    display: block;
+    position: fixed;
+    top: 1.6rem;
+    right: 1.6rem;
+    z-index: 100;
+  }
 }

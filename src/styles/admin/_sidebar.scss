@@ -1,120 +1,171 @@
+// 반응형 완료
+/* z-index 레이어 구조
+--------------------------------
+X 버튼        : 210
+사이드바      : 200
+dim           : 150
+햄버거 버튼   : 100
+-------------------------------- */
+
 @use 'sass:map';
 @use '../color' as *;
 
+// 관리자 사이드바 (공통)
 .AdminSidebar {
-  position: fixed;              /* 사이드바 고정 */
+  position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
+  left: auto;
 
   width: 240px;
-  height: 100vh;                /* 화면 높이 기준 */
+  height: 100vh;
   padding: 2rem;
 
   background-color: map.get($colors, 'main');
   color: map.get($colors, 'white');
 
-  overflow-y: auto;             /* 메뉴 많아질 때 내부 스크롤 */
-  box-sizing: border-box;
-
-  &__title {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 2.4rem;
-  }
-
-  &__nav {
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-  }
-
-  /* 단일 메뉴 */
-  &__single {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    color: map.get($colors, 'white');
-    text-decoration: none;
-
-    &.active {
-      background-color: map.get($colors, 'sub');
-    }
-
-    &:hover {
-      background-color: map.get($colors, 'sub');
-    }
-  }
-
-  /* 그룹 */
-  &__group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-
-    &.active > .AdminSidebar__group-title {
-      background-color: map.get($colors, 'sub');
-    }
-
-    &:hover .AdminSidebar__submenu {
-      max-height: 200px;
-      opacity: 1;
-    }
-  }
-
-  &__group-title {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-
-  /* 서브메뉴 */
-  &__submenu {
-    margin-left: 1.6rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: all 0.3s ease;
-
-    a {
-      display: block;
-      width: 100%;
-      padding: 0.8rem 1rem;
-      border-radius: 8px;
-      font-size: 1.3rem;
-      color: map.get($colors, 'white');
-      text-decoration: none;
-      background-color: transparent;
-
-      &.active {
-        background-color: map.get($colors, 'sub');
-      }
-
-      &:hover {
-        background-color: map.get($colors, 'sub');
-      }
-    }
-  }
-}
-
-
-// 사이드바 하단 유저 영역
-.AdminSidebar {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  overflow-y: auto;
+  z-index: 200;
+
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
 }
 
-/* 하단 유저 영역 전체 */
+.AdminSidebar.is-open {
+  transform: translateX(0);
+}
+
+// 헤더 (관리자 메뉴 + X)
+.AdminSidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.4rem;
+}
+
+.AdminSidebar__title {
+  font-size: 1.8rem; /* 폰트사이즈(관리자메뉴 텍스트) */
+  font-weight: 700;
+  margin: 0; 
+}
+
+/* 닫기(X) 버튼 */
+.AdminSidebar__close {
+  display: none; /* 모바일 전용 */
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+
+  color: map.get($colors, 'white');
+  cursor: pointer;
+  line-height: 1;
+
+  svg {
+    display: block;
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+}
+
+// 네비게이션
+.AdminSidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+/* 단일 메뉴 */
+.AdminSidebar__single {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+
+  color: map.get($colors, 'white');
+  text-decoration: none;
+
+  &.active,
+  &:hover {
+    background-color: map.get($colors, 'sub');
+  }
+}
+
+/* 그룹 메뉴 */
+.AdminSidebar__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  &:hover .AdminSidebar__submenu {
+    max-height: 240px;
+    opacity: 1;
+  }
+
+  &.active > .AdminSidebar__group-title {
+    background-color: map.get($colors, 'sub');
+  }
+}
+
+.AdminSidebar__group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: map.get($colors, 'sub');
+  }
+}
+
+/* 서브메뉴 */
+.AdminSidebar__submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  margin-left: 1.6rem;
+
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.AdminSidebar__group.active .AdminSidebar__submenu {
+  max-height: 240px;
+  opacity: 1;
+}
+
+.AdminSidebar__submenu a {
+  display: block;
+  width: 100%;
+
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+
+  font-size: 1.4rem;
+  color: map.get($colors, 'white');
+  text-decoration: none;
+
+  &.active,
+  &:hover {
+    background-color: map.get($colors, 'sub');
+  }
+}
+
+// 하단 유저 영역
 .AdminSidebar__user {
-  margin-top: auto; /* 사이드바 맨 아래로 */
+  margin-top: auto;
   padding-top: 1.6rem;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 
@@ -123,34 +174,30 @@
   gap: 1rem;
 }
 
-/* 유저 정보 */
-.AdminSidebar__user-info {
-  padding: 0.8rem 1rem;
-}
-
-/* 메인 / 로그아웃 공통 */
 .AdminSidebar__user-link,
 .AdminSidebar__logout {
   display: flex;
   align-items: center;
-  gap: 0.4rem .8rem;
+  gap: 0.8rem;
 
-  padding: 0.8rem 1rem;
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+
   background: transparent;
   border: none;
-
   color: inherit;
   text-decoration: none;
   cursor: pointer;
   font-size: 1.4rem;
-  
+
   &:hover {
     background-color: map.get($colors, 'sub');
-    border-radius: 8px;
   }
 }
 
-/* 로그아웃 버튼 기본 스타일 제거 */
-.AdminSidebar__logout {
-  text-align: left;
+// 모바일
+@media (max-width: 768px) {
+  .AdminSidebar__close {
+    display: block;
+  }
 }
