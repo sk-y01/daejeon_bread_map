@@ -68,6 +68,21 @@ function AdminLayout() {
     return () => document.removeEventListener('keydown', handleTrap);
   }, [isSidebarOpen]);
 
+  /**
+   * 화면 리사이즈 시 모바일 사이드바 상태 초기화
+   * - 모바일에서 열어둔 dim이 PC로 전환 시 남는 문제 방지
+   */
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="AdminLayout">
       {/* 모바일 햄버거 버튼 */}

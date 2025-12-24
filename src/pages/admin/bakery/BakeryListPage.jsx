@@ -20,57 +20,21 @@ import { toImageUrl } from '../../../utils/imageUrl';
 function BakeryListPage() {
   const navigate = useNavigate();
 
-  /**
-   * @state bakeries
-   * @description 서버에서 조회한 전체 빵집 목록
-   */
   const [bakeries, setBakeries] = useState([]);
-
-  /**
-   * @state loading
-   * @description 목록 로딩 상태 제어
-   */
   const [loading, setLoading] = useState(true);
-
-  /**
-   * @state keyword
-   * @description 검색 키워드
-   */
   const [keyword, setKeyword] = useState('');
-
-  /**
-   * @state page
-   * @description 현재 페이지 번호
-   */
   const [page, setPage] = useState(1);
-
-  /**
-   * @state limit
-   * @description 페이지당 목록 개수
-   */
   const [limit, setLimit] = useState(10);
-
-  /**
-   * @state showTopButton
-   * @description 스크롤 위치에 따른 Top 버튼 노출 여부
-   */
   const [showTopButton, setShowTopButton] = useState(false);
 
   /**
-   * loadList
    * 빵집 목록 조회
-   * 
-   * - 검색/페이지/limit 변경 시 동일한 조회 로직 재사용
+   * - 페이지 / limit / 검색 공용 로직
    */
   const loadList = async () => {
     try {
       setLoading(true);
-
-      const res = await fetchBakeries({
-        keyword,
-        limit,
-      });
-
+      const res = await fetchBakeries({ keyword, limit });
       setBakeries(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error(error);
@@ -81,33 +45,26 @@ function BakeryListPage() {
   };
 
   /**
-   * 페이지 또는 limit 변경 시 목록 재조회
-   *
-   * WHY?
-   * - 페이지 이동은 즉각적인 목록 갱신이 필요
+   * 페이지 / limit 변경 시 재조회
    */
   useEffect(() => {
     loadList();
   }, [page, limit]);
 
-  // 스크롤 이벤트 처리(Top 버튼)
-
+  /**
+   * Top 버튼 스크롤 처리
+   */
   useEffect(() => {
     const handleScroll = () => {
       setShowTopButton(window.scrollY > 200);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   /**
-   * handleSearch
-   *
    * 검색 실행
-   * WHY?
-   * - 자동 검색으로 인한 서버 부하 방지
-   * - 엔터 / 검색 버튼 클릭 시에만 호출
+   * - 엔터 / 돋보기 클릭 시만 호출
    */
   const handleSearch = () => {
     setPage(1);
@@ -115,16 +72,10 @@ function BakeryListPage() {
   };
 
   /**
-   * handleDelete
-   *
-   * @description
-   * 빵집 삭제 처리
-   * 
-   * - 삭제 사유를 함께 전달
+   * 빵집 삭제
    */
   const handleDelete = async (id) => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
-
     const reason = window.prompt('삭제 사유를 입력해주세요.');
     if (!reason) return;
 
@@ -138,19 +89,12 @@ function BakeryListPage() {
     }
   };
 
-  // 화면 최상단으로 스크롤 이동
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // 전체 페이지 수 (프론트 기준 계산)
   const totalPages = Math.ceil(bakeries.length / limit);
-
-  // 현재 페이지에 해당하는 빵집 목록
-  const pagedBakeries = bakeries.slice(
-    (page - 1) * limit,
-    page * limit,
-  );
+  const pagedBakeries = bakeries.slice((page - 1) * limit, page * limit);
 
   return (
     <div className="BakeryList">
@@ -165,23 +109,27 @@ function BakeryListPage() {
         </button>
       </div>
 
+      {/* 검색 + 페이지당 개수 */}
       <div className="BakeryList__search-row">
-        <div
-          className="icon__input"
-          onClick={handleSearch}
-          role="button"
-          tabIndex={0}
-        >
-          <MdOutlineSearch />
+        <div className="icon__input">
+          {/* 돋보기 클릭 시 검색 */}
+          <MdOutlineSearch
+            role="button"
+            tabIndex={0}
+            aria-label="검색"
+            onClick={handleSearch}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSearch();
+            }}
+          />
+
           <input
             type="text"
             placeholder="빵집 이름 검색"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleSearch();
-              }
+              if (e.key === 'Enter') handleSearch();
             }}
           />
         </div>
@@ -200,6 +148,7 @@ function BakeryListPage() {
         </select>
       </div>
 
+      {/* 목록 */}
       {loading ? (
         <p>로딩 중...</p>
       ) : pagedBakeries.length === 0 ? (

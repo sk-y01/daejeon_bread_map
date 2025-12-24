@@ -1,21 +1,23 @@
-// 반응형 완료
-/* z-index 레이어 구조
---------------------------------
-X 버튼        : 210
-사이드바      : 200
-dim           : 150
-햄버거 버튼   : 100
--------------------------------- */
-
 @use 'sass:map';
 @use '../color' as *;
 
-// 관리자 사이드바 (공통)
+/* =================================================
+   관리자 사이드바
+   =================================================
+   z-index 구조
+   - X 버튼      : 210
+   - 사이드바    : 200
+   - dim         : 150
+   - 햄버거 버튼 : 100
+   ================================================= */
+
+/* =========================
+   기본 (PC)
+   ========================= */
 .AdminSidebar {
   position: fixed;
   top: 0;
-  right: 0;
-  left: auto;
+  left: 0;
 
   width: 240px;
   height: 100vh;
@@ -30,61 +32,58 @@ dim           : 150
   overflow-y: auto;
   z-index: 200;
 
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
+  /* PC에서는 항상 노출 */
+  transform: none;
 }
 
-.AdminSidebar.is-open {
-  transform: translateX(0);
-}
-
-// 헤더 (관리자 메뉴 + X)
+/* =========================
+   헤더 (모바일)
+   ========================= */
 .AdminSidebar__header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 2.4rem;
 }
 
 .AdminSidebar__title {
-  font-size: 1.8rem; /* 폰트사이즈(관리자메뉴 텍스트) */
+  font-size: 1.8rem;
   font-weight: 700;
-  margin: 0; 
 }
 
 /* 닫기(X) 버튼 */
 .AdminSidebar__close {
-  display: none; /* 모바일 전용 */
+  display: none;
   background: transparent;
   border: none;
   padding: 0;
-  margin: 0;
-
+  line-height: 1;
   color: map.get($colors, 'white');
   cursor: pointer;
-  line-height: 1;
+  z-index: 210;
 
   svg {
     display: block;
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2.6rem;
+    height: 2.6rem;
   }
 }
 
-// 네비게이션
+/* =========================
+   네비게이션
+   ========================= */
 .AdminSidebar__nav {
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
 }
 
-/* 단일 메뉴 */
+/* 단일 메뉴 (즉시 이동) */
 .AdminSidebar__single {
   display: flex;
   align-items: center;
   gap: 0.8rem;
 
-  width: 100%;
   padding: 1rem 1.2rem;
   border-radius: 8px;
 
@@ -97,19 +96,23 @@ dim           : 150
   }
 }
 
-/* 그룹 메뉴 */
+/* =========================
+   그룹 메뉴 (상위)
+   ========================= */
 .AdminSidebar__group {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
 
+  /* 하위 메뉴가 active일 때만 상위 메뉴 강조 */
+  &.active > .AdminSidebar__group-title {
+    background-color: map.get($colors, 'sub');
+  }
+
+  /* PC에서 hover 시 하위 메뉴 표시 */
   &:hover .AdminSidebar__submenu {
     max-height: 240px;
     opacity: 1;
-  }
-
-  &.active > .AdminSidebar__group-title {
-    background-color: map.get($colors, 'sub');
   }
 }
 
@@ -122,25 +125,25 @@ dim           : 150
   border-radius: 8px;
   cursor: pointer;
 
-  &:hover {
-    background-color: map.get($colors, 'sub');
-  }
+  /* hover 시 색상 변화 없음 (의도된 UX) */
 }
 
-/* 서브메뉴 */
+/* =========================
+   서브메뉴
+   ========================= */
 .AdminSidebar__submenu {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
 
   margin-left: 1.6rem;
-
   max-height: 0;
   opacity: 0;
   overflow: hidden;
   transition: all 0.3s ease;
 }
 
+/* 그룹 활성화 시 */
 .AdminSidebar__group.active .AdminSidebar__submenu {
   max-height: 240px;
   opacity: 1;
@@ -148,8 +151,6 @@ dim           : 150
 
 .AdminSidebar__submenu a {
   display: block;
-  width: 100%;
-
   padding: 1rem 1.2rem;
   border-radius: 8px;
 
@@ -163,7 +164,9 @@ dim           : 150
   }
 }
 
-// 하단 유저 영역
+/* =========================
+   하단 유저 영역
+   ========================= */
 .AdminSidebar__user {
   margin-top: auto;
   padding-top: 1.6rem;
@@ -195,8 +198,24 @@ dim           : 150
   }
 }
 
-// 모바일
+/* =========================
+   모바일 전용
+   ========================= */
 @media (max-width: 768px) {
+  .AdminSidebar {
+    left: auto;
+    right: 0;
+
+    /* 기본 숨김 */
+    transform: translateX(100%);
+    transition: none;
+  }
+
+  .AdminSidebar.is-open {
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+  }
+
   .AdminSidebar__close {
     display: block;
   }
