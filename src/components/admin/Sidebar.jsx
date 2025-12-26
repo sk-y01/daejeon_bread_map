@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   FaHome,
   FaUser,
@@ -10,10 +10,21 @@ import {
 import { IoClose } from 'react-icons/io5';
 
 const AdminSidebar = forwardRef(({ isOpen, onClose }, ref) => {
+  const navigate = useNavigate()
   const { pathname } = useLocation();
 
   const isUser = pathname.startsWith('/admin/users');
   const isBakery = pathname.startsWith('/admin/bakery');
+
+  /**
+   * 로그아웃 핸들러
+   */
+  const logoutHandler = () => {
+    localStorage.removeItem('user')
+    alert('로그아웃이 성공적으로 완료되었습니다.')
+    
+    navigate('/')
+  }
 
   return (
     <aside
@@ -95,7 +106,11 @@ const AdminSidebar = forwardRef(({ isOpen, onClose }, ref) => {
         </NavLink>
 
         {/* TODO: 로그아웃 API 연동 */}
-        <button type="button" className="AdminSidebar__logout">
+        <button 
+          type="button" 
+          className="AdminSidebar__logout" 
+          onClick={ logoutHandler }
+        >
           <FaSignOutAlt />
           로그아웃
         </button>

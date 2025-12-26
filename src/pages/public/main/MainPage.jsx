@@ -26,6 +26,16 @@ const MainPage = () => {
     }
   };
 
+  const pageEnterHandler = () => {
+    const item = localStorage.getItem('user')
+
+    if (!item) {
+      navigate('/login')
+    } else {
+      navigate('/admin')
+    }
+  }
+
   // 로직 구성
   // 1. 최초 list 호출
   useEffect(() => {
@@ -113,7 +123,7 @@ const MainPage = () => {
         <button 
           type="button" 
           className="floatingBtn btn__loginBtn"
-          onClick={() => navigate('/login')}
+          onClick={ pageEnterHandler }
         >
           <MdPersonOutline />
           <span>로그인</span>

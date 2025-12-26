@@ -64,6 +64,7 @@ const LoginPage = () => {
       const response = await login({ email, password })
 
       if (response.status === 200) {
+        localStorage.setItem('user', JSON.stringify(response.data))
         navigate('/')
       }
     } catch (error) {
