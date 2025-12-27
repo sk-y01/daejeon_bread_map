@@ -1,4 +1,4 @@
-import React, {Suspense, useState } from 'react'
+import React, {Suspense, useEffect, useState } from 'react'
 import LoadingSpinner from '../loading/LoadingSpinner'
 import Pagination from '../common/Pagination/Pagination'
 import { SlExclamation } from "react-icons/sl";
@@ -17,6 +17,12 @@ function BakeryList({ filterBakeries, searchKeyword }) {
     (page - 1) * limit,
     page * limit,
   );
+
+  // 검색 시 페이지 리셋 수정
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setPage(1);
+  }, [searchKeyword, filterBakeries.length]);
 
   return (
     <div className="bakeryList">

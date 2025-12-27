@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { MdOutlineSearch, MdPersonOutline, MdArrowBackIosNew, MdArrowForwardIos, MdOutlineList } from "react-icons/md"
+import { MdOutlineSearch, MdPersonOutline, MdArrowBackIosNew, MdArrowForwardIos, MdOutlineList, MdClose } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
 import { fetchBakeries } from "../../../apis/bakeryApi"
 import BakeryMap from "../../../components/bakery/BakeryMap"
@@ -83,6 +83,12 @@ const MainPage = () => {
     }
   }, [isSectionVisible]);
 
+  // close 버튼 검색 초기화
+  const handleResetSearch = () => {
+    setKeyword('');
+    setSearchKeyword('');
+  };
+  
   return (
     <div className="main-page">
       <section className={isSectionVisible ? 'main-page__section' : 'main-page__section active'}>
@@ -99,6 +105,7 @@ const MainPage = () => {
               autoComplete="off" 
               placeholder="대전 빵집 찾기" 
             />
+            <MdClose onClick={handleResetSearch}/>
           </div>
           <div className="main-page__cate">
             <div className="Design__button">
@@ -113,6 +120,7 @@ const MainPage = () => {
         <div className="main-page__content">
           <div className="main-page__content__inner">
             <BakeryList 
+              key={searchKeyword} // searchKeyword 변경 시 컴포넌트 리마운트로 페이지 자동 리셋
               filterBakeries={ filterBakeries } 
               searchKeyword={ searchKeyword }
             />
