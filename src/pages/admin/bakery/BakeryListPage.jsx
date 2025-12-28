@@ -4,7 +4,7 @@
  * @description
  * 관리자용 빵집 목록 페이지
  * - 빵집 목록 조회
- * - 엔터 / 돋보기 클릭 기반 검색
+ * - 엔터 / 클릭 기반 검색
  * - 프론트 기준 페이지네이션
  * - 수정 / 삭제 기능 제공
  */
@@ -44,15 +44,13 @@ function BakeryListPage() {
     }
   };
 
-  /**
-   * 페이지 / limit 변경 시 재조회
-   */
+  // 페이지 / limit 변경 시 재조회
   useEffect(() => {
     loadList();
   }, [page, limit]);
 
   /**
-   * Top 버튼 스크롤 처리
+   * Top 버튼 노출 제어
    */
   useEffect(() => {
     const handleScroll = () => {
@@ -64,16 +62,15 @@ function BakeryListPage() {
 
   /**
    * 검색 실행
-   * - 엔터 / 돋보기 클릭 시만 호출
+   * - 엔터
+   * - 돋보기 아이콘 클릭
    */
   const handleSearch = () => {
     setPage(1);
     loadList();
   };
 
-  /**
-   * 빵집 삭제
-   */
+  // 빵집 삭제  
   const handleDelete = async (id) => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
     const reason = window.prompt('삭제 사유를 입력해주세요.');
@@ -89,6 +86,7 @@ function BakeryListPage() {
     }
   };
 
+  // 스크롤 최상단 이동
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -98,57 +96,68 @@ function BakeryListPage() {
 
   return (
     <div className="BakeryList">
+      {/* Header (PC) */}
       <div className="BakeryList__header">
-        <h1>빵집 리스트</h1>
-        <button
-          type="button"
-          className="btn btn__sub"
-          onClick={() => navigate('/admin/bakery/form')}
-        >
-          새 빵집 등록
-        </button>
+        <h2>빵집 리스트</h2>
+        <span className="BakeryList__count">총 {bakeries.length}개</span>
       </div>
 
-      {/* 검색 + 페이지당 개수 */}
+      {/* Search / Action Area */}
       <div className="BakeryList__search-row">
-        <div className="icon__input">
-          {/* 돋보기 클릭 시 검색 */}
-          <MdOutlineSearch
-            role="button"
-            tabIndex={0}
-            aria-label="검색"
-            onClick={handleSearch}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') handleSearch();
-            }}
-          />
+        {/* 검색 + 새 빵집 등록 */}
+        <div className="BakeryList__row BakeryList__row--search">
+          {/* 검색 input */}
+          <div className="icon__input">
+            {/* 돋보기 아이콘 (클릭 검색) */}
+            <button
+              type="button"
+              className="icon__input-icon"
+              aria-label="검색"
+              onClick={handleSearch}
+            >
+              <MdOutlineSearch />
+            </button>
 
-          <input
-            type="text"
-            placeholder="빵집 이름 검색"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') handleSearch();
-            }}
-          />
+            {/* 검색어 입력 */}
+            <input
+              type="text"
+              placeholder="빵집 이름 검색"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleSearch();
+              }}
+            />
+          </div>
+
+          {/* 새 빵집 등록 */}
+          <button
+            type="button"
+            className="btn btn__sub"
+            onClick={() => navigate('/admin/bakery/form')}
+          >
+            새 빵집 등록
+          </button>
         </div>
 
-        <select
-          className="BakeryList__select"
-          value={limit}
-          onChange={(e) => {
-            setLimit(Number(e.target.value));
-            setPage(1);
-          }}
-        >
-          <option value={10}>10개씩</option>
-          <option value={20}>20개씩</option>
-          <option value={50}>50개씩</option>
-        </select>
+        {/* 페이지당 개수 셀렉트 */}
+        <div className="BakeryList__row BakeryList__row--select">
+          <select
+            className="BakeryList__select"
+            value={limit}
+            onChange={(e) => {
+              setLimit(Number(e.target.value));
+              setPage(1);
+            }}
+          >
+            <option value={10}>10개씩</option>
+            <option value={20}>20개씩</option>
+            <option value={50}>50개씩</option>
+          </select>
+        </div>
       </div>
 
-      {/* 목록 */}
+      {/* Bakery List */}
       {loading ? (
         <p>로딩 중...</p>
       ) : pagedBakeries.length === 0 ? (
@@ -167,12 +176,7 @@ function BakeryListPage() {
 
               <div className="BakeryCard__content">
                 <h3 title={item.name}>{item.name}</h3>
-                <p>
-                  <strong>카테고리:</strong>{' '}
-                  {Array.isArray(item.category)
-                    ? item.category.join(' / ')
-                    : item.category}
-                </p>
+                <p><strong>카테고리:</strong> {item.category}</p>
                 <p><strong>대표 메뉴:</strong> {item.menu}</p>
                 <p><strong>주소:</strong> {item.address}</p>
                 <p><strong>전화번호:</strong> {item.phone}</p>
@@ -201,12 +205,16 @@ function BakeryListPage() {
         </div>
       )}
 
-      <Pagination
-        page={page}
-        totalPages={totalPages}
-        onChange={setPage}
-      />
+      {/* Pagination */}
+      <div className="BakeryList__pagination">
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onChange={setPage}
+        />
+      </div>
 
+      {/* Top Button */}
       {showTopButton && (
         <button
           type="button"
