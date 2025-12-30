@@ -5,7 +5,7 @@ import { SlExclamation } from "react-icons/sl";
 
 const BakeryItem = React.lazy(() => import('./BakeryItem'))
 
-function BakeryList({ filterBakeries, searchKeyword }) {  
+function BakeryList({ filterBakeries, searchKeyword, onBakeryClick }) {  
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
 
@@ -38,7 +38,11 @@ function BakeryList({ filterBakeries, searchKeyword }) {
           ) : (
             <>
               {pagedBakeries.map(bakery => (
-                <BakeryItem key={bakery._id} bakery={bakery} />
+                <BakeryItem 
+                  onBakeryClick={onBakeryClick}
+                  key={bakery._id} 
+                  bakery={bakery} 
+                />
               ))}
               <Pagination
                 page={page}

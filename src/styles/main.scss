@@ -2,12 +2,13 @@
 @use "../styles/color" as *;
 
 .main-page {
+  position: relative;
   width: 100%;
 
   &__section {
     position: relative;
     text-align: center;
-    height: 100vh;
+    height: calc(100vh - 2rem);
   }
 
   &__search {
@@ -125,6 +126,7 @@
 .bakeryList {
   width: 100%;
   padding: 2rem;
+  box-sizing: border-box;
 
   .bakeryItem {
     text-align-last: left;
@@ -205,7 +207,6 @@
       position: relative;
       background: #fff;
       max-width: 40rem;
-      height: 100vh;
       overflow-y: auto;
       scrollbar-width: none;
       -ms-overflow-style: none;

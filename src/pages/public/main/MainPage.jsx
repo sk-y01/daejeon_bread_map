@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { fetchBakeries } from "../../../apis/bakeryApi"
 import BakeryMap from "../../../components/bakery/BakeryMap"
 import BakeryList from "../../../components/bakery/BakeryList"        
+import BakeryDetail from "../../../components/bakery/BakeryDetail"
 
 
 const MainPage = () => {
@@ -12,6 +13,9 @@ const MainPage = () => {
   const [filterBakeries, setFilterBakeries] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [isSectionVisible, setIsSectionVisible] = useState(true);
+  const [selectedBakeryId, setSelectedBakeryId] = useState(null);
+  const [selectedBakery, setSelectedBakery] = useState(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
   
   const navigate = useNavigate();
 
@@ -89,6 +93,20 @@ const MainPage = () => {
     setSearchKeyword('');
   };
   
+  // BakeryItem Click Handler 정의 
+  // BakeryList prop로 전달 
+  const handleBakeryClick = (bakery) => {
+    setSelectedBakery(bakery);
+    setSelectedBakeryId(bakery._id);
+    setIsDetailOpen(true);
+  };
+  
+  const handleCloseDetail = () => {
+    setIsDetailOpen(false);
+    setSelectedBakeryId(null);
+    setSelectedBakery(null);
+  }
+
   return (
     <div className="main-page">
       <section className={isSectionVisible ? 'main-page__section' : 'main-page__section active'}>
@@ -105,7 +123,12 @@ const MainPage = () => {
               autoComplete="off" 
               placeholder="대전 빵집 찾기" 
             />
-            <MdClose onClick={handleResetSearch}/>
+            <button 
+              type="button"
+              onClick={handleResetSearch}
+            >
+              <MdClose />
+            </button>
           </div>
           <div className="main-page__cate">
             <div className="Design__button">
@@ -123,10 +146,20 @@ const MainPage = () => {
               key={searchKeyword} // searchKeyword 변경 시 컴포넌트 리마운트로 페이지 자동 리셋
               filterBakeries={ filterBakeries } 
               searchKeyword={ searchKeyword }
+              onBakeryClick={ handleBakeryClick }
             />
           </div>
         </div>
       </section>
+      { 
+        isDetailOpen && (
+          <BakeryDetail 
+            bakery={ selectedBakery }
+            onClose={ handleCloseDetail }
+          />
+        )
+      }
+      
       <div className="main-page__button">
         <button 
           type="button" 
@@ -146,14 +179,14 @@ const MainPage = () => {
         </button>
       </div>
       <div className={isSectionVisible ? 'main-page__more' : 'main-page__more active'}>
-          <button 
-            type="button" 
-            className="btn btn__toggle"
-            onClick={ toggleVisible }
-          >
-            {isSectionVisible ? <MdArrowBackIosNew />: <MdArrowForwardIos />}
-          </button>
-        </div>
+        <button 
+          type="button" 
+          className="btn btn__toggle"
+          onClick={ toggleVisible }
+        >
+          {isSectionVisible ? <MdArrowBackIosNew />: <MdArrowForwardIos />}
+        </button>
+      </div>
       <div className="main-page__map">
         <BakeryMap />
       </div>

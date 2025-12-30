@@ -16,6 +16,7 @@ import JoinPage from './pages/login/JoinPage'
 
 import "./styles/components/_header.scss";
 import "./styles/main.scss";
+import "./components/bakery/BakeryDetail.scss"
 
 import "./styles/admin/_layout.scss";
 import "./styles/admin/_sidebar.scss";
@@ -32,7 +33,6 @@ function App() {
           <Route index element={ <MainPage /> } />
           <Route path='design' element={ <DesignPage /> } />
         </Route>
-
         <Route path='/admin' element={ <AdminLayout /> }>
           <Route index element={ <AdminMainPage /> } />
 
