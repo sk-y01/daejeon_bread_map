@@ -17,7 +17,6 @@ import { api } from './axiosInstance';
  * @param {*}     data  FormData
  */
 export const createBakery = (data) => {
-  console.log('data : ', data)
   return api.post('/bakeries/add', data);
 };
 

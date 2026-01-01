@@ -1,0 +1,24 @@
+@use 'sass:map';
+@use '../color' as *;
+
+.table__wrap {
+  width: 100%;
+  overflow: hidden;
+
+  table {
+    width: 100%;
+
+    th {
+      vertical-align: middle;
+      padding: .5rem;
+      background-color: map.get($colors, 'sub');
+      color: map.get($colors, 'white');
+    }
+
+    td {
+      vertical-align: middle;
+      padding: .5rem 1rem;
+      background-color: map.get($colors, 'cream');
+    }
+  }
+}
