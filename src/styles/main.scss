@@ -7,7 +7,7 @@
 
   &__section {
     position: relative;
-    min-width: 40rem;
+    // min-width: 40rem;
     text-align: center;
     height: 100vh;
   }
@@ -206,8 +206,8 @@
   .main-page {
 
     &__section {
-      position: relative;
-      max-width: 40rem;
+      // position: relative;
+      // max-width: 40rem;
       z-index: 10;
       box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.1);
       transform: translateX(0);
