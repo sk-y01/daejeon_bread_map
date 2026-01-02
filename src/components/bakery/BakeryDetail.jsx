@@ -4,7 +4,8 @@ import './BakeryDetail.scss'
 
 
 const BakeryDetail = ({ bakery, onClose }) => {
-  const { name, address, phone, category } = bakery;
+  const { name, address, phone, category, imageUrl } = bakery;
+  
   return (
     <div className="bakeryDetail">
       <div className="bakeryDetail__inner">
@@ -27,6 +28,22 @@ const BakeryDetail = ({ bakery, onClose }) => {
                 <p key={ cate } className="category">{ cate }</p>
               ))
             }
+          </div>
+          <div className="bakeryItem__thumbnail">
+            <ul>
+              {
+                !imageUrl
+                ? (
+                  <li>
+                    <img src="/src/assets/images/main/bakery_img01.png" alt="성심당 본점" />
+                  </li>
+                ) : (
+                  <li>
+                    <img src={ imageUrl } alt={ name } />
+                  </li>
+                )
+              }
+            </ul>
           </div>
           
         </div>

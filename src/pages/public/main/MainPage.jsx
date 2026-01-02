@@ -87,14 +87,15 @@ const MainPage = () => {
     }
   }, [isSectionVisible]);
 
-  // close 버튼 검색 초기화
+  // Search Close 버튼 검색 초기화
   const handleResetSearch = () => {
     setKeyword('');
     setSearchKeyword('');
   };
   
   // BakeryItem Click Handler 정의 
-  // BakeryList prop로 전달 
+  // BakeryList prop로 전달
+  // BakeryItem prop로 전달 
   const handleBakeryClick = (bakery) => {
     setSelectedBakery(bakery);
     setSelectedBakeryId(bakery._id);
@@ -109,7 +110,7 @@ const MainPage = () => {
 
   return (
     <div className="main-page">
-      <section className={isSectionVisible ? 'main-page__section' : 'main-page__section active'}>
+      <section className={ isSectionVisible ? 'main-page__section' : 'main-page__section active' }>
         <div className="main-page__search">
           <div className="search__input"> 
             <MdOutlineSearch />
@@ -117,15 +118,15 @@ const MainPage = () => {
               type="text" 
               name="searchInput" 
               id="searchInput" 
-              value={keyword}
-              onChange={onChangeSearch}
-              onKeyDown={searchEnterHandler} 
+              value={ keyword }
+              onChange={ onChangeSearch }
+              onKeyDown={ searchEnterHandler } 
               autoComplete="off" 
               placeholder="대전 빵집 찾기" 
             />
             <button 
               type="button"
-              onClick={handleResetSearch}
+              onClick={ handleResetSearch }
             >
               <MdClose />
             </button>
@@ -148,17 +149,17 @@ const MainPage = () => {
               searchKeyword={ searchKeyword }
               onBakeryClick={ handleBakeryClick }
             />
+            { 
+              isDetailOpen && (
+                <BakeryDetail 
+                  bakery={ selectedBakery }
+                  onClose={ handleCloseDetail }
+                />
+              )
+            }
           </div>
         </div>
       </section>
-      { 
-        isDetailOpen && (
-          <BakeryDetail 
-            bakery={ selectedBakery }
-            onClose={ handleCloseDetail }
-          />
-        )
-      }
       
       <div className="main-page__button">
         <button 
