@@ -1,5 +1,6 @@
 import React from 'react'
 import { MdClose } from "react-icons/md"
+import { FaMapMarkerAlt,  FaPhoneAlt, FaRegClock } from "react-icons/fa";
 import './BakeryDetail.scss'
 
 
@@ -18,10 +19,10 @@ const BakeryDetail = ({ bakery, onClose }) => {
           <MdClose />
         </button>
         <div className="bakeryDetail__content">
-          <h2>{ name }</h2>
-          <p>주소: { address } </p>
-          <p>전화번호: { phone }</p>
-          
+          <h3>{ name }</h3>
+          <p><FaMapMarkerAlt /> { address } </p>
+          <p><FaPhoneAlt /> { phone }</p>
+          <p><FaRegClock /> 10:00 - 20:00</p>
           <div>
             {
               category.map(cate => (
@@ -29,7 +30,7 @@ const BakeryDetail = ({ bakery, onClose }) => {
               ))
             }
           </div>
-          <div className="bakeryItem__thumbnail">
+          <div className="bakeryDetail__thumbnail">
             <ul>
               {
                 !imageUrl
@@ -45,7 +46,35 @@ const BakeryDetail = ({ bakery, onClose }) => {
               }
             </ul>
           </div>
-          
+          <div className="bakeryDetail__menus">
+            <h4>메뉴</h4>
+            <ul className="bakeryDetail__menus__inner">
+              <li>
+                <p><img src="/src/assets/images/main/menu_img.jpg" alt="메뉴 이미지" /></p>
+                <ul>
+                  <li className="menus__title">생딸기 티라미수</li>
+                  <li>고소한 마스카포네 크림과 새콤달콤한 딸기의 환상적인 조합🍓 진짜 맛있어요..?</li>
+                  <li className="menus__price">9,500원</li>
+                </ul>
+              </li>
+              <li>
+                <p><img src="/src/assets/images/main/menu_img.jpg" alt="메뉴 이미지" /></p>
+                <ul>
+                  <li className="menus__title">생딸기 티라미수</li>
+                  <li>고소한 마스카포네 크림과 새콤달콤한 딸기의 환상적인 조합🍓 진짜 맛있어요..?</li>
+                  <li className="menus__price">9,500원</li>
+                </ul>
+              </li>
+              <li>
+                <p><img src="/src/assets/images/main/menu_img.jpg" alt="메뉴 이미지" /></p>
+                <ul>
+                  <li className="menus__title">생딸기 티라미수</li>
+                  <li>고소한 마스카포네 크림과 새콤달콤한 딸기의 환상적인 조합🍓 진짜 맛있어요..?</li>
+                  <li className="menus__price">9,500원</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -8,6 +8,9 @@
   width: 100%;
   height: 100vh;
   background: #fff;
+  text-align: left;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.1);
   z-index: 100;
   overflow-y: auto;
   scrollbar-width: none;
@@ -49,24 +52,31 @@
   }
 
   &__content {
-    margin-top: 3rem;
+    margin-top: 4rem;
 
-    h2 {
+    h3 {
       font-size: 2.4rem;
       font-weight: 600;
-      margin-bottom: 1.5rem;
-      color: map.get($colors, "main");
+      margin: 1.5rem 0;
       line-height: 1.3;
+      color: map.get($colors, "main");
     }
 
-    p {
+    > p {
       font-size: 1.6rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
+      line-height: 1.4;
       color: map.get($colors, "gray");
-
+      word-break: keep-all;
+      margin-bottom: 0.5rem;
       &:last-of-type {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      svg {
+        color:#b4b4b4;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.3rem;
       }
     }
 
@@ -82,8 +92,8 @@
     }
   }
 
-  .bakeryItem__thumbnail {
-    margin-top: 2rem;
+  &__thumbnail {
+    margin-top: 1rem;
 
     ul {
       display: flex;
@@ -100,10 +110,81 @@
 
         img {
           width: 100%;
-          max-width: 300px;
+          max-width: 160px;
           height: auto;
           border-radius: 1rem;
           object-fit: cover;
+        }
+      }
+    }
+  }
+
+  .bakeryDetail__menus {
+    margin-top: 2rem;
+
+    h4 {
+      position: relative;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: map.get($colors, "main");
+      padding-left: 8px;
+      margin-bottom: 1rem;
+      &::before {
+        content: '';
+        position: absolute;
+        top: 4px;
+        left: 0;
+        width: 3px;
+        height: 20px;
+        background: map.get($colors, "main");
+      }
+    }
+
+    &__inner {
+      > li { 
+        display: flex;
+        border-bottom: 1px solid map.get($colors, "light-gray");
+        padding: 1.5rem 0;
+        &:last-of-type {
+          border-bottom: none;
+
+        }
+        > p {
+          flex: 1;
+          width: 120px;
+          height: 120px;
+
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 1rem;
+            object-fit: cover;
+          }
+        }
+        > ul {
+          flex: 2;
+          width: calc(100% - 120px);
+          margin-left: 1.5rem;
+          > li {
+            font-size: 1.4rem;
+            color: map.get($colors, "gray");
+            line-height: 1.4;
+            word-break: keep-all;
+            margin-bottom: 0.5rem;
+            &:last-of-type {
+              margin-bottom: 1rem;
+            }
+
+            &.menus__title {  
+              font-size: 1.6rem;
+              font-weight: 600;
+              margin-bottom: 0.5rem;
+            }
+            &.menus__price {
+              font-size: 1.4rem;  
+              font-weight: 600;
+            }
+          }
         }
       }
     }
@@ -128,22 +209,14 @@
       min-height: auto;
     }
 
-    &__close {
-      top: 2.5rem;
-      right: 2.5rem;
-    }
-
     &__content {
-      margin-top: 0;
 
-      h2 {
+      h3 {
         font-size: 2.6rem;
-        margin-bottom: 2rem;
       }
 
       p {
         font-size: 1.6rem;
-        margin-bottom: 1.2rem;
       }
     }
 
@@ -151,7 +224,7 @@
       ul {
         li {
           img {
-            max-width: 100%;
+
           }
         }
       }

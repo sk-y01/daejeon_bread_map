@@ -150,10 +150,11 @@
       color: map.get($colors, "gray");
       .address {
         margin-top: 1rem;
-        max-width: 94%;
+        max-width: 95%;
         text-align: left;
         line-height: 1.2;
         color: map.get($colors, "point");
+        word-break: keep-all;
       }
       .category {
         display: inline-block;
@@ -205,6 +206,7 @@
 
     &__section {
       position: relative;
+      min-width: 40rem;
       overflow-y: auto;
       scrollbar-width: none;
       -ms-overflow-style: none;
@@ -212,8 +214,15 @@
         display: none;
       }
       z-index: 10;
+      box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.1);
       transform: translateX(0);
       transition: transform 0.3s ease-in-out;
+
+      &__inner {
+        width: 40rem;
+        height: 100vh;
+        box-shadow: 5px 0px 10px 0px rgba(0, 0, 0, 0.2)
+      }
     }
 
     &__search {
@@ -221,7 +230,6 @@
       top: 67px;
       padding: 2rem 0;
       background: #fff;
-      border-right: 1px solid #d9d9d9;
     }
 
     &__content {
@@ -229,7 +237,6 @@
       background: #fff;
       top: 22rem;
       max-height: 100vh;
-      border-right: 1px solid #d9d9d9;
 
       &__inner {
         background: none;

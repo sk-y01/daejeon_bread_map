@@ -111,55 +111,66 @@ const MainPage = () => {
   return (
     <div className="main-page">
       <section className={ isSectionVisible ? 'main-page__section' : 'main-page__section active' }>
-        <div className="main-page__search">
-          <div className="search__input"> 
-            <MdOutlineSearch />
-            <input 
-              type="text" 
-              name="searchInput" 
-              id="searchInput" 
-              value={ keyword }
-              onChange={ onChangeSearch }
-              onKeyDown={ searchEnterHandler } 
-              autoComplete="off" 
-              placeholder="대전 빵집 찾기" 
-            />
-            <button 
-              type="button"
-              onClick={ handleResetSearch }
-            >
-              <MdClose />
-            </button>
+        <div className="main-page__section__inner">
+          <div className="main-page__search">
+            <div className="search__input"> 
+              <MdOutlineSearch />
+              <input 
+                type="text" 
+                name="searchInput" 
+                id="searchInput" 
+                value={ keyword }
+                onChange={ onChangeSearch }
+                onKeyDown={ searchEnterHandler } 
+                autoComplete="off" 
+                placeholder="대전 빵집 찾기" 
+              />
+              <button 
+                type="button"
+                onClick={ handleResetSearch }
+              >
+                <MdClose />
+              </button>
+            </div>
+            <div className="main-page__cate">
+              <div className="Design__button">
+                <button type="button" className="btn btn__sub--rounded">식빵</button>
+                <button type="button" className="btn btn__light--rounded">케이크</button>
+                <button type="button" className="btn btn__light--rounded">페스츄리</button>
+                <button type="button" className="btn btn__light--rounded">휘낭시에</button>
+                <button type="button" className="btn btn__light--rounded">치아바타</button>
+              </div>
+            </div>
           </div>
-          <div className="main-page__cate">
-            <div className="Design__button">
-              <button type="button" className="btn btn__sub--rounded">식빵</button>
-              <button type="button" className="btn btn__light--rounded">케이크</button>
-              <button type="button" className="btn btn__light--rounded">페스츄리</button>
-              <button type="button" className="btn btn__light--rounded">휘낭시에</button>
-              <button type="button" className="btn btn__light--rounded">치아바타</button>
+          <div className="main-page__content">
+            <div className="main-page__content__inner">
+              <BakeryList 
+                key={searchKeyword} // searchKeyword 변경 시 컴포넌트 리마운트로 페이지 자동 리셋
+                filterBakeries={ filterBakeries } 
+                searchKeyword={ searchKeyword }
+                onBakeryClick={ handleBakeryClick }
+              />
+              { 
+                isDetailOpen && (
+                  <BakeryDetail 
+                    bakery={ selectedBakery }
+                    onClose={ handleCloseDetail }
+                  />
+                )
+              }
             </div>
           </div>
         </div>
-        <div className="main-page__content">
-          <div className="main-page__content__inner">
-            <BakeryList 
-              key={searchKeyword} // searchKeyword 변경 시 컴포넌트 리마운트로 페이지 자동 리셋
-              filterBakeries={ filterBakeries } 
-              searchKeyword={ searchKeyword }
-              onBakeryClick={ handleBakeryClick }
-            />
-            { 
-              isDetailOpen && (
-                <BakeryDetail 
-                  bakery={ selectedBakery }
-                  onClose={ handleCloseDetail }
-                />
-              )
-            }
-          </div>
-        </div>
       </section>
+      <div className={isSectionVisible ? 'main-page__more' : 'main-page__more active'}>
+        <button 
+          type="button" 
+          className="btn btn__toggle"
+          onClick={ toggleVisible }
+        >
+          {isSectionVisible ? <MdArrowBackIosNew />: <MdArrowForwardIos />}
+        </button>
+      </div>
       
       <div className="main-page__button">
         <button 
@@ -179,15 +190,7 @@ const MainPage = () => {
           <span>마이페이지</span>
         </button>
       </div>
-      <div className={isSectionVisible ? 'main-page__more' : 'main-page__more active'}>
-        <button 
-          type="button" 
-          className="btn btn__toggle"
-          onClick={ toggleVisible }
-        >
-          {isSectionVisible ? <MdArrowBackIosNew />: <MdArrowForwardIos />}
-        </button>
-      </div>
+      
       <div className="main-page__map">
         <BakeryMap />
       </div>

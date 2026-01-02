@@ -58,8 +58,6 @@
     max-width: 40rem;
     transform: translateX(0);
     transition: transform 0.3s ease-in-out;
-    border-right: 1px solid #d9d9d9;
-  
   }
   .header.active {
     transform: translateX(-100%);
