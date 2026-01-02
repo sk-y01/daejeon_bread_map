@@ -31,13 +31,15 @@ const MainPage = () => {
   };
 
   const pageEnterHandler = () => {
-    const item = localStorage.getItem('user')
+    // TODO : 현재 서버 쪽 로그인 기능 오류로 인한 주석 처리 (테스트 완료 후 주석 해제 예정)
+    // const item = localStorage.getItem('user')
 
-    if (!item) {
-      navigate('/login')
-    } else {
-      navigate('/admin')
-    }
+    // if (!item) {
+    //   navigate('/login')
+    // } else {
+    //   navigate('/admin')
+    // }
+    navigate('/admin')
   }
 
   // 로직 구성

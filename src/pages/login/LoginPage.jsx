@@ -68,7 +68,7 @@ const LoginPage = () => {
         navigate('/')
       }
     } catch (error) {
-      console.error('로그인인 실패 : ', error)
+      console.error('로그인 실패 : ', error)
 
       if (error.response) {
         console.error('에러 상태 코드 : ', error.response.status)

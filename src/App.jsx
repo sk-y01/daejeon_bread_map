@@ -38,9 +38,9 @@ function App() {
           <Route path='design' element={ <DesignPage /> } />
         </Route>
         <Route path='/admin' element={ 
-          <ProtectedLayout>
+          // <ProtectedLayout>
             <AdminLayout /> 
-          </ProtectedLayout>
+          // </ProtectedLayout>
         }>
           <Route index element={ <AdminMainPage /> } />
 
