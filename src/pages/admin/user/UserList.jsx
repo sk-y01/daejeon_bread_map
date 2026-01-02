@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './UserList.style.scss'
 import { getUserList } from '../../../apis/user/userApi'
+import { convertDateFormat } from '../../../utils/date'
 
 const UserList = ({ title }) => {
   const [userList, setUserList] = useState([])
@@ -15,6 +16,20 @@ const UserList = ({ title }) => {
 
     fetchUserList()
   }, [])
+
+  /**
+   * 관리자 참/거짓 'Y/F'로 변환 메서드
+   * 
+   * @param { String } value 
+   * @returns 
+   */
+  const convertBooleanFormat = (value) => {
+    if (value === true) {
+      return 'Y'
+    } else {
+      return 'F'
+    }
+  }
 
   return (
     <div className="UserList">
@@ -36,11 +51,11 @@ const UserList = ({ title }) => {
                 userList?.map((user, idx) => {
                   return (
                     <tr key={ user._id }>
-                      <td>{ idx + 1 }</td>
-                      <td>{ user.name }</td>
+                      <td className='text--center'>{ idx + 1 }</td>
+                      <td className='text--center'>{ user.name }</td>
                       <td>{ user.email }</td>
-                      <td>{ user.createdAt }</td>
-                      <td>{ user.isAdmin }</td>
+                      <td className='text--center'>{ convertDateFormat(user.createdAt) }</td>
+                      <td>{ convertBooleanFormat(user.isAdmin) }</td>
                     </tr>
                   )
                 })

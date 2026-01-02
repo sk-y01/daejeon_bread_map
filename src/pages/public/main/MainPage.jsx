@@ -150,18 +150,18 @@ const MainPage = () => {
                 searchKeyword={ searchKeyword }
                 onBakeryClick={ handleBakeryClick }
               />
-              { 
-                isDetailOpen && (
-                  <BakeryDetail 
-                    bakery={ selectedBakery }
-                    onClose={ handleCloseDetail }
-                  />
-                )
-              }
             </div>
           </div>
         </div>
       </section>
+      { 
+        isDetailOpen && (
+          <BakeryDetail 
+            bakery={ selectedBakery }
+            onClose={ handleCloseDetail }
+          />
+        )
+      }
       <div className={isSectionVisible ? 'main-page__more' : 'main-page__more active'}>
         <button 
           type="button" 
