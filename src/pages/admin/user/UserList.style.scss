@@ -8,3 +8,27 @@
   font-weight: 700;
   color: #4A3728;
 }
+
+/* 검색 영역 */
+.UserList__search {
+  margin-bottom: 1.2rem;
+}
+
+/* 테이블 래퍼 (원본 유지) */
+.table__wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* 모바일 대응: 테이블 유지 + 가로 스크롤 */
+@media (max-width: 768px) {
+  .table__wrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table__wrap table {
+    min-width: 600px;
+  }
+}
