@@ -11,24 +11,38 @@
 
 /* 검색 영역 */
 .UserList__search {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.6rem;
 }
 
-/* 테이블 래퍼 (원본 유지) */
+/* 테이블 */
 .table__wrap {
   width: 100%;
   overflow: hidden;
+  /* 테이블 헤더: 단어 단위 줄바꿈 허용 */
+  th {
+    white-space: normal;
+    word-break: keep-all;
+  }
+
+  /* 테이블 데이터: 한 줄 유지 */
+  td {
+    white-space: nowrap;
+  }
 }
 
 /* 모바일 대응: 테이블 유지 + 가로 스크롤 */
 @media (max-width: 768px) {
-  .table__wrap {
+  .UserList {
+    overflow-x: visible;
+  }
+
+  .UserList .table__wrap {
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
   }
 
-  .table__wrap table {
-    min-width: 600px;
+  .UserList .table__wrap table {
+    min-width: 800px;
   }
 }

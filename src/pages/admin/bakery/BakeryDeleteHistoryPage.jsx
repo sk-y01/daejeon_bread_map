@@ -42,7 +42,7 @@ function BakeryDeleteHistoryPage() {
 
   return (
     <div className="BakeryDeleteHistory">
-      <h1>빵집 삭제 이력</h1>
+      <h2>빵집 삭제 이력</h2>
 
       {deleteHistories.length === 0 ? (
         <p>삭제 이력이 없습니다.</p>

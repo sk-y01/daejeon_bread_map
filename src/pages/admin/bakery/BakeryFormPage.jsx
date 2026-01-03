@@ -229,7 +229,7 @@ function BakeryFormPage() {
 
   return (
     <div className="BakeryForm">
-      <h1>{isEdit ? '빵집 수정' : '빵집 등록'}</h1>
+      <h2>{isEdit ? '빵집 수정' : '빵집 등록'}</h2>
 
       <div className="BakeryForm__card">
         <label>가게 이름</label>

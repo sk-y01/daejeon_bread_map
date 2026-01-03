@@ -4,9 +4,9 @@
 
 .BakeryForm {
   // 페이지 제목
-  h1 {
+  h2 {
     margin-bottom: 2rem;
-    font-weight: 700;
+    font-weight: 600;
     color: map.get($colors, "main");
   }
 
