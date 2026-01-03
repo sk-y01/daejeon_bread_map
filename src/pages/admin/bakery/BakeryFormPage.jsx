@@ -16,7 +16,7 @@ import {
   updateBakery,
   fetchBakeryDetail,
 } from '../../../apis/bakeryApi';
-import { FiX } from 'react-icons/fi';
+import { FiX, FiPlus } from 'react-icons/fi';
 
 function BakeryFormPage() {
   const { id } = useParams();
@@ -26,40 +26,29 @@ function BakeryFormPage() {
   /**
    * 기본 폼 데이터
    *
-   * WHY?
-   * - controlled input 구조 유지를 위해 모든 필드를 상태로 관리.
+   * CHANGE:
+   * - menu(string) → menus(array) 구조로 변경
    */
   const [form, setForm] = useState({
     name: '',
-    menu: '',
+    menus: [{ name: '', price: '' }],
     category: [],
     address: '',
     phone: '',
     latitude: '',
     longitude: '',
     image: null,
-    imageUrl: ''
+    imageUrl: '',
   });
 
-  /**
-   * 카테고리 입력용 임시 상태
-   *
-   * WHY?
-   * - Enter / 콤마 입력 기반 태그형 UI를 위해
-   *   실제 category 배열과 분리하여 관리.
-   */
+  // 카테고리 입력용 임시 상태
   const [categoryInput, setCategoryInput] = useState('');
   const [categoryError, setCategoryError] = useState('');
-  
-  // preview 상태 검증
-  const [previewUrl, setPreviewUrl] = useState('')
 
-  /**
-   * 수정 모드일 경우 상세 조회
-   *
-   * WHY?
-   * - 수정 시 기존 데이터를 불러오기 위함.
-   */
+  // preview 상태
+  const [previewUrl, setPreviewUrl] = useState('');
+
+  // 수정 모드일 경우 상세 조회
   useEffect(() => {
     if (isEdit) {
       loadDetail();
@@ -70,17 +59,12 @@ function BakeryFormPage() {
   useEffect(() => {
     return () => {
       if (previewUrl) {
-        URL.revokeObjectURL(previewUrl)
+        URL.revokeObjectURL(previewUrl);
       }
-    }
-  }, [previewUrl])
+    };
+  }, [previewUrl]);
 
-  /**
-   * 상세 조회 API 호출
-   *
-   * WHY?
-   * - 서버 응답을 폼 구조에 맞게 매핑
-   */
+  // 상세 조회 API 호출
   const loadDetail = async () => {
     try {
       const res = await fetchBakeryDetail(id);
@@ -88,13 +72,16 @@ function BakeryFormPage() {
 
       setForm({
         name: data.name ?? '',
-        menu: data.menu ?? '',
+        menus:
+          Array.isArray(data.menus) && data.menus.length > 0
+            ? data.menus
+            : [{ name: '', price: '' }],
         category: Array.isArray(data.category) ? data.category : [],
         address: data.address ?? '',
         phone: data.phone ?? '',
         latitude: data.latitude ?? '',
         longitude: data.longitude ?? '',
-        image: null, // 기존 이미지는 파일로 다시 받지 않음
+        image: null,
         imageUrl: data.image ?? '',
       });
     } catch (err) {
@@ -103,24 +90,42 @@ function BakeryFormPage() {
     }
   };
 
-  /**
-   * 공용 input 값 변경 핸들러
-   *
-   * WHY?
-   * - name 기반으로 하나의 state에서 폼 관리.
-   */
+  // 공용 input 값 변경 핸들러
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-  /**
-   * 카테고리 키 입력 처리
-   *
-   * WHY?
-   * - Enter 또는 ',' 입력 시 category 배열에 추가.
-   * - 중복 입력 방지 및 에러 메시지 노출.
-   */
+  // 메뉴 input 변경
+  const handleMenuChange = (index, key, value) => {
+    const updatedMenus = [...form.menus];
+    updatedMenus[index][key] = value;
+
+    setForm({
+      ...form,
+      menus: updatedMenus,
+    });
+  };
+
+  // 메뉴 추가
+  const handleAddMenu = () => {
+    setForm({
+      ...form,
+      menus: [...form.menus, { name: '', price: '' }],
+    });
+  };
+
+  // 메뉴 삭제
+  const handleRemoveMenu = (index) => {
+    if (form.menus.length === 1) return;
+
+    setForm({
+      ...form,
+      menus: form.menus.filter((_, i) => i !== index),
+    });
+  };
+
+  // 카테고리 입력 로직
   const handleCategoryKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
@@ -144,12 +149,7 @@ function BakeryFormPage() {
     }
   };
 
-  /**
-   * 카테고리 삭제
-   *
-   * WHY?
-   * - 잘못 입력된 태그를 즉시 제거할 수 있도록 UX 제공.
-   */
+  // 카테고리 삭제
   const handleRemoveCategory = (target) => {
     setForm({
       ...form,
@@ -157,38 +157,28 @@ function BakeryFormPage() {
     });
   };
 
-  /**
-   * 이미지 업로드 처리
-   *
-   * WHY?
-   * - multipart/form-data 전송을 위해 File 객체 그대로 관리
-   */
+  // 이미지 업로드 처리
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      alert('이미지 파일 업로드만 가능합니다.')
-      e.target.value = ''
-
+      alert('이미지 파일 업로드만 가능합니다.');
+      e.target.value = '';
       return;
     }
 
-    // 용량 제한 (3MB)
     const maxSize = 3 * 1024 * 1024;
     if (file.size > maxSize) {
-      alert('이미지 용량은 최대 3MB 이하만 가능합니다.')
-      e.target.value = ''
-
+      alert('이미지 용량은 최대 3MB 이하만 가능합니다.');
+      e.target.value = '';
       return;
     }
 
-    // 이전 Preview URL revoke (메모리 누수 방지)
     setPreviewUrl((prev) => {
-      if (prev) URL.revokeObjectURL(prev)
-      
-      return URL.createObjectURL(file)
-    })
+      if (prev) URL.revokeObjectURL(prev);
+      return URL.createObjectURL(file);
+    });
 
     setForm((prev) => ({
       ...prev,
@@ -196,23 +186,24 @@ function BakeryFormPage() {
     }));
   };
 
-  /**
-   * 등록 / 수정 요청
-   *
-   * WHY?
-   * - 이미지 파일 포함 전송을 위해 FormData 사용
-   */
+  // 등록 / 수정 요청
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
 
       formData.append('name', form.name);
-      formData.append('menu', form.menu);
       formData.append('address', form.address);
       formData.append('phone', form.phone);
       formData.append('latitude', form.latitude);
       formData.append('longitude', form.longitude);
 
+      // 메뉴 배열 전송
+      form.menus.forEach((menu, index) => {
+        formData.append(`menus[${index}].name`, menu.name);
+        formData.append(`menus[${index}].price`, menu.price);
+      });
+
+      // 카테고리 전송
       form.category.forEach((item) => {
         formData.append('category', item);
       });
@@ -249,13 +240,44 @@ function BakeryFormPage() {
           placeholder="성심당 본점"
         />
 
-        <label>대표 메뉴</label>
-        <input
-          name="menu"
-          value={form.menu}
-          onChange={handleChange}
-          placeholder="튀김소보로"
-        />
+        <label>메뉴</label>
+        <div className="BakeryForm__menu">
+          {form.menus.map((menu, index) => (
+            <div key={index} className="BakeryForm__menu-row">
+              <input
+                value={menu.name}
+                onChange={(e) =>
+                  handleMenuChange(index, 'name', e.target.value)
+                }
+                placeholder="메뉴명"
+              />
+              <input
+                value={menu.price}
+                onChange={(e) =>
+                  handleMenuChange(index, 'price', e.target.value)
+                }
+                placeholder="가격"
+              />
+              <button
+                type="button"
+                className="btn btn__light BakeryForm__menu-remove"
+                onClick={() => handleRemoveMenu(index)}
+                aria-label="remove menu"
+              >
+                <FiX />
+              </button>
+            </div>
+          ))}
+
+          <button
+            type="button"
+            className="btn btn__light BakeryForm__menu-add"
+            onClick={handleAddMenu}
+          >
+            <FiPlus />
+            메뉴 추가
+          </button>
+        </div>
 
         <label>카테고리</label>
         <div className="BakeryForm__category-input">
@@ -272,7 +294,6 @@ function BakeryFormPage() {
               </button>
             </span>
           ))}
-
           <input
             value={categoryInput}
             onChange={(e) => {
@@ -314,7 +335,6 @@ function BakeryFormPage() {
               placeholder="36.32739"
             />
           </div>
-
           <div>
             <label>경도</label>
             <input
@@ -327,14 +347,14 @@ function BakeryFormPage() {
         </div>
 
         <label>대표 이미지</label>
-        <input type="file" accept='image/*' onChange={handleImageChange} />
+        <input type="file" accept="image/*" onChange={handleImageChange} />
 
-        {(previewUrl || form.image) && (
+        {(previewUrl || form.imageUrl) && (
           <img
             src={
               previewUrl
-              ? previewUrl
-              : (form.imageUrl.startsWith('http'))
+                ? previewUrl
+                : form.imageUrl.startsWith('http')
                 ? form.imageUrl
                 : `${import.meta.env.VITE_LOCAL_URL}/${form.imageUrl}`
             }
