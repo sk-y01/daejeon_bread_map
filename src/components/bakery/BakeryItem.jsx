@@ -1,15 +1,8 @@
-import React, { useState } from 'react'
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import React from 'react'
+import LikeComp from './LikeComp';
 
 const BakeryItem = ({ bakery, onBakeryClick }) => {
   const { name, address, phone, category, imageUrl } = bakery;
-
-  const [isLikeActive, setIsLikeActive] = useState(true);
-
-  // 좋아요 버튼 함수수
-  const handleLikeBtn = () => {
-    setIsLikeActive(active => !active);
-  };
 
   // Bakery Item Click
   const handleBakeryClick = () => {
@@ -22,11 +15,7 @@ const BakeryItem = ({ bakery, onBakeryClick }) => {
     <div className="bakeryItem">
       <div className="bakeryItem__content">
         <h3 onClick={ handleBakeryClick } style={{ cursor:'pointer'}}>{name}</h3>
-        <button onClick={ handleLikeBtn } className="btn btn__heart">
-          {
-            isLikeActive ? <FaRegHeart /> : <FaHeart /> 
-          }
-        </button>
+        <LikeComp />
         <div className="bakeryItem__info">
           <p className="address">{ address }</p>
           <p>{ phone }</p>

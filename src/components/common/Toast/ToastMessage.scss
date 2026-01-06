@@ -1,0 +1,63 @@
+.toast-message {
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+
+  &--show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  &--hide {
+    transform: translateX(-50%) translateY(-100px);
+    opacity: 0;
+  }
+
+  &__content {
+    background: #fff;
+    padding: 1.5rem 2rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 300px;
+    text-align: center;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #333;
+  }
+  
+  // 타입별
+  &--success {
+    .toast-message__content {
+      background: #4caf50;
+      color: #fff;
+    }
+  }
+  
+  &--error {
+    .toast-message__content {
+      background: #f44336;
+      color: #fff;
+    }
+  }
+  
+  &--info {
+    .toast-message__content {
+      background: #2196f3;
+      color: #fff;
+    }
+  }
+  
+  &--warning {
+    .toast-message__content {
+      background: #ff9800;
+      color: #fff;
+    }
+  }
+}
