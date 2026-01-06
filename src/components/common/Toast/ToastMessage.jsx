@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './ToastMessage.scss'
+import { IoMdCheckmarkCircle } from "react-icons/io";
 
 const ToastMessage = ( { message, type = 'info', duration = 3000, onClose } ) => {
 
@@ -41,9 +42,12 @@ const ToastMessage = ( { message, type = 'info', duration = 3000, onClose } ) =>
       }
     >
       <div className="toast-message__content">
-        <p className="toast-message__text">
+        <span className="toast-message__icon">
+          <IoMdCheckmarkCircle />
+        </span>
+        <span className="toast-message__text">
           { message }
-        </p>
+        </span>
         {/* 닫기 버튼 */}
       </div>
     </div>

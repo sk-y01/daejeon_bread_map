@@ -1,6 +1,6 @@
 .toast-message {
   position: fixed;
-  top: 2rem;
+  bottom: 2rem;
   left: 50%;
   transform: translateX(-50%) translateY(-100px);
   z-index: 999;
@@ -26,16 +26,24 @@
     text-align: center;
   }
 
+  &__icon {
+    vertical-align: middle;
+    svg {
+      width: 2.5rem;
+      height: 2rem;
+    }
+  }
+
   &__text {
     margin: 0;
     font-size: 1.4rem;
-    color: #333;
+    padding-left: 0.5rem;
   }
   
   // 타입별
   &--success {
     .toast-message__content {
-      background: #4caf50;
+      background: #2196f3;
       color: #fff;
     }
   }
@@ -49,7 +57,7 @@
   
   &--info {
     .toast-message__content {
-      background: #2196f3;
+      background:#4caf50;
       color: #fff;
     }
   }
@@ -59,5 +67,11 @@
       background: #ff9800;
       color: #fff;
     }
+  }
+}
+
+@media (min-width:768px) {
+  .toast-message {
+    top: 2rem;
   }
 }
