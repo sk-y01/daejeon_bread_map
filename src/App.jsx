@@ -12,6 +12,7 @@ import BakeryDeleteHistoryPage from './pages/admin/bakery/BakeryDeleteHistoryPag
 import TestApi from './pages/test/TestApi'
 import JoinPage from './pages/login/JoinPage'
 import UserList from './pages/admin/user/UserList'
+import MyFavoritePage from './pages/user/MyFavoritePage'
 
 import './App.css'
 import './styles/components/_input.scss'
@@ -37,6 +38,7 @@ function App() {
           <Route index element={ <MainPage /> } />
           <Route path='design' element={ <DesignPage /> } />
         </Route>
+        <Route path='mypage' element={ <MyFavoritePage /> } />
         <Route path='/admin' element={ 
           // <ProtectedLayout>
             <AdminLayout /> 
