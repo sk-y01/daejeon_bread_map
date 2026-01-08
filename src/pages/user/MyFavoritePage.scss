@@ -1,0 +1,143 @@
+@use "sass:map";
+@use "../../styles/color" as *;
+@use "../../styles/common/filter-chips";
+@use "../../styles/components/buttons";
+@use "../../styles/common/mixins" as *;
+
+.my-favorite {
+  background-color: map.get($colors, "background");
+
+  /* ===== 헤더 ===== */
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.6rem 2rem;
+    border-bottom: 1px solid map.get($border-colors, "default");
+    background-color: map.get($colors, "white");
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+
+    img {
+      height: 3.2rem;
+    }
+
+    span {
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: map.get($colors, "main");
+    }
+  }
+
+  &__menu {
+    font-size: 2.4rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* ===== 컨텐츠 ===== */
+  &__container {
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+
+  &__list {
+    margin-top: 3rem;
+  }
+}
+
+/* ===== 카드 ===== */
+.favorite-card {
+  display: grid;
+  grid-template-columns: 2fr 3fr auto;
+  gap: 2rem;
+  padding: 2.4rem 0;
+  border-bottom: 1px solid map.get($border-colors, "default");
+  
+
+  &__name {
+    font-size: 1.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    .heart {
+      color: map.get($colors, "danger");
+    }
+  }
+
+  &__address {
+    margin: 0.8rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: map.get($colors, "gray");
+  }
+
+  &__memo {
+    margin-top: 1.2rem;
+
+    strong {
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    p {
+      font-size: 1.6rem;
+      color: map.get($colors, "gray-dark");
+    }
+  }
+
+  &__images {
+    display: flex;
+    gap: 1.2rem;
+  }
+
+  .image-placeholder {
+    width: 14rem;
+    height: 14rem;
+    border-radius: 0.8rem;
+    background-color: map.get($colors, "light-gray");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: map.get($colors, "gray");
+    font-size: 1.3rem;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.8rem;
+  }
+}
+
+/* ===== 모바일 ===== */
+@media (max-width: 768px) {
+  .favorite-card {
+    grid-template-columns: 1fr;
+  }
+
+  .favorite-card__images {
+    margin-top: 1.6rem;
+  }
+
+  .favorite-card__actions {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}

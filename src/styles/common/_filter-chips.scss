@@ -1,0 +1,10 @@
+.filter-chips {
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

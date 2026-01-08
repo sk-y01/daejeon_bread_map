@@ -1,0 +1,59 @@
+@use "sass:map";
+@use "../../styles/color" as *;
+
+// 지도보기 버튼 여백주기
+.favorite-card {
+  padding: 2.4rem 0;
+  border-bottom: 1px solid map.get($colors, "light-gray");
+}
+
+.favorite-card__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
+.favorite-card__name {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.favorite-card__actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.favorite-card__address {
+  margin-top: 0.8rem;
+  font-size: 1.4rem;
+  color: map.get($colors, "gray");
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.favorite-card__memo {
+  margin-top: 0.6rem;
+  font-size: 1.4rem;
+  color: map.get($colors, "point");
+}
+
+.favorite-card__images {
+  margin-top: 1.2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.image-placeholder {
+  width: 10.6rem;
+  height: 10.6rem;
+  background-color: map.get($colors, "light-gray");
+  border-radius: 0.8rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: map.get($colors, "gray");
+}
