@@ -28,34 +28,37 @@ import "./styles/admin/_bakery-list.scss";
 import "./styles/admin/_bakery-form.scss";
 import "./styles/admin/_dashboard.scss";
 import "./styles/admin/_bakery-delete-history.scss";
+import { ToastProvider } from './contexts/ToastContext'
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route path='/' element={ <PublicLayout /> }>
-          <Route index element={ <MainPage /> } />
-          <Route path='design' element={ <DesignPage /> } />
-        </Route>
-        <Route path='/admin' element={ 
-          // <ProtectedLayout>
-            <AdminLayout /> 
-          // </ProtectedLayout>
-        }>
-          <Route index element={ <AdminMainPage /> } />
+      <ToastProvider>
+        <Routes>
+          <Route path='/' element={ <PublicLayout /> }>
+            <Route index element={ <MainPage /> } />
+            <Route path='design' element={ <DesignPage /> } />
+          </Route>
+          <Route path='/admin' element={ 
+            // <ProtectedLayout>
+              <AdminLayout /> 
+            // </ProtectedLayout>
+          }>
+            <Route index element={ <AdminMainPage /> } />
 
-          <Route path='bakery' element={<BakeryListPage />} />
-          <Route path='bakery/form' element={<BakeryFormPage />} />
-          <Route path='bakery/form/:id' element={<BakeryFormPage />} />
-          <Route path="bakery/delete-history" element={<BakeryDeleteHistoryPage />} />
+            <Route path='bakery' element={<BakeryListPage />} />
+            <Route path='bakery/form' element={<BakeryFormPage />} />
+            <Route path='bakery/form/:id' element={<BakeryFormPage />} />
+            <Route path="bakery/delete-history" element={<BakeryDeleteHistoryPage />} />
 
-          <Route path='users' element={ <UserList title='회원 목록' /> } />
-        </Route>
+            <Route path='users' element={ <UserList title='회원 목록' /> } />
+          </Route>
 
-        <Route path='/login' element={ <LoginPage /> } />
-        <Route path='/join' element={ <JoinPage /> } />
-        <Route path='/test' element={ <TestApi /> } />
-      </Routes>
+          <Route path='/login' element={ <LoginPage /> } />
+          <Route path='/join' element={ <JoinPage /> } />
+          <Route path='/test' element={ <TestApi /> } />
+        </Routes>
+      </ToastProvider>
     </>
   )
 }
