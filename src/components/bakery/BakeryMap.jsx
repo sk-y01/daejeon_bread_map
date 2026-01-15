@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { fetchBakeries } from '../../apis/bakeryApi'
 import './BakeryMap.style.scss'
 
-const BakeryMap = () => {
+const BakeryMap = ({ onBakeryClick }) => {
   const [map, setMap] = useState(null)
   const [bakeries, setBakeries] = useState([])
 
@@ -91,13 +91,31 @@ const BakeryMap = () => {
       closeBtn?.addEventListener('click', () => overlay.setMap(null), { once: true })
 
       // 상세 보기
-      const detailBtn = container.querySelector('.overlay__btn')
-      detailBtn?.addEventListener('click', () => {
-          overlay.setMap(null)
-          navigate(`/bakery/${bakery._id}`)
-        },
-        { once: true }
-      )
+      // 이벤트 위임 방식으로 컨테이너에 이벤트 리스너 등록 
+      const handleContainerClick = (e) => {
+        const detailBtn = container.querySelector('.overlay__btn');
+
+        if(detailBtn){
+          // 이벤트 전파 차단
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+
+          overlay.setMap(null);
+          if(onBakeryClick) {
+            onBakeryClick(bakery);
+          }
+
+          // 이벤트 리스너 제거
+          container.removeEventListener('click', handleContainerClick);
+          container.removeEventListener('mousedown', handleContainerClick);
+        }
+      };
+
+      // 컨테이너에 이벤트 위임으로 등록
+      container.addEventListener('click', handleContainerClick, { capture: true });
+      container.addEventListener('mousedown', handleContainerClick, { capture: true });
+      
 
       // 이미지 깨지면 숨김 처리
       const img = container.querySelector('.overlay__img')

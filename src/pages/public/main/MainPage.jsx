@@ -194,7 +194,9 @@ const MainPage = () => {
       </div>
       
       <div className="main-page__map">
-        <BakeryMap />
+        <BakeryMap 
+          onBakeryClick={ handleBakeryClick }
+        />
       </div>
     </div>
   )
