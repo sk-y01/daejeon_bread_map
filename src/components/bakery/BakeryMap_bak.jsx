@@ -196,13 +196,25 @@ const BakeryMap = ({ onBakeryClick }) => {
     )
   }
 
+  /*
+   * NOTE:
+   * Kakao Map SDK 중복 로드 방지를 위한 가드 처리.
+   * React StrictMode / 컴포넌트 재마운트 환경에서
+   * SDK 스크립트가 여러 번 로드되는 경우를 방지하기 위함.
+   */
   const loadScript = () => {
+    if (document.querySelector('script[src*="dapi.kakao.com"]')) {
+      window.kakao?.maps?.load(getLocation)
+      return
+    }
+
     const script = document.createElement('script')
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoKey}&autoload=false`
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoKey}&autoload=false`
+    script.async = true
     script.onload = () => window.kakao.maps.load(getLocation)
     document.head.appendChild(script)
   }
-
+  
   useEffect(() => {
     getBakeries()
   }, [getBakeries])
