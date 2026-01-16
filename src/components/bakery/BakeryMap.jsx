@@ -9,7 +9,6 @@ const BakeryMap = ({ onBakeryClick }) => {
 
   const navigate = useNavigate()
   const kakaoKey = import.meta.env.VITE_KAKAO_KEY
-  console.log('kakaoKey : ', kakaoKey)
 
   // 마커/오버레이를 ref로 관리 (렌더링에 영향 X)
   const markersRef = useRef([])
@@ -201,9 +200,6 @@ const BakeryMap = ({ onBakeryClick }) => {
     const script = document.createElement('script')
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoKey}&autoload=false`
     script.onload = () => window.kakao.maps.load(getLocation)
-
-    console.log('1 ::: loadScript !!!!!!!!!!!')
-
     document.head.appendChild(script)
   }
 
@@ -212,7 +208,6 @@ const BakeryMap = ({ onBakeryClick }) => {
   }, [getBakeries])
 
   useEffect(() => {
-    console.log('2 :: map..... ', map)
     if (map && bakeries.length > 0) displayBakeryMarkers(map)
   }, [map, bakeries])
 
