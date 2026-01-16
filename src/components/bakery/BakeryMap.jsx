@@ -201,6 +201,9 @@ const BakeryMap = ({ onBakeryClick }) => {
     const script = document.createElement('script')
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoKey}&autoload=false`
     script.onload = () => window.kakao.maps.load(getLocation)
+
+    console.log('1 ::: loadScript !!!!!!!!!!!')
+
     document.head.appendChild(script)
   }
 
@@ -209,12 +212,12 @@ const BakeryMap = ({ onBakeryClick }) => {
   }, [getBakeries])
 
   useEffect(() => {
+    console.log('2 :: map..... ', map)
     if (map && bakeries.length > 0) displayBakeryMarkers(map)
   }, [map, bakeries])
 
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
-      console.log('........')
       getLocation()
     } else {
       loadScript()
