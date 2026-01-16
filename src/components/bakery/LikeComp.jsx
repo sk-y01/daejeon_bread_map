@@ -27,7 +27,7 @@ const LikeComp = () => {
     // 현재 상태를 기반으로 새 상태 계산
     const newState = !isLikeActive;
 
-    // 상태 업데이트만 수행행
+    // 상태 업데이트만 수행
     setIsLikeActive(newState);
 
     // 상태 업데이트 후 토스트 메시지 표시(별도로 사이드 이펙트 실행)
