@@ -198,8 +198,7 @@ const BakeryMap = ({ onBakeryClick }) => {
 
   const loadScript = () => {
     const script = document.createElement('script')
-    // script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoKey}&autoload=false`
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoKey}&autoload=false`
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoKey}&autoload=false`
     script.onload = () => window.kakao.maps.load(getLocation)
     document.head.appendChild(script)
   }
