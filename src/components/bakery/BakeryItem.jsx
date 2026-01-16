@@ -32,7 +32,7 @@ const BakeryItem = ({ bakery, onBakeryClick }) => {
               !imageUrl
               ? (
                 <li>
-                  <img src="/bakery_img01.png" alt="성심당 본점" />
+                  <img src="/images/bakery_img01.png" alt="성심당 본점" />
                 </li>
               ) : (
                 <li>
