@@ -214,6 +214,7 @@ const BakeryMap = ({ onBakeryClick }) => {
 
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
+      console.log('........')
       getLocation()
     } else {
       loadScript()
