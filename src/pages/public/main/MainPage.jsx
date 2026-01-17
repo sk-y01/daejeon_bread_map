@@ -161,10 +161,16 @@ const MainPage = () => {
           <BakeryDetail 
             bakery={ selectedBakery }
             onClose={ handleCloseDetail }
+            isSectionVisible={ isSectionVisible }
           />
         )
       }
-      <div className={isSectionVisible ? 'main-page__more' : 'main-page__more active'}>
+      <div className={ 
+        'main-page__more' + ' ' +
+        (isSectionVisible ? '' : 'active') + ' ' +
+        (isDetailOpen ? 'main-page__more--detail-open' : '') 
+        }
+      >
         <button 
           type="button" 
           className="btn btn__toggle"

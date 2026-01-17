@@ -255,7 +255,7 @@
       top: 50%;
       left: 0;
       transform: translateX(40rem) translateY(-50%);
-      transition: transform 0.3s ease-in-out;
+      transition: transform 0.2s ease-in-out;
       z-index: 10;
 
       .btn__toggle {
@@ -277,6 +277,16 @@
   
     &__section.active {
       transform: translateX(-100%);
+    }
+
+    // Detail이 열렸을 때 (섹션이 보이는 경우)
+    &__more--detail-open {
+      transform: translateX(82rem) translateY(-50%);
+    }
+
+    // 섹션이 숨겨지고 Detail이 열렸을 때 (두 클래스가 동시에 적용)
+    &__more.active.main-page__more--detail-open {
+      transform: translateX(42rem) translateY(-50%);
     }
   }
 
