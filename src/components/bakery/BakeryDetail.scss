@@ -203,6 +203,12 @@
     border-radius: 1.5rem;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
     overflow-y: auto;
+    transition: left 0.3s ease-in-out;
+
+    // 섹션이 숨겨졌을 때 left 값 조정
+    &--section-hidden {
+      left: 2rem;
+    }
 
     &__inner {
       padding: 2.5rem;
@@ -217,16 +223,6 @@
 
       p {
         font-size: 1.6rem;
-      }
-    }
-
-    .bakeryItem__thumbnail {
-      ul {
-        li {
-          img {
-
-          }
-        }
       }
     }
   }

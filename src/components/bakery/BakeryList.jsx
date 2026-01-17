@@ -39,15 +39,15 @@ function BakeryList({ filterBakeries, searchKeyword, onBakeryClick }) {
             <>
               {pagedBakeries.map(bakery => (
                 <BakeryItem 
-                  onBakeryClick={onBakeryClick}
-                  key={bakery._id} 
-                  bakery={bakery} 
+                  onBakeryClick={ onBakeryClick }
+                  key={ bakery._id } 
+                  bakery={ bakery } 
                 />
               ))}
               <Pagination
-                page={page}
-                totalPages={totalPages}
-                onChange={setPage}
+                page={ page }
+                totalPages={ totalPages }
+                onChange={ setPage }
               />
             </>
           )
