@@ -9,7 +9,6 @@ const BakeryMap = ({ onBakeryClick }) => {
 
   const navigate = useNavigate()
   const kakaoKey = import.meta.env.VITE_KAKAO_KEY
-  console.log('kakaoKey : ', kakaoKey)
 
   // 마커/오버레이를 ref로 관리 (렌더링에 영향 X)
   const markersRef = useRef([])
@@ -198,9 +197,16 @@ const BakeryMap = ({ onBakeryClick }) => {
   }
 
   const loadScript = () => {
+    // KaKao Key 검증 추가
+    if (!kakaoKey) {
+      console.error('kakao Key가 설정되지 않았습니다.')
+      return
+    }
+
     const script = document.createElement('script')
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoKey}&autoload=false`
     script.onload = () => window.kakao.maps.load(getLocation)
+    script.onerror = () => console.error('카카오 맵 스크립트 로드 실패')
     document.head.appendChild(script)
   }
 
