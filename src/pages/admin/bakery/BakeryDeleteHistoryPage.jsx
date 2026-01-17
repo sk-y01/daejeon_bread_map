@@ -5,6 +5,7 @@
  * 관리자용 빵집 삭제 이력 페이지
  * - 삭제 이력 조회
  * - 삭제일 기준 최신순 정렬
+ * 
  */
 
 import { useEffect, useState } from 'react';
