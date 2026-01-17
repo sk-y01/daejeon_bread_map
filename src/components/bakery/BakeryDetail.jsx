@@ -4,14 +4,14 @@ import { FaMapMarkerAlt,  FaPhoneAlt, FaRegClock } from "react-icons/fa";
 import './BakeryDetail.scss'
 
 
-const BakeryDetail = ({ bakery, onClose }) => {
+const BakeryDetail = ({ bakery, onClose, isSectionVisible = true }) => {
   const { name, address, phone, category, imageUrl } = bakery;
   
   return (
-    <div className="bakeryDetail">
+    <div className={ `bakeryDetail ${!isSectionVisible ? 'bakeryDetail--section-hidden' : ''}` }>
       <div className="bakeryDetail__inner">
         <button 
-          onClick={onClose}
+          onClick={ onClose }
           type="button" 
           className="bakeryDetail__close"
           aria-label="닫기"
