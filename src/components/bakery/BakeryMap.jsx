@@ -9,7 +9,6 @@ const BakeryMap = ({ onBakeryClick }) => {
 
   const navigate = useNavigate()
   const kakaoKey = import.meta.env.VITE_KAKAO_KEY
-  console.log('카카오 키 ??? ::: ', kakaoKey)
 
   // 마커/오버레이를 ref로 관리 (렌더링에 영향 X)
   const markersRef = useRef([])
