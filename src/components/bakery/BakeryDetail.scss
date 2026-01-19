@@ -12,17 +12,10 @@
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.1);
   z-index: 100;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
   
   &__inner {
     position: relative;
     padding: 2rem;
-    min-height: 100vh;
     box-sizing: border-box;
   }
 
@@ -53,6 +46,13 @@
 
   &__content {
     margin-top: 4rem;
+    height:calc(100vh - 28rem);
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     h3 {
       font-size: 2.4rem;
@@ -216,7 +216,7 @@
     }
 
     &__content {
-
+      height: calc(100vh - 14rem);
       h3 {
         font-size: 2.6rem;
       }

@@ -48,7 +48,9 @@
       width: 90%;
       margin: 0 auto;
       padding: 1rem 0;
+      height: auto;
       overflow-x: auto;
+      background: #fff;
       scrollbar-width: visible;
       -ms-overflow-style: none;
       &::-webkit-scrollbar {
@@ -79,8 +81,8 @@
     left: 0;
     width: 100%;
     max-height: 50vh;
+    
     z-index: 10;
-    overflow-y: auto;
 
     &__inner {
       display: flex;
@@ -122,10 +124,15 @@
     right: 2rem;
     z-index: 10;
   }
+
+  &__more {
+    display: none;
+  }
 }
 
 .bakeryList {
   width: 100%;
+  overflow-y: auto;
   padding: 2rem;
   box-sizing: border-box;
 
@@ -235,12 +242,13 @@
     &__content {
       max-width: 40rem;
       background: #fff;
-      top: 22rem;
+      top: 16rem;
       max-height: 100vh;
 
       &__inner {
         background: none;
         border-radius: 0;
+        box-shadow: none;
       }
     }
 
@@ -251,6 +259,7 @@
     }
 
     &__more {
+      display: block;
       position: fixed;
       top: 50%;
       left: 0;

@@ -134,7 +134,7 @@ const MainPage = () => {
                 <MdClose />
               </button>
             </div>
-            <div className="main-page__cate">
+            {/* <div className="main-page__cate">
               <div className="Design__button">
                 <button type="button" className="btn btn__sub--rounded">식빵</button>
                 <button type="button" className="btn btn__light--rounded">케이크</button>
@@ -142,7 +142,7 @@ const MainPage = () => {
                 <button type="button" className="btn btn__light--rounded">휘낭시에</button>
                 <button type="button" className="btn btn__light--rounded">치아바타</button>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="main-page__content">
             <div className="main-page__content__inner">

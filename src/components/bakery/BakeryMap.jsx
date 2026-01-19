@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { fetchBakeries } from '../../apis/bakeryApi'
 import './BakeryMap.style.scss'
 
@@ -7,7 +6,6 @@ const BakeryMap = ({ onBakeryClick }) => {
   const [map, setMap] = useState(null)
   const [bakeries, setBakeries] = useState([])
 
-  const navigate = useNavigate()
   const kakaoKey = import.meta.env.VITE_KAKAO_KEY
 
   // 마커/오버레이를 ref로 관리 (렌더링에 영향 X)
