@@ -87,13 +87,13 @@ const BakeryMap = ({ onBakeryClick }) => {
 
       const closeBtn = container.querySelector('.overlay__close')
       closeBtn?.addEventListener('click', () => overlay.setMap(null), { once: true })
+      closeBtn?.addEventListener('touchend', () => overlay.setMap(null), { once: true })
 
-      // 상세 보기
-      // 이벤트 위임 방식으로 컨테이너에 이벤트 리스너 등록 
-      const handleContainerClick = (e) => {
-        const detailBtn = container.querySelector('.overlay__btn');
-
-        if(detailBtn){
+      // 상세 보기 버튼에 직접 이벤트 리스너 등록 
+      const detailBtn = container.querySelector('.overlay__btn');
+      
+      if(detailBtn){
+          const handleContainerClick = (e) => {
           // 이벤트 전파 차단
           e.preventDefault();
           e.stopPropagation();
@@ -103,18 +103,13 @@ const BakeryMap = ({ onBakeryClick }) => {
           if(onBakeryClick) {
             onBakeryClick(bakery);
           }
-
-          // 이벤트 리스너 제거
-          container.removeEventListener('click', handleContainerClick);
-          container.removeEventListener('mousedown', handleContainerClick);
-        }
+        };
+        
+        container.addEventListener('click', handleContainerClick, { once: true });
+        container.addEventListener('touchend', handleContainerClick, { once: true }) ;
       };
 
-      // 컨테이너에 이벤트 위임으로 등록
-      container.addEventListener('click', handleContainerClick, { capture: true });
-      container.addEventListener('mousedown', handleContainerClick, { capture: true });
       
-
       // 이미지 깨지면 숨김 처리
       const img = container.querySelector('.overlay__img')
       if (img) {
