@@ -81,8 +81,12 @@
     left: 0;
     width: 100%;
     max-height: 50vh;
-    
     z-index: 10;
+    
+    &.hidden {
+      overflow: hidden;
+    }
+
 
     &__inner {
       display: flex;
@@ -244,7 +248,7 @@
       background: #fff;
       top: 16rem;
       max-height: 100vh;
-
+      
       &__inner {
         background: none;
         border-radius: 0;

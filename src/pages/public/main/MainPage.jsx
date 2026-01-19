@@ -144,7 +144,7 @@ const MainPage = () => {
               </div>
             </div> */}
           </div>
-          <div className="main-page__content">
+          <div className={ isDetailOpen ? 'main-page__content hidden' : 'main-page__content' }> 
             <div className="main-page__content__inner">
               <BakeryList 
                 key={searchKeyword} // searchKeyword 변경 시 컴포넌트 리마운트로 페이지 자동 리셋
