@@ -43,9 +43,9 @@ function App() {
           </Route>
           <Route path='mypage' element={ <MyFavoritePage /> } />
           <Route path='/admin' element={ 
-            // <ProtectedLayout>
+            <ProtectedLayout>
               <AdminLayout /> 
-            // </ProtectedLayout>
+            </ProtectedLayout>
           }>
             <Route index element={ <AdminMainPage /> } />
 
