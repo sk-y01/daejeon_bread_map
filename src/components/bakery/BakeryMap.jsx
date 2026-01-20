@@ -87,10 +87,12 @@ const BakeryMap = ({ onBakeryClick }) => {
 
       const closeBtn = container.querySelector('.overlay__close')
       closeBtn?.addEventListener('click', () => overlay.setMap(null), { once: true })
+      closeBtn?.addEventListener('mousedown', () => overlay.setMap(null), { once: true })
       closeBtn?.addEventListener('touchend', () => overlay.setMap(null), { once: true })
 
       // 상세 보기 버튼에 직접 이벤트 리스너 등록 
       const detailBtn = container.querySelector('.overlay__btn');
+      console.log('detailBtn ::', detailBtn);
       
       if(detailBtn){
           const handleContainerClick = (e) => {
@@ -106,6 +108,7 @@ const BakeryMap = ({ onBakeryClick }) => {
         };
         
         container.addEventListener('click', handleContainerClick, { once: true });
+        container.addEventListener('mousedown', handleContainerClick, { once: true });
         container.addEventListener('touchend', handleContainerClick, { once: true }) ;
       };
 
