@@ -139,7 +139,8 @@ const LoginPage = () => {
               <button
                 type="button"
                 className="btn btn__find"
-                onClick={ () => navigate('/findEmail') }
+                // onClick={ () => navigate('/findEmail') }
+                onClick={ () => alert('현재 기능 구현 중입니다.') }
               >
                 계정 찾기
               </button>
