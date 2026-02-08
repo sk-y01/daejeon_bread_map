@@ -105,6 +105,14 @@
           border: 1px solid map.get($colors, 'placeholder');
           color: #4A3728;
         }
+
+        &.btn__find {
+          background-color: map.get($colors, 'point');
+        }
+
+        &.btn__link {
+          background-color: map.get($colors, 'main');
+        }
       }
     }
   }

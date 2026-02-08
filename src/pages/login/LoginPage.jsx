@@ -136,6 +136,13 @@ const LoginPage = () => {
                 className="btn btn__join"
                 onClick={ () => navigate('/join') }
               >회원가입</button>
+              <button
+                type="button"
+                className="btn btn__find"
+                onClick={ () => navigate('/findEmail') }
+              >
+                계정 찾기
+              </button>
             </div>
           </form>
         </div>

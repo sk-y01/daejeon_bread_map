@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
+import { ToastProvider } from './contexts/ToastContext'
 import PublicLayout from './layouts/public/PublicLayout'
 import AdminLayout from './layouts/admin/AdminLayout'
 import ProtectedLayout from './layouts/ProtectedLayout'
@@ -13,6 +14,7 @@ import TestApi from './pages/test/TestApi'
 import JoinPage from './pages/login/JoinPage'
 import UserList from './pages/admin/user/UserList'
 import MyFavoritePage from './pages/user/MyFavoritePage'
+import FindEmailPage from './pages/login/FindEmailPage'
 
 import './App.css'
 import './styles/components/_input.scss'
@@ -29,7 +31,6 @@ import "./styles/admin/_bakery-list.scss";
 import "./styles/admin/_bakery-form.scss";
 import "./styles/admin/_dashboard.scss";
 import "./styles/admin/_bakery-delete-history.scss";
-import { ToastProvider } from './contexts/ToastContext'
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
           <Route path='/login' element={ <LoginPage /> } />
           <Route path='/join' element={ <JoinPage /> } />
           <Route path='/test' element={ <TestApi /> } />
+          <Route path='/findEmail' element={ <FindEmailPage /> } />
         </Routes>
       </ToastProvider>
     </>
